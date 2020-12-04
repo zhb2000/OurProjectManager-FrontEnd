@@ -1,0 +1,62 @@
+<template>
+  <div>
+    <div>
+      username:
+      <input name="username" autocomplete="username" v-model="username" />
+    </div>
+    <div>
+      password:
+      <input
+        type="password"
+        name="password"
+        autocomplete="current-password"
+        v-model="password"
+      />
+    </div>
+    <div><button @click="loginBtnClick">登录</button></div>
+    <div><router-link to="/signup">注册</router-link></div>
+    <div>{{ display }}</div>
+  </div>
+</template>
+
+<script>
+import axios from "axios";
+import { BusinessErrorType, responseErrorTest } from "@/utils/ApiResponse.js";
+
+export default {
+  mounted() {},
+  data() {
+    return {
+      username: "",
+      password: "",
+      display: "",
+    };
+  },
+  methods: {
+    async loginBtnClick() {
+      let result;
+      try {
+        result = await axios.post("/api/users/login", {
+          username: this.username,
+          password: this.password,
+        });
+      } catch (error) {
+        if (
+          responseErrorTest(error, BusinessErrorType.WRONG_PASSWORD_OR_USERNAME)
+        ) {
+          alert("用户名或密码不正确");
+        } else {
+          alert(error);
+        }
+        return;
+      }
+      const token = result.data;
+      localStorage.setItem("JWT_TOKEN", token);
+      result = await axios.get("/api/users/whoami");
+      const currentUser = result.data;
+      sessionStorage.setItem("CURRENT_USERNAME", currentUser.username);
+      this.$router.push("/");
+    },
+  },
+};
+</script>
