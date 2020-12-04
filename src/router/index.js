@@ -5,6 +5,7 @@ import MyHome from '../views/MyHome.vue';
 import DevPanel from '../views/DevPanel.vue';
 import Login from '../views/Login.vue';
 import SignUp from '../views/SignUp.vue';
+import CreateProject from '../views/CreateProject.vue';
 
 Vue.use(VueRouter);
 
@@ -45,6 +46,13 @@ const routes = [
     path: '/signup',
     name: 'SignUp',
     component: SignUp
+  },
+  //创建项目页面
+  {
+    path: '/create-project',
+    name: 'CreateProject',
+    component: CreateProject,
+    meta: { requiresLogin: true }
   }
 ];
 

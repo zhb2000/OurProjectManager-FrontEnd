@@ -7,6 +7,7 @@
       <li><router-link to="/myhome">MyHome</router-link></li>
       <li><router-link to="/login">Login</router-link></li>
       <li><router-link to="/signup">SignUp</router-link></li>
+      <li><router-link to="/create-project">CreateProject</router-link></li>
     </ul>
     <h1>Dev</h1>
     <button @click="logoutBtnClick">logout</button>
