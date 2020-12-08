@@ -39,7 +39,7 @@ export default {
       this.userStr = sessionStorage.getItem("CURRENT_USERNAME");
     },
     async logoutBtnClick() {
-      await axios.get("api/users/logout");
+      await axios.get("/api/logout");
       localStorage.removeItem("JWT_TOKEN");
       sessionStorage.removeItem("CURRENT_USERNAME");
     },

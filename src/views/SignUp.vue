@@ -33,7 +33,7 @@
 
 <script>
 import axios from "axios";
-import { BusinessErrorType, responseErrorTest } from "@/utils/ApiResponse.js";
+import { BusinessErrorType, responseErrorTest } from "@/utils/ResponseErrorUtils.js";
 import { StringUtils } from "@/utils/StringUtils.js";
 
 export default {
@@ -63,7 +63,7 @@ export default {
         return;
       }
       try {
-        await axios.post("/api/users/", {
+        await axios.post("/api/users", {
           username: this.username,
           nickname: this.nickname,
           password: this.password,

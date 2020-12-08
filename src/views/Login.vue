@@ -21,7 +21,7 @@
 
 <script>
 import axios from "axios";
-import { BusinessErrorType, responseErrorTest } from "@/utils/ApiResponse.js";
+import { BusinessErrorType, responseErrorTest } from "../utils/ResponseErrorUtils";
 
 export default {
   mounted() {},
@@ -36,7 +36,7 @@ export default {
     async loginBtnClick() {
       let result;
       try {
-        result = await axios.post("/api/users/login", {
+        result = await axios.post("/api/login", {
           username: this.username,
           password: this.password,
         });
@@ -52,7 +52,7 @@ export default {
       }
       const token = result.data;
       localStorage.setItem("JWT_TOKEN", token);
-      result = await axios.get("/api/users/whoami");
+      result = await axios.get("/api/whoami");
       const currentUser = result.data;
       const username = currentUser.username;
       sessionStorage.setItem("CURRENT_USERNAME", username);

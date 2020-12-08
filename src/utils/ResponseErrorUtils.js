@@ -1,5 +1,6 @@
 import { HttpStatus } from './HttpStatus.js'
 
+/** 业务异常枚举类 */
 class BusinessErrorType {
     /**
      * @param {string} type 错误类型
@@ -46,6 +47,7 @@ Object.freeze(BusinessErrorType);
 /**
  * 检查异常中是否包含了业务异常
  * @param {*} error Axios 抛出的异常
+ * @returns {boolean}
  */
 function containsBusinessError(error) {
     return error
