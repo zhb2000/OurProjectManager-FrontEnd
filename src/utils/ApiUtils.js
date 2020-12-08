@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { ProjectJson, UserJson } from './jsonmodel';
 
 const CURRENT_USERNAME_KEY = 'CURRENT_USERNAME';
 const JWT_TOKEN_KEY = 'JWT_TOKEN';
@@ -59,10 +60,52 @@ async function logoutAsync() {
     sessionStorage.removeItem(CURRENT_USERNAME_KEY);
 }
 
+/**
+ * 创建项目，并获取该项目的 JSON
+ * 
+ * @param {string} name 
+ * @param {string} description 
+ * @returns {Promise<ProjectJson>} 创建的项目
+ */
+async function createProjectAsync(name, description) {
+    const result = await axios.post('/api/projects', { name, description });
+    const project = result.data;
+    Object.setPrototypeOf(project, ProjectJson.prototype);
+    return project;
+}
+
+/**
+ * @param {string} username 
+ * @returns {Promise<UserJson>}
+ */
+async function getUserByNameAsync(username) {
+    const result = await axios.get('/api/users/' + username);
+    const user = result.data;
+    Object.setPrototypeOf(user, UserJson.prototype);
+    return user;
+}
+
+/**
+ * 获取用户参加的项目
+ * @param {string} username 
+ * @returns {Promise<ProjectJson[]>}
+ */
+async function getUserProjectsAsync(username) {
+    const result = await axios.get('/api/users/' + username + '/projects');
+    const projects = result.data;
+    for (let project of projects) {
+        Object.setPrototypeOf(project, ProjectJson.prototype);
+    }
+    return projects;
+}
+
 export {
     getCurrentUsernameAsync,
     loginAsync,
     logoutAsync,
+    createProjectAsync,
+    getUserByNameAsync,
+    getUserProjectsAsync,
     CURRENT_USERNAME_KEY,
     JWT_TOKEN_KEY
 }

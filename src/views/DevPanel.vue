@@ -8,8 +8,12 @@
       <li><router-link to="/login">Login</router-link></li>
       <li><router-link to="/signup">SignUp</router-link></li>
       <li><router-link to="/create-project">CreateProject</router-link></li>
+      <li><router-link to="/jump-to">JumpTo</router-link></li>
       <li>
         <router-link to="/users/Alice123">UserHome: Alice123</router-link>
+      </li>
+      <li>
+        <router-link to="/projects/14">project-14</router-link>
       </li>
     </ul>
     <h1>Dev</h1>

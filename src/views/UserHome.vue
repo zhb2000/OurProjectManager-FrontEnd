@@ -1,14 +1,17 @@
 <template>
   <div>
     <h1>UserHome</h1>
-    <p>page user: {{ $route.params.username }}</p>
+    <p>page user: {{ username }}</p>
     <p>current user: {{ currentUsername }}</p>
+    <div>is current: {{ isCurrentUser }}</div>
     <div><router-link to="/users/Bob">Bob</router-link></div>
     <div><router-link to="/users/Alice123">Alice123</router-link></div>
     <div>
-      <router-link to="./project">项目</router-link> |
-      <router-link to="./notification">通知</router-link> |
-      <router-link to="./setting">设置</router-link>
+      <router-link to="./overview">概览</router-link> |
+      <router-link to="./project" v-if="isCurrentUser">项目</router-link> |
+      <router-link to="./notification" v-if="isCurrentUser"> 通知 </router-link>
+      |
+      <router-link to="./setting" v-if="isCurrentUser">设置</router-link>
     </div>
     <router-view />
   </div>
@@ -20,18 +23,37 @@ import { getCurrentUsernameAsync } from "../utils/ApiUtils.js";
 export default {
   data() {
     return {
-      currentUsername: "noname",
+      /** @type {string} */
+      currentUsername: null,
     };
   },
-  async mounted() {
-    //TODO don't fetch data here
-    console.log("UserHome: mounted");
-    try {
-      this.currentUsername = await getCurrentUsernameAsync();
-    } catch (error) {
-      alert(error);
-      return;
-    }
+  computed: {
+    /** @returns {string} */
+    username() {
+      return this.$route.params.username;
+    },
+    isCurrentUser() {
+      return this.currentUsername && this.currentUsername === this.username;
+    },
+  },
+  watch: {
+    $route() {
+      this.pageChangedAsync();
+    },
+  },
+  created() {
+    this.pageChangedAsync();
+  },
+  methods: {
+    /** set current username */
+    async pageChangedAsync() {
+      try {
+        this.currentUsername = await getCurrentUsernameAsync();
+      } catch (error) {
+        console.log("get current username failed: " + error);
+        return;
+      }
+    },
   },
 };
 </script>

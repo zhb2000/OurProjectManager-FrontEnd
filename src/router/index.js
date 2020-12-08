@@ -10,6 +10,7 @@ import Login from '../views/Login.vue';
 import SignUp from '../views/SignUp.vue';
 import CreateProject from '../views/CreateProject.vue';
 import UserHome from '../views/UserHome.vue';
+import UserOverview from '../views/UserOverview.vue';
 import UserProject from '../views/UserProject.vue';
 import UserNotification from '../views/UserNotification.vue';
 import UserSetting from '../views/UserSetting.vue';
@@ -17,6 +18,7 @@ import ProjectHome from '../views/ProjectHome.vue';
 import ProjectTodo from '../views/ProjectTodo.vue';
 import ProjectMember from '../views/ProjectMember.vue';
 import ProjectSetting from '../views/ProjectSetting.vue';
+import JumpTo from '../views/JumpTo.vue';
 
 Vue.use(VueRouter);
 
@@ -65,14 +67,26 @@ const routes = [
     component: CreateProject,
     meta: { requiresLogin: true }
   },
+  //跳转到页面
+  {
+    path: '/jump-to',
+    name: 'JumpTo',
+    component: JumpTo,
+    meta: { requiresLogin: true }
+  },
   //用户主页
   {
     path: '/users/:username',
     name: 'UserHome',
     component: UserHome,
-    redirect: '/users/:username/project',
+    redirect: '/users/:username/overview',
     meta: { requiresLogin: true },
     children: [
+      {
+        path: 'overview',
+        name: 'UserOverview',
+        component: UserOverview
+      },
       {
         path: 'project',
         name: 'UserProject',

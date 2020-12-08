@@ -1,3 +1,5 @@
 <template>
-    <div>user setting</div>
+  <div>
+    <h2>user setting</h2>
+  </div>
 </template>

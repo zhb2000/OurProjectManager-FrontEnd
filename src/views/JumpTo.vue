@@ -2,11 +2,11 @@
   <div>
     <h1>SearchResult</h1>
     <div>
-      project id:<input v-bind="projectId" />
+      project id:<input v-model="projectId" />
       <button @click="goProjectBtnClick">go project</button>
     </div>
     <div>
-      username:<input v-bind="username" />
+      username:<input v-model="username" />
       <button @click="goUserBtnClick">go user</button>
     </div>
   </div>
