@@ -1,5 +1,8 @@
 import axios from 'axios';
 
+const CURRENT_USERNAME_KEY = 'CURRENT_USERNAME';
+const JWT_TOKEN_KEY = 'JWT_TOKEN';
+
 /**
  * 请求 /api/whoami 获取当前用户的 JSON
  */
@@ -15,9 +18,6 @@ async function getWhoamiUserAsync() {
 async function getWhoamiUsernameAsync() {
     return (await getWhoamiUserAsync()).username;
 }
-
-const CURRENT_USERNAME_KEY = 'CURRENT_USERNAME';
-const JWT_TOKEN_KEY = 'JWT_TOKEN';
 
 /**
  * 获取当前用户名
