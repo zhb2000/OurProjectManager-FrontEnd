@@ -1,5 +1,8 @@
+//Vue Router 路由配置
+
 import Vue from 'vue';
 import VueRouter from 'vue-router';
+import { JWT_TOKEN_KEY } from '../utils/ApiUtils';
 import HomeDemo from '../views/HomeDemo.vue';
 import MyHome from '../views/MyHome.vue';
 import DevPanel from '../views/DevPanel.vue';
@@ -72,14 +75,17 @@ const routes = [
     children: [
       {
         path: 'project',
+        name: 'UserProject',
         component: UserProject
       },
       {
         path: 'notification',
+        name: 'UserNotification',
         component: UserNotification
       },
       {
         path: 'setting',
+        name: 'UserSetting',
         component: UserSetting
       }
     ]
@@ -94,14 +100,17 @@ const routes = [
     children: [
       {
         path: 'todo',
+        name: 'ProjectTodo',
         component: ProjectTodo
       },
       {
         path: 'member',
+        name: 'ProjectMember',
         component: ProjectMember
       },
       {
         path: 'setting',
+        name: 'ProjectSetting',
         component: ProjectSetting
       }
     ]
@@ -115,8 +124,8 @@ const router = new VueRouter({
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresLogin)) {
-    if (!localStorage.getItem('JWT_TOKEN')) {
-      next({ name: 'Login' }); //未登录自动跳转到 Login
+    if (!localStorage.getItem(JWT_TOKEN_KEY)) {
+      next('/login'); //未登录自动跳转到 Login
     } else {
       next();
     }

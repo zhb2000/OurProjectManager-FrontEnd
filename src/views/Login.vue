@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h1>Login</h1>
     <div>
       username:
       <input name="username" autocomplete="username" v-model="username" />
@@ -20,8 +21,11 @@
 </template>
 
 <script>
-import axios from "axios";
-import { BusinessErrorType, responseErrorTest } from "../utils/ResponseErrorUtils";
+import {
+  BusinessErrorType as BusErrType,
+  responseErrorTest as errorTest,
+} from "../utils/ResponseErrorUtils";
+import { loginAsync } from "../utils/ApiUtils";
 
 export default {
   mounted() {},
@@ -34,29 +38,17 @@ export default {
   },
   methods: {
     async loginBtnClick() {
-      let result;
       try {
-        result = await axios.post("/api/login", {
-          username: this.username,
-          password: this.password,
-        });
+        await loginAsync(this.username, this.password);
       } catch (error) {
-        if (
-          responseErrorTest(error, BusinessErrorType.WRONG_PASSWORD_OR_USERNAME)
-        ) {
+        if (errorTest(error, BusErrType.WRONG_PASSWORD_OR_USERNAME)) {
           alert("用户名或密码不正确");
         } else {
           alert(error);
         }
         return;
       }
-      const token = result.data;
-      localStorage.setItem("JWT_TOKEN", token);
-      result = await axios.get("/api/whoami");
-      const currentUser = result.data;
-      const username = currentUser.username;
-      sessionStorage.setItem("CURRENT_USERNAME", username);
-      this.$router.push("/users/" + username);
+      this.$router.push("/users/" + this.username);
     },
   },
 };

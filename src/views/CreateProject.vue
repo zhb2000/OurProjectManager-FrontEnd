@@ -1,7 +1,8 @@
 <template>
   <div>
-    <div><input name="projectName" v-bind="projectName" /></div>
-    <div><input name="projectDescription" v-bind="projectDescription" /></div>
+    <h1>CreateProject</h1>
+    <div>项目名称：<input name="projectName" v-bind="projectName" /></div>
+    <div>项目描述：<input name="projectDescription" v-bind="projectDescription" /></div>
     <div><button @click="createBtnClick">创建项目</button></div>
   </div>
 </template>
@@ -18,6 +19,7 @@ export default {
   },
   methods: {
     async createBtnClick() {
+      //TODO string empty
       let result;
       try {
         result = await axios.post("/api/projects", {

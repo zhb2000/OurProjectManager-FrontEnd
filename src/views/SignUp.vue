@@ -1,5 +1,6 @@
 <template>
   <div>
+    <h1>SignUp</h1>
     <div>
       用户名：<input
         name="username"
@@ -33,8 +34,11 @@
 
 <script>
 import axios from "axios";
-import { BusinessErrorType, responseErrorTest } from "@/utils/ResponseErrorUtils.js";
-import { StringUtils } from "@/utils/StringUtils.js";
+import {
+  BusinessErrorType as BusErrType,
+  responseErrorTest as errorTest,
+} from "../utils/ResponseErrorUtils.js";
+import { StringUtils } from "../utils/StringUtils.js";
 
 export default {
   data() {
@@ -46,17 +50,19 @@ export default {
     };
   },
   methods: {
-    async signUpBtnClick() {
-      for (let s of [
+    /** 存在某个输入框是空的 */
+    someInputEmpty() {
+      return [
         this.username,
         this.nickname,
         this.password,
         this.confirmPassword,
-      ]) {
-        if (StringUtils.isEmpty(s)) {
-          alert("字段不能为空");
-          return;
-        }
+      ].some((s) => StringUtils.isEmpty(s));
+    },
+    async signUpBtnClick() {
+      if (this.someInputEmpty()) {
+        alert("字段不能为空");
+        return;
       }
       if (this.password !== this.confirmPassword) {
         alert("两次输入的密码不一致");
@@ -69,7 +75,7 @@ export default {
           password: this.password,
         });
       } catch (error) {
-        if (responseErrorTest(error, BusinessErrorType.USER_ALREADY_EXIST)) {
+        if (errorTest(error, BusErrType.USER_ALREADY_EXIST)) {
           alert("同名用户已存在");
         } else {
           alert(error);
@@ -77,7 +83,7 @@ export default {
         return;
       }
       alert("注册成功");
-      this.$router.go("/login");
+      this.$router.push("/login");
     },
   },
 };

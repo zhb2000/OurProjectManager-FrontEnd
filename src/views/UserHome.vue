@@ -6,9 +6,9 @@
     <div><router-link to="/users/Bob">Bob</router-link></div>
     <div><router-link to="/users/Alice123">Alice123</router-link></div>
     <div>
-      <router-link to="./project">project</router-link> |
-      <router-link to="./notification">notification</router-link> |
-      <router-link to="./setting">setting</router-link>
+      <router-link to="./project">项目</router-link> |
+      <router-link to="./notification">通知</router-link> |
+      <router-link to="./setting">设置</router-link>
     </div>
     <router-view />
   </div>

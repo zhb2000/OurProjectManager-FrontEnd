@@ -22,26 +22,31 @@
 </template>
 
 <script>
-import axios from "axios";
+import {
+  JWT_TOKEN_KEY,
+  CURRENT_USERNAME_KEY,
+  logoutAsync,
+} from "../utils/ApiUtils";
 
 export default {
   data() {
     return {
-      tokenStr: localStorage.getItem("JWT_TOKEN"),
-      userStr: sessionStorage.getItem("CURRENT_USERNAME"),
+      tokenStr: localStorage.getItem(JWT_TOKEN_KEY),
+      userStr: sessionStorage.getItem(CURRENT_USERNAME_KEY),
     };
   },
   methods: {
     showTokenBtnClick() {
-      this.tokenStr = localStorage.getItem("JWT_TOKEN");
+      this.tokenStr = localStorage.getItem(JWT_TOKEN_KEY);
     },
     showUserBtnClick() {
-      this.userStr = sessionStorage.getItem("CURRENT_USERNAME");
+      this.userStr = sessionStorage.getItem(CURRENT_USERNAME_KEY);
     },
     async logoutBtnClick() {
-      await axios.get("/api/logout");
-      localStorage.removeItem("JWT_TOKEN");
-      sessionStorage.removeItem("CURRENT_USERNAME");
+      await logoutAsync();
+      this.showTokenBtnClick();
+      this.showUserBtnClick();
+      alert("logout succeeded");
     },
   },
 };
