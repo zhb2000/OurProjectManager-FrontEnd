@@ -6,6 +6,14 @@ import DevPanel from '../views/DevPanel.vue';
 import Login from '../views/Login.vue';
 import SignUp from '../views/SignUp.vue';
 import CreateProject from '../views/CreateProject.vue';
+import UserHome from '../views/UserHome.vue';
+import UserProject from '../views/UserProject.vue';
+import UserNotification from '../views/UserNotification.vue';
+import UserSetting from '../views/UserSetting.vue';
+import ProjectHome from '../views/ProjectHome.vue';
+import ProjectTodo from '../views/ProjectTodo.vue';
+import ProjectMember from '../views/ProjectMember.vue';
+import ProjectSetting from '../views/ProjectSetting.vue';
 
 Vue.use(VueRouter);
 
@@ -53,6 +61,50 @@ const routes = [
     name: 'CreateProject',
     component: CreateProject,
     meta: { requiresLogin: true }
+  },
+  //用户主页
+  {
+    path: '/users/:username',
+    name: 'UserHome',
+    component: UserHome,
+    redirect: '/users/:username/project',
+    meta: { requiresLogin: true },
+    children: [
+      {
+        path: 'project',
+        component: UserProject
+      },
+      {
+        path: 'notification',
+        component: UserNotification
+      },
+      {
+        path: 'setting',
+        component: UserSetting
+      }
+    ]
+  },
+  //项目主页
+  {
+    path: '/projects/:projectId',
+    name: 'ProjectHome',
+    component: ProjectHome,
+    redirect: '/projects/:projectId/todo',
+    meta: { requiresLogin: true },
+    children: [
+      {
+        path: 'todo',
+        component: ProjectTodo
+      },
+      {
+        path: 'member',
+        component: ProjectMember
+      },
+      {
+        path: 'setting',
+        component: ProjectSetting
+      }
+    ]
   }
 ];
 

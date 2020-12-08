@@ -54,8 +54,9 @@ export default {
       localStorage.setItem("JWT_TOKEN", token);
       result = await axios.get("/api/users/whoami");
       const currentUser = result.data;
-      sessionStorage.setItem("CURRENT_USERNAME", currentUser.username);
-      this.$router.push("/");
+      const username = currentUser.username;
+      sessionStorage.setItem("CURRENT_USERNAME", username);
+      this.$router.push("/users/" + username);
     },
   },
 };
