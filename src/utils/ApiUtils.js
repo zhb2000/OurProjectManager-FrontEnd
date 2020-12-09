@@ -1,5 +1,12 @@
 import axios from 'axios';
-import { MemberJson, NotificationJson, ProjectJson, TaskJson, UserJson } from './jsonmodel';
+import {
+    InvitationJson,
+    MemberJson,
+    NotificationJson,
+    ProjectJson,
+    TaskJson,
+    UserJson
+} from './jsonmodel';
 
 const CURRENT_USERNAME_KEY = 'CURRENT_USERNAME';
 const JWT_TOKEN_KEY = 'JWT_TOKEN';
@@ -250,7 +257,6 @@ async function getTasksAsync(projectId) {
 }
 
 /**
- * 
  * @param {number | string} projectId 
  * @param {number | string} taskId 
  * @returns {Promise<TaskJson>}
@@ -260,6 +266,18 @@ async function getTaskAsync(projectId, taskId) {
     const task = result.data;
     Object.setPrototypeOf(task, TaskJson.prototype);
     return task;
+}
+
+/**
+ * @param {number|string} projectId 
+ */
+async function getInvitationsAsync(projectId) {
+    const result = await axios.get(`/api/projects/${projectId}/invitations`);
+    const invitations = result.data;
+    for (let invitation of invitations) {
+        Object.setPrototypeOf(invitation, InvitationJson.prototype);
+    }
+    return invitations;
 }
 
 export {
@@ -281,6 +299,7 @@ export {
     getProjectAsync,
     getTasksAsync,
     getTaskAsync,
+    getInvitationsAsync,
     CURRENT_USERNAME_KEY,
     JWT_TOKEN_KEY
 };
