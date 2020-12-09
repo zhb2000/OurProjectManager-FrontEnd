@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { MemberJson, NotificationJson, ProjectJson, UserJson } from './jsonmodel';
+import { MemberJson, NotificationJson, ProjectJson, TaskJson, UserJson } from './jsonmodel';
 
 const CURRENT_USERNAME_KEY = 'CURRENT_USERNAME';
 const JWT_TOKEN_KEY = 'JWT_TOKEN';
@@ -236,6 +236,32 @@ async function getProjectAsync(projectId) {
     return project;
 }
 
+/**
+ * @param {number | string} projectId 
+ * @returns {Promise<TaskJson[]>}
+ */
+async function getTasksAsync(projectId) {
+    const result = await axios.get(`/api/projects/${projectId}/tasks`);
+    const tasks = result.data;
+    for (let task of tasks) {
+        Object.setPrototypeOf(task, TaskJson.prototype);
+    }
+    return tasks;
+}
+
+/**
+ * 
+ * @param {number | string} projectId 
+ * @param {number | string} taskId 
+ * @returns {Promise<TaskJson>}
+ */
+async function getTaskAsync(projectId, taskId) {
+    const result = await axios.get(`/api/projects/${projectId}/tasks/${taskId}`);
+    const task = result.data;
+    Object.setPrototypeOf(task, TaskJson.prototype);
+    return task;
+}
+
 export {
     getCurrentUsernameAsync,
     getCurrentUserIdAsync,
@@ -253,6 +279,8 @@ export {
     getMembersAsync,
     getCurrentRoleAsync,
     getProjectAsync,
+    getTasksAsync,
+    getTaskAsync,
     CURRENT_USERNAME_KEY,
     JWT_TOKEN_KEY
-}
+};

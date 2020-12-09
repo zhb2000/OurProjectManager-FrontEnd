@@ -18,10 +18,6 @@
 <script>
 import { getCurrentRoleAsync } from "../utils/ApiUtils";
 import { MemberJson } from "../utils/jsonmodel";
-import {
-  responseErrorTest as errorTest,
-  BusinessErrorType as BusErrorType,
-} from "../utils/ResponseErrorUtils";
 
 export default {
   data() {
