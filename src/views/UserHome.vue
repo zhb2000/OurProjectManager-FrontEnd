@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { getCurrentUsernameAsync } from "../utils/ApiUtils.js";
+import { getCurrentUsernameAsync } from "../utils/ApiUtils";
 
 export default {
   data() {

@@ -49,8 +49,8 @@ export default {
   methods: {
     /** fetch user data */
     async pageChangedAsync() {
-      //console.log("user overview changed");
       try {
+        //console.log("user overview changed, page name: " + this.username);
         this.user = await getUserByNameAsync(this.username);
       } catch (error) {
         console.log("get user by name failed: " + error);

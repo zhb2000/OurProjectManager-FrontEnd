@@ -15,8 +15,10 @@ import UserProject from '../views/UserProject.vue';
 import UserNotification from '../views/UserNotification.vue';
 import UserSetting from '../views/UserSetting.vue';
 import ProjectHome from '../views/ProjectHome.vue';
-import ProjectTodo from '../views/ProjectTodo.vue';
+import ProjectOverview from '../views/ProjectOverview.vue';
+import ProjectTask from '../views/ProjectTask.vue';
 import ProjectMember from '../views/ProjectMember.vue';
+import ProjectInvitation from '../views/ProjectInvitation.vue';
 import ProjectSetting from '../views/ProjectSetting.vue';
 import JumpTo from '../views/JumpTo.vue';
 
@@ -109,18 +111,28 @@ const routes = [
     path: '/projects/:projectId',
     name: 'ProjectHome',
     component: ProjectHome,
-    redirect: '/projects/:projectId/todo',
+    redirect: '/projects/:projectId/overview',
     meta: { requiresLogin: true },
     children: [
       {
-        path: 'todo',
-        name: 'ProjectTodo',
-        component: ProjectTodo
+        path: 'overview',
+        name: 'ProjectOverview',
+        component: ProjectOverview
+      },
+      {
+        path: 'task',
+        name: 'ProjectTask',
+        component: ProjectTask
       },
       {
         path: 'member',
         name: 'ProjectMember',
         component: ProjectMember
+      },
+      {
+        path: 'invitation',
+        name: 'ProjectInvitation',
+        component: ProjectInvitation
       },
       {
         path: 'setting',

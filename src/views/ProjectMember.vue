@@ -1,3 +1,3 @@
 <template>
-    <div>project member</div>
+  <div><h2>project member</h2></div>
 </template>

@@ -1,20 +1,22 @@
 import axios from 'axios';
-import { NotificationJson, ProjectJson, UserJson } from './jsonmodel';
+import { MemberJson, NotificationJson, ProjectJson, UserJson } from './jsonmodel';
 
 const CURRENT_USERNAME_KEY = 'CURRENT_USERNAME';
 const JWT_TOKEN_KEY = 'JWT_TOKEN';
 
 /**
  * 请求 /api/whoami 获取当前用户的 JSON
+ * @returns {Promise<UserJson>}
  */
 async function getWhoamiUserAsync() {
     const result = await axios.get('/api/whoami');
-    return result.data;
+    const user = result.data;
+    Object.setPrototypeOf(user, UserJson.prototype);
+    return user;
 }
 
 /**
  * 请求 /api/whoami 获取当前用户的用户名
- * @returns {Promise<string>} 当前用户名
  */
 async function getWhoamiUsernameAsync() {
     return (await getWhoamiUserAsync()).username;
@@ -32,6 +34,14 @@ async function getCurrentUsernameAsync() {
         sessionStorage.setItem(CURRENT_USERNAME_KEY, currentUsername);
     }
     return currentUsername;
+}
+
+/**
+ * 获取当前用户 id
+ */
+
+async function getCurrentUserIdAsync() {
+    return (await getWhoamiUserAsync()).id;
 }
 
 /**
@@ -163,8 +173,57 @@ async function deleteUserAsync(username) {
     await axios.delete(`/api/users/${username}`);
 }
 
+/**
+ * 获取项目内成员列表
+ * @param {number | string} projectId 
+ * @returns {Promise<MemberJson[]>}
+ */
+async function getMembersAsync(projectId) {
+    const result = await axios.get(`/api/projects/${projectId}/members`);
+    const members = result.data;
+    for (let member of members) {
+        Object.setPrototypeOf(member, MemberJson.prototype);
+    }
+    return members;
+}
+
+/**
+ * 获取某用户在项目内的成员
+ * @param {number | string} projectId 
+ * @param {number | string} userId 
+ * @returns {Promise<MemberJson>}
+ */
+async function getMemberAsync(projectId, userId) {
+    const result = await axios.get(`/api/projects/${projectId}/members/${userId}`);
+    const member = result.data;
+    Object.setPrototypeOf(member, MemberJson.prototype);
+    return member;
+}
+
+/**
+ * 当前用户是否为项目成员
+ * @param {number | string} projectId 
+ * @returns {Promise<boolean>}
+ */
+async function getIsMemberAsync(projectId) {
+    const result = await axios.get(`/api/projects/${projectId}/ismember`);
+    return result.data;
+}
+
+/**
+ * @param {number | string} projectId 
+ * @returns {Promise<ProjectJson>}
+ */
+async function getProjectAsync(projectId) {
+    const result = await axios.get(`/api/projects/${projectId}`);
+    const project = result.data;
+    Object.setPrototypeOf(project, ProjectJson.prototype);
+    return project;
+}
+
 export {
     getCurrentUsernameAsync,
+    getCurrentUserIdAsync,
     loginAsync,
     logoutAsync,
     createProjectAsync,
@@ -176,6 +235,10 @@ export {
     updatePasswordAsync,
     deleteUserAsync,
     clearStorage,
+    getMemberAsync,
+    getMembersAsync,
+    getIsMemberAsync,
+    getProjectAsync,
     CURRENT_USERNAME_KEY,
     JWT_TOKEN_KEY
 }
