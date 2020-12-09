@@ -1,3 +1,4 @@
+// 用户参加的项目条目
 <template>
   <div>
     <div>project name: {{ project.name }}</div>
