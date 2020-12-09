@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { ProjectJson, UserJson } from './jsonmodel';
+import { NotificationJson, ProjectJson, UserJson } from './jsonmodel';
 
 const CURRENT_USERNAME_KEY = 'CURRENT_USERNAME';
 const JWT_TOKEN_KEY = 'JWT_TOKEN';
@@ -99,6 +99,34 @@ async function getUserProjectsAsync(username) {
     return projects;
 }
 
+/**
+ * 获取用户收到的通知
+ * @param {string} username 
+ * @returns {Promise<NotificationJson[]>}
+ */
+async function getRecvNotificationsAsync(username) {
+    const result = await axios.get('/api/users/' + username + '/recvNotifications');
+    const recvNotifications = result.data;
+    for (let notification of recvNotifications) {
+        Object.setPrototypeOf(notification, NotificationJson.prototype);
+    }
+    return recvNotifications;
+}
+
+/**
+ * 获取用户发送的通知
+ * @param {string} username 
+ * @returns {Promise<NotificationJson[]>}
+ */
+async function getSendNotificationsAsync(username) {
+    const result = await axios.get('/api/users/' + username + '/sendNotifications');
+    const sendNotifications = result.data;
+    for (let notification of sendNotifications) {
+        Object.setPrototypeOf(notification, NotificationJson.prototype);
+    }
+    return sendNotifications;
+}
+
 export {
     getCurrentUsernameAsync,
     loginAsync,
@@ -106,6 +134,8 @@ export {
     createProjectAsync,
     getUserByNameAsync,
     getUserProjectsAsync,
+    getRecvNotificationsAsync,
+    getSendNotificationsAsync,
     CURRENT_USERNAME_KEY,
     JWT_TOKEN_KEY
 }

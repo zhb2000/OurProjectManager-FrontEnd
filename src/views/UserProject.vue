@@ -1,3 +1,4 @@
+// 用户项目页面
 <template>
   <div>
     <h2>user project</h2>
@@ -39,7 +40,12 @@ export default {
     /** fetch user's projects */
     async pageChangedAsync() {
       this.projects = [];
-      this.projects = await getUserProjectsAsync(this.username);
+      try {
+        this.projects = await getUserProjectsAsync(this.username);
+      } catch (error) {
+        console.log("Get user projects failed: " + error);
+        return;
+      }
     },
   },
   components: {

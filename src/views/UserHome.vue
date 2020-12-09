@@ -1,3 +1,4 @@
+// 用户主页
 <template>
   <div>
     <h1>UserHome</h1>
@@ -50,7 +51,7 @@ export default {
       try {
         this.currentUsername = await getCurrentUsernameAsync();
       } catch (error) {
-        console.log("get current username failed: " + error);
+        console.log("Get current username failed: " + error);
         return;
       }
     },
