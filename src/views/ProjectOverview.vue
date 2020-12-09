@@ -49,6 +49,8 @@ export default {
     /** fetch project data */
     async pageChangedAsync() {
       try {
+        this.currentRole = null;
+        this.project = null;
         const promises = [
           getCurrentRoleAsync(this.projectId),
           getProjectAsync(this.projectId),

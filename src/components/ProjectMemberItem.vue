@@ -2,6 +2,11 @@
 <template>
   <div>
     <div>current role: {{ currentRole }}</div>
+    <div>
+      <router-link :to="userPath">
+        <b>{{ member.user.username }}</b>
+      </router-link>
+    </div>
     <div>member: {{ member }}</div>
   </div>
 </template>
@@ -19,6 +24,11 @@ export default {
       type: String,
       required: true,
     },
+  },
+  data() {
+    return {
+      userPath: "/users/" + this.member.user.username,
+    };
   },
 };
 </script>

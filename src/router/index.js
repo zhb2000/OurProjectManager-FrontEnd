@@ -8,7 +8,6 @@ import MyHome from '../views/MyHome.vue';
 import DevPanel from '../views/DevPanel.vue';
 import Login from '../views/Login.vue';
 import SignUp from '../views/SignUp.vue';
-import CreateProject from '../views/CreateProject.vue';
 import UserHome from '../views/UserHome.vue';
 import UserOverview from '../views/UserOverview.vue';
 import UserProject from '../views/UserProject.vue';
@@ -20,6 +19,9 @@ import ProjectTask from '../views/ProjectTask.vue';
 import ProjectMember from '../views/ProjectMember.vue';
 import ProjectInvitation from '../views/ProjectInvitation.vue';
 import ProjectSetting from '../views/ProjectSetting.vue';
+import ProjectCreateTask from '../views/ProjectCreateTask.vue';
+import ProjectViewTask from '../views/ProjectViewTask.vue';
+import CreateProject from '../views/CreateProject.vue';
 import JumpTo from '../views/JumpTo.vue';
 
 Vue.use(VueRouter);
@@ -138,6 +140,16 @@ const routes = [
         path: 'setting',
         name: 'ProjectSetting',
         component: ProjectSetting
+      },
+      {
+        path: 'task/create',
+        name: 'ProjectCreateTask',
+        component: ProjectCreateTask
+      },
+      {
+        path: 'task/:taskId',
+        name: 'ProjectViewTask',
+        component: ProjectViewTask
       }
     ]
   }

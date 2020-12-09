@@ -280,6 +280,23 @@ async function getInvitationsAsync(projectId) {
     return invitations;
 }
 
+/**
+ * @param {number|string} projectId 
+ * @param {string} newName 
+ * @param {string} newDescription 
+ */
+async function updateProjectNameAndDescriptionAsync(projectId, newName, newDescription) {
+    await axios.patch(`/api/projects/${projectId}`,
+        { name: newName, description: newDescription });
+}
+
+/**
+ * @param {number|string} projectId 
+ */
+async function deleteProjectAsync(projectId) {
+    await axios.delete(`/api/projects/${projectId}`);
+}
+
 export {
     getCurrentUsernameAsync,
     getCurrentUserIdAsync,
@@ -300,6 +317,8 @@ export {
     getTasksAsync,
     getTaskAsync,
     getInvitationsAsync,
+    updateProjectNameAndDescriptionAsync,
+    deleteProjectAsync,
     CURRENT_USERNAME_KEY,
     JWT_TOKEN_KEY
 };

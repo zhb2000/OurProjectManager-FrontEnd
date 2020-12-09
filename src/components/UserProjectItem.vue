@@ -2,6 +2,9 @@
 <template>
   <div>
     <div>project name: {{ project.name }}</div>
+    <router-link :to="projectPath">
+      <b>{{ project.name }}</b>
+    </router-link>
     <div>project id: {{ project.id }}</div>
     <div>description: {{ project.description }}</div>
     <div>project: {{ project }}</div>
@@ -17,6 +20,11 @@ export default {
       type: ProjectJson,
       required: true,
     },
+  },
+  data() {
+    return {
+      projectPath: "/projects/" + this.project.id,
+    };
   },
 };
 </script>
