@@ -4,7 +4,6 @@
     <h1>ProjectHome</h1>
     <div>project id: {{ projectId }}</div>
     <div>current role: {{ currentRole }}</div>
-    <div>current user id: {{ currentUserId }}</div>
     <div>
       <router-link to="./overview">概览</router-link> |
       <router-link to="./task" v-if="isMember">任务</router-link> |
@@ -17,11 +16,7 @@
 </template>
 
 <script>
-import {
-  getCurrentUserIdAsync,
-  getMemberAsync,
-  getIsMemberAsync,
-} from "../utils/ApiUtils";
+import { getCurrentRoleAsync } from "../utils/ApiUtils";
 import { MemberJson } from "../utils/jsonmodel";
 import {
   responseErrorTest as errorTest,
@@ -33,8 +28,6 @@ export default {
     return {
       /** @type {string} */
       currentRole: null,
-      /** @type {number} */
-      currentUserId: null,
     };
   },
   computed: {
@@ -61,18 +54,12 @@ export default {
     this.pageChangedAsync();
   },
   methods: {
-    //get currend user id and current role in project
+    //get current current role in project
     async pageChangedAsync() {
       try {
-        this.currentUserId = await getCurrentUserIdAsync();
-        if (!(await getIsMemberAsync(this.projectId))) {
-          this.currentRole = null; //当前用户不是项目成员
-          return;
-        }
-        const member = await getMemberAsync(this.projectId, this.currentUserId);
-        this.currentRole = member.role;
+        this.currentRole = await getCurrentRoleAsync(this.projectId);
       } catch (error) {
-        console.log("Get member failed: " + error);
+        console.log("Get current role failed: " + error);
         return;
       }
     },

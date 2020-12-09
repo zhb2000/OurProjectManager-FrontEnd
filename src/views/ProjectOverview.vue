@@ -4,17 +4,20 @@
     <div>project id: {{ projectId }}</div>
     <div>project name: {{ projectName }}</div>
     <div>description: {{ description }}</div>
+    <div>current role: {{ currentRole }}</div>
     <div>project: {{ project }}</div>
   </div>
 </template>
 
 <script>
-import { getProjectAsync } from "../utils/ApiUtils";
+import { getCurrentRoleAsync, getProjectAsync } from "../utils/ApiUtils";
 import { ProjectJson } from "../utils/jsonmodel";
 
 export default {
   data() {
     return {
+      /** @type {string} */
+      currentRole: null,
       /** @type {ProjectJson} */
       project: null,
     };
@@ -45,9 +48,15 @@ export default {
     /** fetch project data */
     async pageChangedAsync() {
       try {
-        this.project = await getProjectAsync(this.projectId);
+        const promises = [
+          getCurrentRoleAsync(this.projectId),
+          getProjectAsync(this.projectId),
+        ];
+        const results = await Promise.all(promises);
+        this.currentRole = results[0];
+        this.project = results[1];
       } catch (error) {
-        console.log("get project by id failed: " + error);
+        console.log("get role or project failed: " + error);
         return;
       }
     },

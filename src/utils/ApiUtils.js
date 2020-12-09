@@ -211,6 +211,21 @@ async function getIsMemberAsync(projectId) {
 }
 
 /**
+ * 获取当前用户在项目内的角色
+ * @param {number | string} projectId
+ * @returns {Promise<string>} 若用户不在项目内则返回 null
+ */
+async function getCurrentRoleAsync(projectId) {
+    const isMember = await getIsMemberAsync(projectId);
+    if (!isMember) {
+        return null;
+    }
+    const currentUserId = await getCurrentUserIdAsync();
+    const member = await getMemberAsync(projectId, currentUserId);
+    return member.role;
+}
+
+/**
  * @param {number | string} projectId 
  * @returns {Promise<ProjectJson>}
  */
@@ -235,9 +250,8 @@ export {
     updatePasswordAsync,
     deleteUserAsync,
     clearStorage,
-    getMemberAsync,
     getMembersAsync,
-    getIsMemberAsync,
+    getCurrentRoleAsync,
     getProjectAsync,
     CURRENT_USERNAME_KEY,
     JWT_TOKEN_KEY
