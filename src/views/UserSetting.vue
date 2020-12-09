@@ -7,7 +7,7 @@
     <div><button @click="modifyNicknameBtnClick">修改昵称</button></div>
     <h3>修改用户名</h3>
     <div>当前用户名：{{ username }}</div>
-    <div>新用户名：<input v-model="newUsername" autocomplete="off" /></div>
+    <div>新用户名：<input v-model="newUsername" autocomplete="username" /></div>
     <div><button @click="modifyUsernameBtnClick">修改用户名</button></div>
     <h3>修改密码</h3>
     <div>
@@ -25,12 +25,25 @@
       />
     </div>
     <div><button @click="modifyPasswordBtnClick">修改密码</button></div>
+    <h3>注销账户</h3>
+    <div><button @click="deleteAccountBtnClick">注销账户</button></div>
   </div>
 </template>
 
 <script>
 import { UserJson } from "../utils/jsonmodel";
-import { getUserByNameAsync } from "../utils/ApiUtils";
+import {
+  getUserByNameAsync,
+  updateUsernameAndNicknameAsync,
+  updatePasswordAsync,
+  logoutAsync,
+  deleteUserAsync,
+  clearStorage,
+} from "../utils/ApiUtils";
+import {
+  responseErrorTest as errorTest,
+  BusinessErrorType as BusErrorType,
+} from "../utils/ResponseErrorUtils";
 
 export default {
   data() {
@@ -75,9 +88,69 @@ export default {
         return;
       }
     },
-    async modifyNicknameBtnClick() {},
-    async modifyUsernameBtnClick() {},
-    async modifyPasswordBtnClick() {},
+    async modifyNicknameBtnClick() {
+      try {
+        await updateUsernameAndNicknameAsync(
+          this.username,
+          this.username,
+          this.newNickname
+        );
+      } catch (error) {
+        console.log("Update nickname failed: " + error);
+        return;
+      }
+      alert("昵称更新成功");
+      this.$router.go(); //refresh
+    },
+    async modifyUsernameBtnClick() {
+      try {
+        await updateUsernameAndNicknameAsync(
+          this.username,
+          this.newUsername,
+          this.nickname
+        );
+        await logoutAsync();
+      } catch (error) {
+        if (errorTest(error, BusErrorType.USER_ALREADY_EXIST)) {
+          alert("同名用户已存在");
+        } else {
+          console.log("Update username failed: " + error);
+        }
+        return;
+      }
+      alert("用户名更新成功，请重新登录");
+      this.$router.push("/login");
+    },
+    async modifyPasswordBtnClick() {
+      try {
+        await updatePasswordAsync(
+          this.username,
+          this.oldPassword,
+          this.newPassword
+        );
+        await logoutAsync();
+      } catch (error) {
+        if (errorTest(error, BusErrorType.WRONG_OLD_PASSWORD)) {
+          alert("旧密码错误");
+        } else {
+          console.log("Update password failed: " + error);
+        }
+        return;
+      }
+      alert("密码更新成功，请重新登录");
+      this.$router.push("/login");
+    },
+    async deleteAccountBtnClick() {
+      try {
+        await deleteUserAsync(this.username);
+      } catch (error) {
+        console.log("Delete user account failed: " + error);
+        return;
+      }
+      clearStorage();
+      alert("用户账户删除成功");
+      this.$router.push("/login");
+    },
   },
 };
 </script>

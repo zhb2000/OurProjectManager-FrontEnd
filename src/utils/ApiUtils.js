@@ -50,14 +50,21 @@ async function loginAsync(username, password) {
 }
 
 /**
+ * 清除 local storage 和 session storage 中的字段
+ */
+function clearStorage() {
+    localStorage.removeItem(JWT_TOKEN_KEY);
+    sessionStorage.removeItem(CURRENT_USERNAME_KEY);
+}
+
+/**
  * 登出
  * 
  * 登出后会清除 local storage 和 session storage 中的字段
  */
 async function logoutAsync() {
     await axios.get("/api/logout");
-    localStorage.removeItem(JWT_TOKEN_KEY);
-    sessionStorage.removeItem(CURRENT_USERNAME_KEY);
+    clearStorage();
 }
 
 /**
@@ -79,7 +86,7 @@ async function createProjectAsync(name, description) {
  * @returns {Promise<UserJson>}
  */
 async function getUserByNameAsync(username) {
-    const result = await axios.get('/api/users/' + username);
+    const result = await axios.get(`/api/users/${username}`);
     const user = result.data;
     Object.setPrototypeOf(user, UserJson.prototype);
     return user;
@@ -91,7 +98,7 @@ async function getUserByNameAsync(username) {
  * @returns {Promise<ProjectJson[]>}
  */
 async function getUserProjectsAsync(username) {
-    const result = await axios.get('/api/users/' + username + '/projects');
+    const result = await axios.get(`/api/users/${username}/projects`);
     const projects = result.data;
     for (let project of projects) {
         Object.setPrototypeOf(project, ProjectJson.prototype);
@@ -105,7 +112,7 @@ async function getUserProjectsAsync(username) {
  * @returns {Promise<NotificationJson[]>}
  */
 async function getRecvNotificationsAsync(username) {
-    const result = await axios.get('/api/users/' + username + '/recvNotifications');
+    const result = await axios.get(`/api/users/${username}/recvNotifications`);
     const recvNotifications = result.data;
     for (let notification of recvNotifications) {
         Object.setPrototypeOf(notification, NotificationJson.prototype);
@@ -119,12 +126,41 @@ async function getRecvNotificationsAsync(username) {
  * @returns {Promise<NotificationJson[]>}
  */
 async function getSendNotificationsAsync(username) {
-    const result = await axios.get('/api/users/' + username + '/sendNotifications');
+    const result = await axios.get(`/api/users/${username}/sendNotifications`);
     const sendNotifications = result.data;
     for (let notification of sendNotifications) {
         Object.setPrototypeOf(notification, NotificationJson.prototype);
     }
     return sendNotifications;
+}
+
+/**
+ * 更新用户名和昵称
+ * @param {string} username 
+ * @param {string} newUsername 
+ * @param {string} newNickname 
+ */
+async function updateUsernameAndNicknameAsync(username, newUsername, newNickname) {
+    await axios.put(`/api/users/${username}`,
+        { username: newUsername, nickname: newNickname });
+}
+
+/**
+ * 更新密码
+ * @param {string} username 
+ * @param {string} oldPassword 
+ * @param {string} newPassword 
+ */
+async function updatePasswordAsync(username, oldPassword, newPassword) {
+    await axios.put(`/api/users/${username}/password`, { oldPassword, newPassword });
+}
+
+/**
+ * 注销用户账户
+ * @param {string} username 
+ */
+async function deleteUserAsync(username) {
+    await axios.delete(`/api/users/${username}`);
 }
 
 export {
@@ -136,6 +172,10 @@ export {
     getUserProjectsAsync,
     getRecvNotificationsAsync,
     getSendNotificationsAsync,
+    updateUsernameAndNicknameAsync,
+    updatePasswordAsync,
+    deleteUserAsync,
+    clearStorage,
     CURRENT_USERNAME_KEY,
     JWT_TOKEN_KEY
 }
