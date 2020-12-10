@@ -1,6 +1,12 @@
 <template>
   <div>
     <h2>Project Invitation</h2>
+    <div>
+      <div>
+        <input placeholder="接收者的用户名" v-model="receiverUsername" />
+      </div>
+      <div><button @click="sendInvitationBtnClick">发送邀请</button></div>
+    </div>
     <invitation-item
       v-for="invitation in invitations"
       :key="invitation.id"
@@ -11,8 +17,17 @@
 </template>
 
 <script>
-import { cancelInvitationAsync, getInvitationsAsync } from "../utils/ApiUtils";
+import {
+  cancelInvitationAsync,
+  createInvitationAsync,
+  getInvitationsAsync,
+  getUserByNameAsync,
+} from "../utils/ApiUtils";
 import { InvitationJson } from "../utils/jsonmodel";
+import {
+  responseErrorTest as errorTest,
+  BusinessErrorType as BusErrorType,
+} from "../utils/ResponseErrorUtils";
 import ProjectInvitationItem from "../components/ProjectInvitationItem.vue";
 
 export default {
@@ -20,6 +35,7 @@ export default {
     return {
       /** @type {InvitationJson[]} */
       invitations: [],
+      receiverUsername: "",
     };
   },
   computed: {
@@ -61,6 +77,31 @@ export default {
         }
       }
       alert("取消邀请成功");
+    },
+    async sendInvitationBtnClick() {
+      let receiver;
+      try {
+        receiver = await getUserByNameAsync(this.receiverUsername);
+      } catch (error) {
+        if (errorTest(error, BusErrorType.USER_NOT_FOUND)) {
+          alert("用户 " + this.receiverUsername + " 不存在");
+        } else {
+          console.log("Find receiver failed: " + error);
+        }
+        return;
+      }
+      try {
+        await createInvitationAsync(this.projectId, receiver);
+      } catch (error) {
+        if (errorTest(error, BusErrorType.RECEIVER_ALREADY_IN_PROJECT)) {
+          alert("用户 " + this.receiverUsername + " 已在项目中");
+        } else {
+          console.log("Send invitation failed: " + error);
+        }
+        return;
+      }
+      alert("邀请发送成功");
+      this.invitations = await getInvitationsAsync(this.projectId);
     },
   },
   components: {

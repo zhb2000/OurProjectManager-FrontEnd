@@ -323,6 +323,20 @@ async function rejectInvitationAsync(projectId, invitationId) {
 
 /**
  * @param {number|string} projectId 
+ * @param {UserJson} receiver 
+ * @returns {Promise<InvitationJson>}
+ */
+async function createInvitationAsync(projectId, receiver) {
+    const result = await axios.post(
+        `/api/projects/${projectId}/invitations`,
+        { receiver });
+    const invitation = result.data;
+    Object.setPrototypeOf(invitation, InvitationJson.prototype);
+    return invitation;
+}
+
+/**
+ * @param {number|string} projectId 
  * @param {string} newName 
  * @param {string} newDescription 
  */
@@ -416,6 +430,7 @@ export {
     cancelInvitationAsync,
     acceptInvitationAsync,
     rejectInvitationAsync,
+    createInvitationAsync,
     updateProjectNameAndDescriptionAsync,
     deleteProjectAsync,
     createTaskAsync,
