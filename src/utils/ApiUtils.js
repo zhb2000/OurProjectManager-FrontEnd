@@ -283,6 +283,46 @@ async function getInvitationsAsync(projectId) {
 
 /**
  * @param {number|string} projectId 
+ * @param {number|string} invitationId 
+ * @returns {Promise<InvitationJson>}
+ */
+async function getInvitationAsync(projectId, invitationId) {
+    const result = await axios.get(
+        `/api/projects/${projectId}/invitations/${invitationId}`);
+    const invitation = result.data;
+    Object.setPrototypeOf(invitation, InvitationJson.prototype);
+    return invitation;
+}
+
+/**
+ * @param {number|string} projectId 
+ * @param {number|string} invitationId 
+ */
+async function cancelInvitationAsync(projectId, invitationId) {
+    await axios.get(
+        `/api/projects/${projectId}/invitations/${invitationId}/cancel`);
+}
+
+/**
+ * @param {number|string} projectId 
+ * @param {number|string} invitationId 
+ */
+async function acceptInvitationAsync(projectId, invitationId) {
+    await axios.get(
+        `/api/projects/${projectId}/invitations/${invitationId}/accept`);
+}
+
+/**
+ * @param {number|string} projectId 
+ * @param {number|string} invitationId 
+ */
+async function rejectInvitationAsync(projectId, invitationId) {
+    await axios.get(
+        `/api/projects/${projectId}/invitations/${invitationId}/reject`);
+}
+
+/**
+ * @param {number|string} projectId 
  * @param {string} newName 
  * @param {string} newDescription 
  */
@@ -372,6 +412,10 @@ export {
     getTasksAsync,
     getTaskAsync,
     getInvitationsAsync,
+    getInvitationAsync,
+    cancelInvitationAsync,
+    acceptInvitationAsync,
+    rejectInvitationAsync,
     updateProjectNameAndDescriptionAsync,
     deleteProjectAsync,
     createTaskAsync,

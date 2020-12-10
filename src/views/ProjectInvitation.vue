@@ -4,13 +4,14 @@
     <invitation-item
       v-for="invitation in invitations"
       :key="invitation.id"
-      :invitaion="invitaion"
+      :invitation="invitation"
+      @cancel-invitation="cancelInvitationClick"
     />
   </div>
 </template>
 
 <script>
-import { getInvitationsAsync } from "../utils/ApiUtils";
+import { cancelInvitationAsync, getInvitationsAsync } from "../utils/ApiUtils";
 import { InvitationJson } from "../utils/jsonmodel";
 import ProjectInvitationItem from "../components/ProjectInvitationItem.vue";
 
@@ -44,6 +45,22 @@ export default {
         console.log("Get invitations failed: " + error);
         return;
       }
+    },
+    async cancelInvitationClick(invitaionId) {
+      try {
+        await cancelInvitationAsync(this.projectId, invitaionId);
+      } catch (error) {
+        console.log("Cancel invitation failed: " + error);
+        console.log(error.response);
+        return;
+      }
+      for (let invitaion of this.invitations) {
+        if (invitaion.id === invitaionId) {
+          invitaion.status = InvitationJson.STATUS_CANCELED;
+          break;
+        }
+      }
+      alert("取消邀请成功");
     },
   },
   components: {
