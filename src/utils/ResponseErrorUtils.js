@@ -12,35 +12,53 @@ class BusinessErrorType {
     }
 }
 /** 用户名或密码错误 */
-BusinessErrorType.WRONG_PASSWORD_OR_USERNAME = new BusinessErrorType("WrongPasswordOrUsername", HttpStatus.UNAUTHORIZED);
+BusinessErrorType.WRONG_PASSWORD_OR_USERNAME
+    = new BusinessErrorType("WrongPasswordOrUsername", HttpStatus.UNAUTHORIZED);
 /** 旧密码错误 */
-BusinessErrorType.WRONG_OLD_PASSWORD = new BusinessErrorType("WrongOldPassword", HttpStatus.FORBIDDEN);
+BusinessErrorType.WRONG_OLD_PASSWORD
+    = new BusinessErrorType("WrongOldPassword", HttpStatus.FORBIDDEN);
 /** 同名用户已存在 */
-BusinessErrorType.USER_ALREADY_EXIST = new BusinessErrorType("UserAlreadyExist", HttpStatus.CONFLICT);
+BusinessErrorType.USER_ALREADY_EXIST
+    = new BusinessErrorType("UserAlreadyExist", HttpStatus.CONFLICT);
 /** 用户不存在 */
-BusinessErrorType.USER_NOT_FOUND = new BusinessErrorType("UserNotFound", HttpStatus.NOT_FOUND);
+BusinessErrorType.USER_NOT_FOUND
+    = new BusinessErrorType("UserNotFound", HttpStatus.NOT_FOUND);
 /** 通知不存在 */
-BusinessErrorType.NOTIFICATION_NOT_FOUND = new BusinessErrorType("NotificationNotFound", HttpStatus.NOT_FOUND);
+BusinessErrorType.NOTIFICATION_NOT_FOUND
+    = new BusinessErrorType("NotificationNotFound", HttpStatus.NOT_FOUND);
 /** 未登录 */
-BusinessErrorType.NOT_LOGIN = new BusinessErrorType("NotLogin", HttpStatus.UNAUTHORIZED);
+BusinessErrorType.NOT_LOGIN
+    = new BusinessErrorType("NotLogin", HttpStatus.UNAUTHORIZED);
 /** 没有权限 */
-BusinessErrorType.PERMISSION_DENIED = new BusinessErrorType("PermissionDenied", HttpStatus.FORBIDDEN);
+BusinessErrorType.PERMISSION_DENIED
+    = new BusinessErrorType("PermissionDenied", HttpStatus.FORBIDDEN);
 /** 项目不存在 */
-BusinessErrorType.PROJECT_NOT_FOUND = new BusinessErrorType("ProjectNotFound", HttpStatus.NOT_FOUND);
+BusinessErrorType.PROJECT_NOT_FOUND
+    = new BusinessErrorType("ProjectNotFound", HttpStatus.NOT_FOUND);
 /** 任务不存在 */
-BusinessErrorType.TASK_NOT_FOUND = new BusinessErrorType("TaskNotFound", HttpStatus.NOT_FOUND);
+BusinessErrorType.TASK_NOT_FOUND
+    = new BusinessErrorType("TaskNotFound", HttpStatus.NOT_FOUND);
 /** 评论不存在 */
-BusinessErrorType.COMMENT_NOT_FOUND = new BusinessErrorType("CommentNotFound", HttpStatus.NOT_FOUND);
+BusinessErrorType.COMMENT_NOT_FOUND
+    = new BusinessErrorType("CommentNotFound", HttpStatus.NOT_FOUND);
 /** 成员不存在 */
-BusinessErrorType.MEMBER_NOT_FOUND = new BusinessErrorType("MemberNotFound", HttpStatus.NOT_FOUND);
+BusinessErrorType.MEMBER_NOT_FOUND
+    = new BusinessErrorType("MemberNotFound", HttpStatus.NOT_FOUND);
 /** 未知错误 */
-BusinessErrorType.UNKNOWN_ERROR = new BusinessErrorType("UnknownError", HttpStatus.INTERNAL_SERVER_ERROR);
+BusinessErrorType.UNKNOWN_ERROR
+    = new BusinessErrorType("UnknownError", HttpStatus.INTERNAL_SERVER_ERROR);
 /** 邀请不存在 */
-BusinessErrorType.INVITATION_NOT_FOUND = new BusinessErrorType("InvitationNotFound", HttpStatus.NOT_FOUND);
-/** 邀请已存在 */
-BusinessErrorType.INVITATION_ALREADY_EXIST = new BusinessErrorType("InvitationAlreadyExist", HttpStatus.CONFLICT);
+BusinessErrorType.INVITATION_NOT_FOUND
+    = new BusinessErrorType("InvitationNotFound", HttpStatus.NOT_FOUND);
 /** 邀请接收者已在项目中 */
-BusinessErrorType.RECEIVER_ALREADY_IN_PROJECT = new BusinessErrorType("ReceiverAlreadyInProject", HttpStatus.CONFLICT);
+BusinessErrorType.RECEIVER_ALREADY_IN_PROJECT
+    = new BusinessErrorType("ReceiverAlreadyInProject", HttpStatus.CONFLICT);
+/** 邀请已过期 */
+BusinessErrorType.INVITATION_EXPIRED
+    = new BusinessErrorType("InvitationExpired", HttpStatus.CONFLICT);
+/** 不是邀请的接收者 */
+BusinessErrorType.NOT_INVITATION_RECEIVER
+    = new BusinessErrorType("NotInvitationReceiver", HttpStatus.FORBIDDEN);
 
 Object.freeze(BusinessErrorType);
 
