@@ -153,6 +153,15 @@ async function getSendNotificationsAsync(username) {
 }
 
 /**
+ * @param {string} receiverUsername
+ * @param {string} title
+ * @param {string} body
+ */
+async function createNotificationAsync(receiverUsername, title, body) {
+    await axios.post(`/api/users/${receiverUsername}/notifications`, { title, body });
+}
+
+/**
  * 更新用户名和昵称
  * @param {string} username 
  * @param {string} newUsername 
@@ -416,6 +425,7 @@ export {
     getUserProjectsAsync,
     getRecvNotificationsAsync,
     getSendNotificationsAsync,
+    createNotificationAsync,
     updateUsernameAndNicknameAsync,
     updatePasswordAsync,
     deleteUserAsync,
