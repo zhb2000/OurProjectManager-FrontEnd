@@ -17,9 +17,9 @@
       </li>
     </ul>
     <h1>Dev</h1>
-    <button @click="logoutBtnClick">logout</button>
-    <button @click="showTokenBtnClick">show token</button>
-    <button @click="showUserBtnClick">show username</button>
+    <el-button @click="logoutBtnClick">logout</el-button>
+    <el-button @click="showTokenBtnClick">show token</el-button>
+    <el-button @click="showUserBtnClick">show username</el-button>
     <div>token: {{ tokenStr }}</div>
     <div>username: {{ userStr }}</div>
   </div>

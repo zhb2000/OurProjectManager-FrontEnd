@@ -78,25 +78,33 @@ export default {
           this.task = null;
           this.task = await getTaskAsync(this.projectId, this.taskId);
         };
-        const setCommentsAsync = async () => {
-          this.comments = [];
-          this.comments = await getCommentsAsync(this.projectId, this.taskId);
-        };
-        await Promise.all([setRoleAsync(), setTaskAsync(), setCommentsAsync()]);
+        await Promise.all([
+          setRoleAsync(),
+          setTaskAsync(),
+          this.setCommentsAsync(),
+        ]);
       } catch (error) {
         console.log("Get role or task or comments failed: " + error);
         return;
       }
     },
+    async setCommentsAsync() {
+      try {
+        this.comments = await getCommentsAsync(this.projectId, this.taskId);
+      } catch (error) {
+        console.log("Get comments failed: " + error);
+        return;
+      }
+    },
     async createCommentBtnClick() {
-      console.log("comment body: " + this.commentBody);
       if (StringUtils.isEmpty(this.commentBody)) {
         alert("评论内容不能为空");
         return;
       }
       try {
         await createCommentAsync(this.projectId, this.taskId, this.commentBody);
-        this.$router.go(); //refresh
+        this.commentBody = "";
+        await this.setCommentsAsync();
       } catch (error) {
         console.log("Create comment failed: " + error);
         return;
@@ -105,7 +113,7 @@ export default {
     async deleteCommentClick(commentId) {
       try {
         await deleteCommentsAsync(this.projectId, this.taskId, commentId);
-        this.$router.go();
+        await this.setCommentsAsync();
       } catch (error) {
         console.log("Delete comment failed: " + error);
         return;
