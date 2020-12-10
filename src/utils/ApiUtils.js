@@ -1,5 +1,6 @@
 import axios from 'axios';
 import {
+    CommentJson,
     InvitationJson,
     MemberJson,
     NotificationJson,
@@ -312,6 +313,45 @@ async function createTaskAsync(projectId, title, body, executors) {
     return task;
 }
 
+/**
+ * @param {number|string} projectId 
+ * @param {number|string} taskId 
+ * @returns {CommentJson[]}
+ */
+async function getCommentsAsync(projectId, taskId) {
+    const result = await axios.get(
+        `/api/projects/${projectId}/tasks/${taskId}/comments`);
+    const comments = result.data;
+    for (let comment of comments) {
+        Object.setPrototypeOf(comment, CommentJson.prototype);
+    }
+    return comments;
+}
+
+/**
+ * @param {number|string} projectId 
+ * @param {number|string} taskId 
+ * @param {string} body 
+ * @returns {Promise<CommentJson>}
+ */
+async function createCommentAsync(projectId, taskId, body) {
+    const result = await axios.post(
+        `/api/projects/${projectId}/tasks/${taskId}/comments`, { body });
+    const comment = result.data;
+    Object.setPrototypeOf(comment, CommentJson.prototype);
+    return comment;
+}
+
+/**
+ * @param {number|string} projectId 
+ * @param {number|string} taskId 
+ * @param {number|string} commentId 
+ */
+async function deleteCommentsAsync(projectId, taskId, commentId) {
+    await axios.delete(
+        `/api/projects/${projectId}/tasks/${taskId}/comments/${commentId}`);
+}
+
 export {
     getCurrentUsernameAsync,
     getCurrentUserIdAsync,
@@ -335,6 +375,9 @@ export {
     updateProjectNameAndDescriptionAsync,
     deleteProjectAsync,
     createTaskAsync,
+    getCommentsAsync,
+    createCommentAsync,
+    deleteCommentsAsync,
     CURRENT_USERNAME_KEY,
     JWT_TOKEN_KEY
 };

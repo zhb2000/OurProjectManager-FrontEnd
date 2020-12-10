@@ -4,7 +4,12 @@
     <div v-if="isAdmin">
       <router-link to="create" append><button>创建任务</button></router-link>
     </div>
-    <task-item v-for="task in tasks" :key="task.id" :task="task" />
+    <task-item
+      v-for="task in tasks"
+      :key="task.id"
+      :task="task"
+      :projectId="projectId"
+    />
   </div>
 </template>
 
@@ -46,15 +51,15 @@ export default {
     /** fetch tasks data */
     async pageChangedAsync() {
       try {
-        const setRole = async () => {
+        const setRoleAsync = async () => {
           this.currentRole = MemberJson.ROLE_MEMBER;
           this.currentRole = await getCurrentRoleAsync(this.projectId);
         };
-        const setTasks = async () => {
+        const setTasksAsync = async () => {
           this.tasks = [];
           this.tasks = await getTasksAsync(this.projectId);
         };
-        await Promise.all([setRole(), setTasks()]);
+        await Promise.all([setRoleAsync(), setTasksAsync()]);
       } catch (error) {
         console.log("Get role or tasks failed: " + error);
         return;
