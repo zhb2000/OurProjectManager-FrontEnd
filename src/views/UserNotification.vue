@@ -11,6 +11,7 @@
       v-for="recvItem in recvNotifications"
       :key="recvItem.id"
       :notification="recvItem"
+      @read-changed="itemReadClick"
     />
     <h3>send</h3>
     <send-item
@@ -27,6 +28,7 @@ import {
   createNotificationAsync,
   getRecvNotificationsAsync,
   getSendNotificationsAsync,
+  updateNotificationReadAsync,
 } from "../utils/ApiUtils";
 import {
   responseErrorTest as errorTest,
@@ -107,6 +109,23 @@ export default {
       alert("消息发送成功");
       this.receiverUsername = this.title = this.body = "";
       await this.setSendAsync();
+    },
+    async itemReadClick(notificationId) {
+      let index;
+      for (let i = 0; i < this.recvNotifications.length; i++) {
+        if (this.recvNotifications[i].id === notificationId) {
+          index = i;
+          break;
+        }
+      }
+      const read = !this.recvNotifications[index].read;
+      try {
+        await updateNotificationReadAsync(this.username, notificationId, read);
+      } catch (error) {
+        console.log("Update notification read failed: " + error);
+        return;
+      }
+      this.recvNotifications[index].read = read;
     },
   },
   components: {

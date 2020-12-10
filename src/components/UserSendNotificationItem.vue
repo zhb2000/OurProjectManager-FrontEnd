@@ -1,7 +1,7 @@
 // 用户发送通知条目
 <template>
   <div>
-    <div><em>send notification</em></div>
+    <div><b>send notification</b></div>
     <div>json: {{ notification }}</div>
   </div>
 </template>

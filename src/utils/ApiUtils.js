@@ -130,7 +130,7 @@ async function getUserProjectsAsync(username) {
  * @returns {Promise<NotificationJson[]>}
  */
 async function getRecvNotificationsAsync(username) {
-    const result = await axios.get(`/api/users/${username}/recvNotifications`);
+    const result = await axios.get(`/api/users/${username}/notifications/recv`);
     const recvNotifications = result.data;
     for (let notification of recvNotifications) {
         Object.setPrototypeOf(notification, NotificationJson.prototype);
@@ -144,7 +144,7 @@ async function getRecvNotificationsAsync(username) {
  * @returns {Promise<NotificationJson[]>}
  */
 async function getSendNotificationsAsync(username) {
-    const result = await axios.get(`/api/users/${username}/sendNotifications`);
+    const result = await axios.get(`/api/users/${username}/notifications/send`);
     const sendNotifications = result.data;
     for (let notification of sendNotifications) {
         Object.setPrototypeOf(notification, NotificationJson.prototype);
@@ -159,6 +159,15 @@ async function getSendNotificationsAsync(username) {
  */
 async function createNotificationAsync(receiverUsername, title, body) {
     await axios.post(`/api/users/${receiverUsername}/notifications`, { title, body });
+}
+
+/**
+ * @param {string} username 
+ * @param {number|string} notificationId 
+ * @param {boolean} read 
+ */
+async function updateNotificationReadAsync(username, notificationId, read) {
+    await axios.patch(`/api/users/${username}/notifications/${notificationId}`, { read });
 }
 
 /**
@@ -426,6 +435,7 @@ export {
     getRecvNotificationsAsync,
     getSendNotificationsAsync,
     createNotificationAsync,
+    updateNotificationReadAsync,
     updateUsernameAndNicknameAsync,
     updatePasswordAsync,
     deleteUserAsync,
