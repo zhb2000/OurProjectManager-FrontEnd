@@ -92,12 +92,12 @@ const routes = [
         component: UserOverview
       },
       {
-        path: 'project',
+        path: 'projects',
         name: 'UserProject',
         component: UserProject
       },
       {
-        path: 'notification',
+        path: 'notifications',
         name: 'UserNotification',
         component: UserNotification
       },
@@ -122,17 +122,17 @@ const routes = [
         component: ProjectOverview
       },
       {
-        path: 'task',
+        path: 'tasks',
         name: 'ProjectTask',
         component: ProjectTask
       },
       {
-        path: 'member',
+        path: 'members',
         name: 'ProjectMember',
         component: ProjectMember
       },
       {
-        path: 'invitation',
+        path: 'invitations',
         name: 'ProjectInvitation',
         component: ProjectInvitation
       },
@@ -142,12 +142,12 @@ const routes = [
         component: ProjectSetting
       },
       {
-        path: 'task/create',
+        path: 'tasks/create',
         name: 'ProjectCreateTask',
         component: ProjectCreateTask
       },
       {
-        path: 'task/:taskId',
+        path: 'tasks/:taskId',
         name: 'ProjectViewTask',
         component: ProjectViewTask
       }

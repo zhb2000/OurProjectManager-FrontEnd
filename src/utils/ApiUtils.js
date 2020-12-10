@@ -297,6 +297,21 @@ async function deleteProjectAsync(projectId) {
     await axios.delete(`/api/projects/${projectId}`);
 }
 
+/**
+ * @param {number|string} projectId 
+ * @param {string} title 
+ * @param {string} body 
+ * @param {UserJson[]} executors 
+ * @returns {TaskJson} 创建的任务
+ */
+async function createTaskAsync(projectId, title, body, executors) {
+    const result = await axios.post(`/api/projects/${projectId}/tasks`,
+        { title, body, executors });
+    const task = result.data;
+    Object.setPrototypeOf(task, TaskJson.prototype);
+    return task;
+}
+
 export {
     getCurrentUsernameAsync,
     getCurrentUserIdAsync,
@@ -319,6 +334,7 @@ export {
     getInvitationsAsync,
     updateProjectNameAndDescriptionAsync,
     deleteProjectAsync,
+    createTaskAsync,
     CURRENT_USERNAME_KEY,
     JWT_TOKEN_KEY
 };

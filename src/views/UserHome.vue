@@ -9,8 +9,8 @@
     <div><router-link to="/users/Alice123">Alice123</router-link></div>
     <div>
       <router-link to="./overview">概览</router-link> |
-      <router-link to="./project" v-if="isCurrentUser">项目</router-link> |
-      <router-link to="./notification" v-if="isCurrentUser"> 通知 </router-link>
+      <router-link to="./projects" v-if="isCurrentUser">项目</router-link> |
+      <router-link to="./notifications" v-if="isCurrentUser"> 通知 </router-link>
       |
       <router-link to="./setting" v-if="isCurrentUser">设置</router-link>
     </div>
