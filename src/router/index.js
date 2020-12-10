@@ -21,6 +21,7 @@ import ProjectInvitation from '../views/ProjectInvitation.vue';
 import ProjectSetting from '../views/ProjectSetting.vue';
 import ProjectCreateTask from '../views/ProjectCreateTask.vue';
 import ProjectViewTask from '../views/ProjectViewTask.vue';
+import InvitationView from '../views/InvitationView.vue';
 import CreateProject from '../views/CreateProject.vue';
 import JumpTo from '../views/JumpTo.vue';
 
@@ -152,6 +153,13 @@ const routes = [
         component: ProjectViewTask
       }
     ]
+  },
+  //邀请查看页面
+  {
+    path: '/projects/:projectId/invitations/:invitationId',
+    name: 'InvitationView',
+    component: InvitationView,
+    meta: { requiresLogin: true }
   }
 ];
 
