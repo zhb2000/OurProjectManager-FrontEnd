@@ -1,18 +1,53 @@
 // 项目主页
 <template>
-  <div>
-    <h1>ProjectHome</h1>
-    <div>project id: {{ projectId }}</div>
-    <div>current role: {{ currentRole }}</div>
-    <div>
-      <router-link :to="overviewPath">概览</router-link> |
-      <router-link :to="tasksPath" v-if="isMember">任务</router-link> |
-      <router-link :to="membersPath" v-if="isMember">成员</router-link> |
-      <router-link :to="invitationsPath" v-if="isAdmin">邀请</router-link> |
-      <router-link :to="settingPath" v-if="isAdmin">设置</router-link>
-    </div>
-    <router-view />
-  </div>
+  <el-container style="height: 100%">
+    <el-aside class="project-aside" width="250px">
+      <router-link
+        :to="overviewPath"
+        :class="[{ 'aside-item-active': isOverviewActive }, 'aside-item']"
+      >
+        <i class="el-icon-menu" />概览
+      </router-link>
+      <router-link
+        :to="tasksPath"
+        :class="[{ 'aside-item-active': isTasksActive }, 'aside-item']"
+        v-if="isMember"
+      >
+        <i class="el-icon-s-claim" />任务
+      </router-link>
+      <router-link
+        :to="membersPath"
+        :class="[{ 'aside-item-active': isMembersActive }, 'aside-item']"
+        v-if="isMember"
+      >
+        <i class="el-icon-user-solid" />成员
+      </router-link>
+      <router-link
+        :to="invitationsPath"
+        :class="[{ 'aside-item-active': isInvitationsActive }, 'aside-item']"
+        v-if="isAdmin"
+      >
+        <i class="el-icon-message" />邀请
+      </router-link>
+      <router-link
+        :to="settingPath"
+        :class="[{ 'aside-item-active': isSettingActive }, 'aside-item']"
+        v-if="isAdmin"
+      >
+        <i class="el-icon-s-tools" />设置
+      </router-link>
+    </el-aside>
+    <el-container>
+      <el-main>
+        <div>
+          <h1>ProjectHome</h1>
+          <div>project id: {{ projectId }}</div>
+          <div>current role: {{ currentRole }}</div>
+          <router-view />
+        </div>
+      </el-main>
+    </el-container>
+  </el-container>
 </template>
 
 <script>
@@ -58,6 +93,25 @@ export default {
     settingPath() {
       return this.projectHomePath + "/setting";
     },
+    isOverviewActive() {
+      return this.$route.name === "ProjectOverview";
+    },
+    isTasksActive() {
+      return (
+        this.$route.name === "ProjectTask" ||
+        this.$route.name === "ProjectCreateTask" ||
+        this.$route.name === "ProjectViewTask"
+      );
+    },
+    isMembersActive() {
+      return this.$route.name === "ProjectMember";
+    },
+    isInvitationsActive() {
+      return this.$route.name === "ProjectInvitation";
+    },
+    isSettingActive() {
+      return this.$route.name === "ProjectSetting";
+    },
   },
   watch: {
     $route() {
@@ -80,3 +134,39 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.project-aside {
+  border-style: solid;
+  border-color: lightgray;
+  border-width: 0 1px 0 0;
+}
+
+.aside-item {
+  display: block;
+  margin: 10px;
+  padding: 10px 16px;
+  border-radius: 5px;
+  color: #606266;
+  text-decoration: none;
+}
+
+.aside-item:hover {
+  background: #f6f8fa;
+  font-weight: bold;
+}
+
+.aside-item > i {
+  margin: 0 10px 0 0;
+}
+
+.aside-item-active {
+  font-weight: bold;
+  color: white;
+  background: #0366d6;
+}
+
+.aside-item-active:hover {
+  background: #0366d6;
+}
+</style>

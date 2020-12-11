@@ -81,6 +81,9 @@ export default {
   methods: {
     /** fetch user data */
     async pageChangedAsync() {
+      await this.setUserAsync();
+    },
+    async setUserAsync() {
       try {
         this.user = await getUserByNameAsync(this.username);
       } catch (error) {
@@ -96,11 +99,12 @@ export default {
           this.newNickname
         );
       } catch (error) {
+        this.$message({ message: "昵称更新失败", type: "error" });
         console.log("Update nickname failed: " + error);
         return;
       }
-      alert("昵称更新成功");
-      this.$router.go(); //refresh
+      this.$message({ message: "昵称更新成功", type: "success" });
+      await this.setUserAsync();
     },
     async modifyUsernameBtnClick() {
       try {
@@ -112,13 +116,14 @@ export default {
         await logoutAsync();
       } catch (error) {
         if (errorTest(error, BusErrorType.USER_ALREADY_EXIST)) {
-          alert("同名用户已存在");
+          this.$message({ message: "同名用户已存在", type: "error" });
         } else {
+          this.$message({ message: "用户名更新失败", type: "error" });
           console.log("Update username failed: " + error);
         }
         return;
       }
-      alert("用户名更新成功，请重新登录");
+      this.$alert("请重新登录", "用户名更新成功");
       this.$router.push("/login");
     },
     async modifyPasswordBtnClick() {
@@ -131,13 +136,13 @@ export default {
         await logoutAsync();
       } catch (error) {
         if (errorTest(error, BusErrorType.WRONG_OLD_PASSWORD)) {
-          alert("旧密码错误");
+          this.$message({ message: "旧密码错误", type: "error" });
         } else {
           console.log("Update password failed: " + error);
         }
         return;
       }
-      alert("密码更新成功，请重新登录");
+      this.$alert("请重新登录", "密码更新成功");
       this.$router.push("/login");
     },
     async deleteAccountBtnClick() {
@@ -148,7 +153,7 @@ export default {
         return;
       }
       clearStorage();
-      alert("用户账户删除成功");
+      this.$alert("请重新登录或注册", "用户账户删除成功");
       this.$router.push("/login");
     },
   },
