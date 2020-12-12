@@ -39,12 +39,12 @@
     </el-aside>
     <el-container>
       <el-main>
-        <div>
+        <!-- <div>
           <h1>ProjectHome</h1>
           <div>project id: {{ projectId }}</div>
           <div>current role: {{ currentRole }}</div>
-          <router-view />
-        </div>
+        </div> -->
+        <router-view />
       </el-main>
     </el-container>
   </el-container>

@@ -1,19 +1,50 @@
 <template>
   <div>
-    <h2>project setting</h2>
-    <h3>修改项目名称</h3>
+    <h2 class="setting-header">修改项目名称</h2>
     <div>当前名称：{{ projectName }}</div>
-    <div>新名称：<input v-model="newProjectName" autocomplete="off" /></div>
-    <div><button @click="updateNameBtnClick">修改项目名</button></div>
-    <h3>修改项目描述</h3>
+    <label for="new-project-name" class="setting-label">新项目名称</label>
+    <input
+      v-model="newProjectName"
+      name="new-project-name"
+      autocomplete="off"
+      class="setting-input"
+    />
+    <el-button
+      type="primary"
+      class="setting-button"
+      size="medium"
+      @click="updateNameBtnClick"
+    >
+      修改项目名
+    </el-button>
+    <h2 class="setting-header">修改项目描述</h2>
     <div>当前描述：{{ projectDescription }}</div>
-    <div>
-      新描述：<input v-model="newProjectDescription" autocomplete="off" />
-    </div>
-    <div><button @click="updateDescriptionBtnClick">修改项目描述</button></div>
+    <label for="new-description" class="setting-label">新项目描述</label>
+    <input
+      v-model="newProjectDescription"
+      name="new-description"
+      autocomplete="off"
+      class="setting-input"
+    />
+    <el-button
+      type="primary"
+      class="setting-button"
+      size="medium"
+      @click="updateDescriptionBtnClick"
+    >
+      修改项目描述
+    </el-button>
     <div v-if="isSuperAdmin">
-      <h3>删除项目</h3>
-      <div><button @click="DeleteProjectBtnClick">删除项目</button></div>
+      <h2 class="setting-header">删除项目</h2>
+      <p>警告：删除项目后数据将无法恢复。</p>
+      <el-button
+        type="danger"
+        class="setting-button"
+        size="medium"
+        @click="deleteProjectBtnClick"
+      >
+        删除项目
+      </el-button>
     </div>
   </div>
 </template>
@@ -67,18 +98,25 @@ export default {
   methods: {
     /** fetch project data */
     async pageChangedAsync() {
+      await Promise.all([this.setProjectAsync(), this.setRoleAsync()]);
+    },
+    async setProjectAsync() {
+      this.project = null;
       try {
-        this.currentRole = MemberJson.ROLE_ADMIN;
-        this.project = null;
-        const promises = [
-          getCurrentRoleAsync(this.projectId),
-          getProjectAsync(this.projectId),
-        ];
-        const results = await Promise.all(promises);
-        this.currentRole = results[0];
-        this.project = results[1];
+        this.project = await getProjectAsync(this.projectId);
       } catch (error) {
-        console.log("get role or project failed: " + error);
+        this.$message({ message: "获取项目信息失败", type: "error" });
+        console.log("Get project failed: " + error);
+        return;
+      }
+    },
+    async setRoleAsync() {
+      this.currentRole = MemberJson.ROLE_ADMIN;
+      try {
+        this.currentRole = await getCurrentRoleAsync(this.projectId);
+      } catch (error) {
+        this.$message({ message: "获取角色信息失败", type: "error" });
+        console.log("Get role failed: " + error);
         return;
       }
     },
@@ -90,11 +128,12 @@ export default {
           this.projectDescription
         );
       } catch (error) {
+        this.$message({ message: "项目名称更新失败", type: "error" });
         console.log("Update project name failed: " + error);
         return;
       }
-      alert("项目名称更新成功");
-      this.$router.go(); //refresh
+      this.$message({ message: "项目名称更新成功", type: "success" });
+      await this.setProjectAsync();
     },
     async updateDescriptionBtnClick() {
       try {
@@ -104,22 +143,75 @@ export default {
           this.newProjectDescription
         );
       } catch (error) {
-        console.log("Update project name failed: " + error);
+        this.$message({ message: "项目描述更新失败", type: "error" });
+        console.log("Update project description failed: " + error);
         return;
       }
-      alert("项目描述更新成功");
-      this.$router.go(); //refresh
+      this.$message({ message: "项目描述更新成功", type: "success" });
+      await this.setProjectAsync();
     },
-    async DeleteProjectBtnClick() {
+    async deleteProjectBtnClick() {
+      this.$confirm("删除项目后数据将无法恢复，是否继续？", "删除项目", {
+        confirmButtonText: "确认删除",
+        cancelButtonText: "取消",
+        type: "warning",
+      }).then(this.doDeleteAsync);
+    },
+    async doDeleteAsync() {
       try {
         await deleteProjectAsync(this.projectId);
       } catch (error) {
+        this.$message({ message: "删除项目失败", type: "error" });
         console.log("Delete project failed: " + error);
         return;
       }
-      alert("删除项目成功");
+      await this.$alert("删除项目成功", "删除项目成功");
       this.$router.push("/");
     },
   },
 };
 </script>
+
+<style scoped>
+.setting-header {
+  border-style: solid;
+  border-width: 0 0 1px 0;
+  border-color: #dcdfe6;
+  padding: 0 0 10px 0;
+}
+
+.setting-label {
+  display: block;
+  margin: 15px 0;
+  font-weight: bold;
+}
+
+.setting-button {
+  display: block;
+  margin: 15px 0 0 0;
+  border-radius: 6px;
+}
+
+.setting-input {
+  display: block;
+  width: 400px;
+  background: #fafbfc;
+  border-color: #dcdfe6;
+  border-radius: 6px;
+  border-style: solid;
+  border-width: 1px;
+  padding: 8px 12px;
+  font-size: 16px;
+  transition: 0.3s;
+}
+
+.setting-input:hover {
+  border-color: #409eff;
+}
+
+.setting-input:focus {
+  outline: none;
+  border-color: #409eff;
+  box-shadow: 0 0 5px #409eff;
+}
+</style>

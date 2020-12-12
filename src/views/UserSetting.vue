@@ -59,8 +59,8 @@
     >
       修改密码
     </el-button>
-    <h2 class="setting-header">注销账户</h2>
-    <p>警告：注销账户后所有数据都将无法恢复。</p>
+    <h2 class="setting-header">删除账户</h2>
+    <p>警告：删除账户后所有数据都将无法恢复。</p>
     <el-button
       type="danger"
       size="medium"
@@ -129,6 +129,7 @@ export default {
       try {
         this.user = await getUserByNameAsync(this.username);
       } catch (error) {
+        this.$message({ message: "获取用户信息失败", type: "error" });
         console.log("get user by name failed: " + error);
         return;
       }
@@ -193,7 +194,6 @@ export default {
         cancelButtonText: "取消",
         type: "warning",
       }).then(this.deleteAccountAsync);
-      return;
     },
     async deleteAccountAsync() {
       try {
