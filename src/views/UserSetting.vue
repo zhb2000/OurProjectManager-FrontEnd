@@ -1,15 +1,14 @@
 <template>
   <div>
-    <h2>user setting</h2>
-    <h3>修改昵称</h3>
+    <h2 class="setting-header">修改昵称</h2>
     <div>当前昵称：{{ nickname }}</div>
     <div>新昵称：<input v-model="newNickname" autocomplete="nickname" /></div>
-    <div><button @click="modifyNicknameBtnClick">修改昵称</button></div>
-    <h3>修改用户名</h3>
+    <div><el-button @click="modifyNicknameBtnClick">修改昵称</el-button></div>
+    <h2 class="setting-header">修改用户名</h2>
     <div>当前用户名：{{ username }}</div>
     <div>新用户名：<input v-model="newUsername" autocomplete="username" /></div>
-    <div><button @click="modifyUsernameBtnClick">修改用户名</button></div>
-    <h3>修改密码</h3>
+    <div><el-button @click="modifyUsernameBtnClick">修改用户名</el-button></div>
+    <h2 class="setting-header">修改密码</h2>
     <div>
       旧密码：<input
         type="password"
@@ -24,9 +23,14 @@
         v-model="newPassword"
       />
     </div>
-    <div><button @click="modifyPasswordBtnClick">修改密码</button></div>
-    <h3>注销账户</h3>
-    <div><button @click="deleteAccountBtnClick">注销账户</button></div>
+    <div><el-button @click="modifyPasswordBtnClick">修改密码</el-button></div>
+    <h2 class="setting-header">注销账户</h2>
+    <p>警告：注销账户后所有数据都将无法恢复。</p>
+    <div>
+      <el-button type="danger" @click="deleteAccountBtnClick">
+        注销账户
+      </el-button>
+    </div>
   </div>
 </template>
 
@@ -123,7 +127,7 @@ export default {
         }
         return;
       }
-      this.$alert("请重新登录", "用户名更新成功");
+      await this.$alert("请重新登录", "用户名更新成功");
       this.$router.push("/login");
     },
     async modifyPasswordBtnClick() {
@@ -142,10 +146,18 @@ export default {
         }
         return;
       }
-      this.$alert("请重新登录", "密码更新成功");
+      await this.$alert("请重新登录", "密码更新成功");
       this.$router.push("/login");
     },
     async deleteAccountBtnClick() {
+      this.$confirm("删除账户后数据将无法恢复，是否继续？", "删除账户", {
+        confirmButtonText: "确认删除",
+        cancelButtonText: "取消",
+        type: "warning",
+      }).then(this.deleteAccountAsync);
+      return;
+    },
+    async deleteAccountAsync() {
       try {
         await deleteUserAsync(this.username);
       } catch (error) {
@@ -153,9 +165,18 @@ export default {
         return;
       }
       clearStorage();
-      this.$alert("请重新登录或注册", "用户账户删除成功");
+      await this.$alert("请重新登录或注册", "用户账户删除成功");
       this.$router.push("/login");
     },
   },
 };
 </script>
+
+<style scoped>
+.setting-header {
+  border-style: solid;
+  border-width: 0 0 1px 0;
+  border-color: #dcdfe6;
+  padding: 0 0 10px 0;
+}
+</style>
