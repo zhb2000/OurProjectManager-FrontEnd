@@ -2,35 +2,73 @@
   <div>
     <h2 class="setting-header">修改昵称</h2>
     <div>当前昵称：{{ nickname }}</div>
-    <div>新昵称：<input v-model="newNickname" autocomplete="nickname" /></div>
-    <div><el-button @click="modifyNicknameBtnClick">修改昵称</el-button></div>
+    <label for="new-nickname" class="setting-label">新昵称</label>
+    <input
+      v-model="newNickname"
+      name="new-nickname"
+      autocomplete="nickname"
+      class="setting-input"
+    />
+    <el-button
+      type="primary"
+      class="setting-button"
+      size="medium"
+      @click="modifyNicknameBtnClick"
+    >
+      修改昵称
+    </el-button>
     <h2 class="setting-header">修改用户名</h2>
     <div>当前用户名：{{ username }}</div>
-    <div>新用户名：<input v-model="newUsername" autocomplete="username" /></div>
-    <div><el-button @click="modifyUsernameBtnClick">修改用户名</el-button></div>
+    <label for="new-username" class="setting-label">新用户名</label>
+    <input
+      v-model="newUsername"
+      name="new-username"
+      autocomplete="username"
+      class="setting-input"
+    />
+    <el-button
+      type="primary"
+      class="setting-button"
+      size="medium"
+      @click="modifyUsernameBtnClick"
+    >
+      修改用户名
+    </el-button>
     <h2 class="setting-header">修改密码</h2>
-    <div>
-      旧密码：<input
-        type="password"
-        autocomplete="current-password"
-        v-model="oldPassword"
-      />
-    </div>
-    <div>
-      新密码：<input
-        type="password"
-        autocomplete="new-password"
-        v-model="newPassword"
-      />
-    </div>
-    <div><el-button @click="modifyPasswordBtnClick">修改密码</el-button></div>
+    <label for="current-password" class="setting-label">旧密码</label>
+    <input
+      type="password"
+      name="current-password"
+      autocomplete="current-password"
+      v-model="oldPassword"
+      class="setting-input"
+    />
+    <label for="new-password" class="setting-label">新密码</label>
+    <input
+      type="password"
+      name="new-password"
+      autocomplete="new-password"
+      v-model="newPassword"
+      class="setting-input"
+    />
+    <el-button
+      type="primary"
+      size="medium"
+      class="setting-button"
+      @click="modifyPasswordBtnClick"
+    >
+      修改密码
+    </el-button>
     <h2 class="setting-header">注销账户</h2>
     <p>警告：注销账户后所有数据都将无法恢复。</p>
-    <div>
-      <el-button type="danger" @click="deleteAccountBtnClick">
-        注销账户
-      </el-button>
-    </div>
+    <el-button
+      type="danger"
+      size="medium"
+      class="setting-button"
+      @click="deleteAccountBtnClick"
+    >
+      注销账户
+    </el-button>
   </div>
 </template>
 
@@ -178,5 +216,40 @@ export default {
   border-width: 0 0 1px 0;
   border-color: #dcdfe6;
   padding: 0 0 10px 0;
+}
+
+.setting-label {
+  display: block;
+  margin: 15px 0;
+  font-weight: bold;
+}
+
+.setting-button {
+  display: block;
+  margin: 15px 0 0 0;
+  border-radius: 6px;
+}
+
+.setting-input {
+  display: block;
+  width: 400px;
+  background: #fafbfc;
+  border-color: #dcdfe6;
+  border-radius: 6px;
+  border-style: solid;
+  border-width: 1px;
+  padding: 8px 12px;
+  font-size: 16px;
+  transition: 0.3s;
+}
+
+.setting-input:hover {
+  border-color: #409eff;
+}
+
+.setting-input:focus {
+  outline: none;
+  border-color: #409eff;
+  box-shadow: 0 0 5px #409eff;
 }
 </style>
