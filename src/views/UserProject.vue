@@ -1,7 +1,7 @@
 // 用户项目页面
 <template>
   <div>
-    <h2>user project</h2>
+    <!-- <h2>user project</h2> -->
     <project-item
       v-for="project in projects"
       :key="project.id"
