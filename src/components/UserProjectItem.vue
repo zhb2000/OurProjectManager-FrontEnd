@@ -60,7 +60,7 @@ export default {
   border-width: 1px;
   border-color: #dcdfe6;
   border-radius: 10px;
-  padding: 20px;
+  padding: 20px 25px;
   margin: 16px 0;
 }
 
