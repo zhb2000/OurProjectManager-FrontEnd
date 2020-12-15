@@ -1,18 +1,23 @@
 <template>
   <div>
-    <h2>Project Invitation</h2>
-    <div>
-      <div>
-        <input placeholder="接收者的用户名" v-model="receiverUsername" />
-      </div>
-      <div><button @click="sendInvitationBtnClick">发送邀请</button></div>
+    <div class="input-area">
+      <input
+        class="user-input"
+        placeholder="收件人的用户名"
+        v-model="receiverUsername"
+      />
+      <el-button type="primary" size="medium" @click="sendInvitationBtnClick">
+        发送邀请
+      </el-button>
     </div>
-    <invitation-item
-      v-for="invitation in invitations"
-      :key="invitation.id"
-      :invitation="invitation"
-      @cancel-invitation="cancelInvitationClick"
-    />
+    <div class="invitation-grid">
+      <invitation-item
+        v-for="invitation in invitations"
+        :key="invitation.id"
+        :invitation="invitation"
+        @cancel-invitation="cancelInvitationClick"
+      />
+    </div>
   </div>
 </template>
 
@@ -55,9 +60,9 @@ export default {
   methods: {
     async pageChangedAsync() {
       try {
-        this.invitations = [];
         this.invitations = await getInvitationsAsync(this.projectId);
       } catch (error) {
+        this.$message({ message: "获取邀请失败", type: "error" });
         console.log("Get invitations failed: " + error);
         return;
       }
@@ -66,17 +71,12 @@ export default {
       try {
         await cancelInvitationAsync(this.projectId, invitaionId);
       } catch (error) {
+        this.$message({ message: "取消邀请失败", type: "error" });
         console.log("Cancel invitation failed: " + error);
-        console.log(error.response);
         return;
       }
-      for (let invitaion of this.invitations) {
-        if (invitaion.id === invitaionId) {
-          invitaion.status = InvitationJson.STATUS_CANCELED;
-          break;
-        }
-      }
-      alert("取消邀请成功");
+      this.$message({ message: "取消邀请成功", type: "success" });
+      this.invitations = await getInvitationsAsync(this.projectId);
     },
     async sendInvitationBtnClick() {
       let receiver;
@@ -84,7 +84,10 @@ export default {
         receiver = await getUserByNameAsync(this.receiverUsername);
       } catch (error) {
         if (errorTest(error, BusErrorType.USER_NOT_FOUND)) {
-          alert("用户 " + this.receiverUsername + " 不存在");
+          this.$message({
+            message: "用户 " + this.receiverUsername + " 不存在",
+            type: "error",
+          });
         } else {
           console.log("Find receiver failed: " + error);
         }
@@ -94,13 +97,16 @@ export default {
         await createInvitationAsync(this.projectId, receiver);
       } catch (error) {
         if (errorTest(error, BusErrorType.RECEIVER_ALREADY_IN_PROJECT)) {
-          alert("用户 " + this.receiverUsername + " 已在项目中");
+          this.$message({
+            message: "用户 " + this.receiverUsername + " 已在项目中",
+            type: "error",
+          });
         } else {
           console.log("Send invitation failed: " + error);
         }
         return;
       }
-      alert("邀请发送成功");
+      this.$message({ message: "邀请发送成功", type: "error" });
       this.invitations = await getInvitationsAsync(this.projectId);
     },
   },
@@ -109,3 +115,37 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.invitation-grid {
+  display: grid;
+  grid-template-columns: 50% 50%;
+}
+
+.input-area {
+  margin: 0 10px;
+}
+
+.user-input {
+  width: 400px;
+  margin-right: 10px;
+  background: #fafbfc;
+  border-color: #dcdfe6;
+  border-radius: 6px;
+  border-style: solid;
+  border-width: 1px;
+  padding: 8px 12px;
+  font-size: 16px;
+  transition: 0.3s;
+}
+
+.user-input:hover {
+  border-color: #409eff;
+}
+
+.user-input:focus {
+  outline: none;
+  border-color: #409eff;
+  box-shadow: 0 0 5px #409eff;
+}
+</style>

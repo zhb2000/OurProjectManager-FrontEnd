@@ -90,6 +90,5 @@ export default {
 .user-id{
   color: #909399;
   font-size: 14px;
-
 }
 </style>
