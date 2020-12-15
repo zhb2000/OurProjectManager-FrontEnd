@@ -1,13 +1,13 @@
 // 用户项目页面
 <template>
   <div>
-    <div>
+    <div class="input-container">
       <input
         v-model="searchWord"
         placeholder="搜索你的项目"
         class="search-input"
       />
-      <el-select v-model="filterValue">
+      <el-select v-model="filterValue" size="medium" class="input-select">
         <el-option
           v-for="option in filterOptions"
           :key="option.value"
@@ -15,7 +15,7 @@
           :value="option.value"
         />
       </el-select>
-      <el-select v-model="sortValue">
+      <el-select v-model="sortValue" size="medium" class="input-select">
         <el-option
           v-for="option in sortOptions"
           :key="option.value"
@@ -23,7 +23,9 @@
           :value="option.value"
         />
       </el-select>
-      <button><router-link to="/create-project">新建项目</router-link></button>
+      <router-link to="/create-project">
+        <el-button type="primary" size="medium">新建项目</el-button>
+      </router-link>
     </div>
     <project-item
       v-for="project in showedProjects"
@@ -155,6 +157,35 @@ export default {
 
 <style scoped>
 .search-input {
-  padding: 4px;
+  width: 400px;
+  margin-right: 10px;
+  background: #fafbfc;
+  border-color: #dcdfe6;
+  border-radius: 6px;
+  border-style: solid;
+  border-width: 1px;
+  padding: 8px 12px;
+  font-size: 16px;
+  transition: 0.3s;
+}
+
+.search-input:hover {
+  border-color: #409eff;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #409eff;
+  box-shadow: 0 0 5px #409eff;
+}
+
+.input-container {
+  display: flex;
+  align-content: center;
+}
+
+.input-select {
+  margin-right: 10px;
+  width: 150px;
 }
 </style>
