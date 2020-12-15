@@ -3,16 +3,16 @@
   <div class="invitation-card">
     <div class="line">
       <span class="attr-name">收件人：</span>
-      <router-link :to="recvPath" class="username">{{
-        recvUsername
-      }}</router-link>
+      <router-link :to="recvPath" class="username">
+        {{ recvUsername }}
+      </router-link>
       <span class="nickname">{{ recvNickname }}</span>
     </div>
     <div class="line">
       <span class="attr-name">发送者：</span>
-      <router-link :to="sendPath" class="username">{{
-        sendUsername
-      }}</router-link>
+      <router-link :to="sendPath" class="username">
+        {{ sendUsername }}
+      </router-link>
       <span class="nickname">{{ sendNickname }}</span>
     </div>
     <div class="line">
@@ -121,7 +121,7 @@ export default {
   border: solid 1px #dcdfe6;
   border-radius: 10px;
   padding: 10px 20px;
-  margin: 10px
+  margin: 10px;
 }
 
 .line {
