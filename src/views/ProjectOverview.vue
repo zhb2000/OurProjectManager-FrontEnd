@@ -25,13 +25,21 @@
         </div>
       </div>
     </div>
-    <div>project: {{ project }}</div>
+    <div class="admin-header">项目主管</div>
+    <div class="admin-grid"><admin-card :user="superAdmin" /></div>
+    <div v-if="showAdmins">
+      <div class="admin-header">项目管理员</div>
+      <div class="admin-grid">
+        <admin-card v-for="admin in admins" :key="admin.id" :user="admin" />
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import { getCurrentRoleAsync, getProjectAsync } from "../utils/ApiUtils";
 import { ProjectJson, UserJson, MemberJson } from "../utils/jsonmodel";
+import ProjectOverviewAdminCard from "../components/ProjectOverviewAdminCard.vue";
 
 export default {
   data() {
@@ -69,7 +77,7 @@ export default {
     },
     /** @returns {UserJson[]} */
     admins() {
-      return this.project ? this.project.superAdmin : null;
+      return this.project ? this.project.admins : [];
     },
     /** @type {string} */
     nameFirstChar() {
@@ -89,6 +97,9 @@ export default {
       } else {
         return "非项目成员";
       }
+    },
+    showAdmins() {
+      return this.admins && this.admins.length > 0;
     },
   },
   watch: {
@@ -117,6 +128,9 @@ export default {
         return;
       }
     },
+  },
+  components: {
+    "admin-card": ProjectOverviewAdminCard,
   },
 };
 </script>
@@ -156,5 +170,16 @@ export default {
 
 .info-right-col {
   line-height: 40px;
+}
+
+.admin-grid {
+  display: grid;
+  grid-template-columns: 50% 50%;
+}
+
+.admin-header {
+  margin: 0 20px;
+  font-weight: bold;
+  font-size: 25px;
 }
 </style>
