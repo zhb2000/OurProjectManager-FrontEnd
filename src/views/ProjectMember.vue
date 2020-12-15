@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h2>project member</h2>
     <member-item
       v-for="member in members"
       :key="member.userId"
@@ -62,3 +61,6 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+</style>

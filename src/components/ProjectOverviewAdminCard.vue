@@ -7,7 +7,7 @@
       <router-link :to="userPath" class="username">{{ username }}</router-link>
       <div>
         <span class="nickname">{{ nickname }}</span>
-        <span class="user-id">ID：{{ userId }}</span>
+        <span class="user-id">用户 ID：{{ userId }}</span>
       </div>
     </div>
   </div>
