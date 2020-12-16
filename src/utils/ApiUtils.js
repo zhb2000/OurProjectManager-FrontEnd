@@ -289,6 +289,7 @@ async function getTaskAsync(projectId, taskId) {
 
 /**
  * @param {number|string} projectId 
+ * @returns {Promise<InvitationJson[]>}
  */
 async function getInvitationsAsync(projectId) {
     const result = await axios.get(`/api/projects/${projectId}/invitations`);

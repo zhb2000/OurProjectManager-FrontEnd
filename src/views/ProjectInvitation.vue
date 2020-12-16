@@ -59,8 +59,13 @@ export default {
   },
   methods: {
     async pageChangedAsync() {
+      await this.setInvitationsAsync();
+    },
+    async setInvitationsAsync() {
       try {
-        this.invitations = await getInvitationsAsync(this.projectId);
+        const invitations = await getInvitationsAsync(this.projectId);
+        invitations.sort((a, b) => b.createAt.localeCompare(a.createAt));
+        this.invitations = invitations;
       } catch (error) {
         this.$message({ message: "获取邀请失败", type: "error" });
         console.log("Get invitations failed: " + error);
@@ -76,7 +81,7 @@ export default {
         return;
       }
       this.$message({ message: "取消邀请成功", type: "success" });
-      this.invitations = await getInvitationsAsync(this.projectId);
+      await this.setInvitationsAsync();
     },
     async sendInvitationBtnClick() {
       let receiver;
@@ -106,8 +111,8 @@ export default {
         }
         return;
       }
-      this.$message({ message: "邀请发送成功", type: "error" });
-      this.invitations = await getInvitationsAsync(this.projectId);
+      this.$message({ message: "邀请发送成功", type: "success" });
+      await this.setInvitationsAsync();
     },
   },
   components: {
@@ -123,7 +128,7 @@ export default {
 }
 
 .input-area {
-  margin: 0 10px;
+  margin: 0 10px 10px 10px;
 }
 
 .user-input {

@@ -9,7 +9,7 @@
     <h3>recv</h3>
     <recv-item
       v-for="recvItem in recvNotifications"
-      :key="recvItem.id"
+      :key="-recvItem.id"
       :notification="recvItem"
       @read-changed="itemReadClick"
     />
@@ -97,7 +97,7 @@ export default {
         return;
       }
       try {
-        await createNotificationAsync(this.receiverUsername, "title", "body"); //TODO
+        await createNotificationAsync(this.receiverUsername, this.title, this.body);
       } catch (error) {
         if (errorTest(error, BusErrorType.USER_NOT_FOUND)) {
           alert("用户 " + this.receiverUsername + " 不存在");
