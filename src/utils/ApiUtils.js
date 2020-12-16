@@ -252,6 +252,16 @@ async function getCurrentRoleAsync(projectId) {
 }
 
 /**
+ * 更新成员角色
+ * @param {number | string} projectId
+ * @param {MemberJson} member 
+ */
+async function updateMemberAsync(projectId, member) {
+    const userId = member.user.id;
+    await axios.patch(`/api/projects/${projectId}/members/${userId}`, member);
+}
+
+/**
  * @param {number | string} projectId 
  * @returns {Promise<ProjectJson>}
  */
@@ -442,6 +452,7 @@ export {
     deleteUserAsync,
     clearStorage,
     getMembersAsync,
+    updateMemberAsync,
     getCurrentRoleAsync,
     getProjectAsync,
     getTasksAsync,

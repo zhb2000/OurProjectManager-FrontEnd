@@ -5,18 +5,28 @@
       :key="member.userId"
       :member="member"
       :currentRole="currentRole"
+      :currentUsername="currentUsername"
+      @role-change="changeMemberRoleAsync"
+      @remove-member="removeMemberAsync"
     />
   </div>
 </template>
 
 <script>
-import { getCurrentRoleAsync, getMembersAsync } from "../utils/ApiUtils";
+import {
+  getCurrentRoleAsync,
+  getCurrentUsernameAsync,
+  getMembersAsync,
+  updateMemberAsync,
+} from "../utils/ApiUtils";
 import { MemberJson } from "../utils/jsonmodel";
 import ProjectMemberItem from "../components/ProjectMemberItem.vue";
 
 export default {
   data() {
     return {
+      /** @type {string} */
+      currentUsername: null,
       /** @type {string} */
       currentRole: MemberJson.ROLE_MEMBER,
       /** @type {MemberJson[]} */
@@ -40,20 +50,43 @@ export default {
   methods: {
     /** fetch members data */
     async pageChangedAsync() {
+      await Promise.all([this.setCurrentRoleAsync(), this.setMembersAsync()]);
+    },
+    async setCurrentRoleAsync() {
       try {
-        this.currentRole = MemberJson.ROLE_MEMBER;
-        this.members = [];
-        const promises = [
-          getCurrentRoleAsync(this.projectId),
-          getMembersAsync(this.projectId),
-        ];
-        const results = await Promise.all(promises);
-        this.currentRole = results[0];
-        this.members = results[1];
+        this.currentUsername = await getCurrentUsernameAsync();
+        this.currentRole = await getCurrentRoleAsync(this.projectId);
       } catch (error) {
-        console.log("get role or members failed: " + error);
+        this.$message({ message: "获取当前角色失败", type: "error" });
+        console.log("Get role failed: " + error);
         return;
       }
+    },
+    async setMembersAsync() {
+      try {
+        this.members = await getMembersAsync(this.projectId);
+      } catch (error) {
+        this.$message({ message: "获取成员列表失败", type: "error" });
+        console.log("Get members failed: " + error);
+        return;
+      }
+    },
+    async changeMemberRoleAsync(member, newRole) {
+      try {
+        member.role = newRole;
+        console.log("new role: " + member.role);
+        await updateMemberAsync(this.projectId, member);
+      } catch (error) {
+        this.$message({ message: "成员角色更新失败", type: "error" });
+        console.log("Update role failed: " + error);
+        await this.setMembersAsync();
+        return;
+      }
+      this.$message({ message: "成员权限更新成功", type: "success" });
+    },
+    async removeMemberAsync(member) {
+      //TODO 移除项目成员
+      alert("remove member");
     },
   },
   components: {

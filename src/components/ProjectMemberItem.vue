@@ -11,15 +11,19 @@
         <span class="join-at">加入时间：{{ joinAt }}</span>
       </div>
     </div>
-    <el-select v-model="roleValue">
-      <el-option
-        v-for="option in roleOptions"
-        :key="option.value"
-        :label="option.label"
-        :value="option.value"
-      />
-    </el-select>
-    <el-button type="danger">移出项目</el-button>
+    <div style="flex-grow: 1"/>
+    <div v-if="showManage">
+      <el-select v-model="roleValue" @change="roleSelectChange" class="role-select">
+        <el-option
+          v-for="option in roleOptions"
+          :key="option.value"
+          :label="option.label"
+          :value="option.value"
+        />
+      </el-select>
+      <el-button type="danger" @click="removeBtnClick"> 移出项目 </el-button>
+    </div>
+    <span v-if="!showManage" class="role-label">{{ roleStr }}</span>
   </div>
 </template>
 
@@ -36,8 +40,41 @@ export default {
       type: String,
       required: true,
     },
+    currentUsername: {
+      type: String,
+      required: true,
+    },
   },
   computed: {
+    currentIsAdmin() {
+      return (
+        this.currentRole === MemberJson.ROLE_ADMIN ||
+        this.currentRole === MemberJson.ROLE_SUPER_ADMIN
+      );
+    },
+    isLowerThanCurrent() {
+      function roleToInt(role) {
+        if (role === MemberJson.ROLE_MEMBER) {
+          return 1;
+        } else if (role === MemberJson.ROLE_ADMIN) {
+          return 2;
+        } else if (role === MemberJson.ROLE_SUPER_ADMIN) {
+          return 3;
+        } else {
+          return 0;
+        }
+      }
+      const itemInt = roleToInt(this.member.role);
+      const currentInt = roleToInt(this.currentRole);
+      return itemInt < currentInt;
+    },
+    showManage() {
+      return (
+        this.currentIsAdmin &&
+        this.isLowerThanCurrent &&
+        this.currentUsername !== this.username
+      );
+    },
     /** @returns {UserJson} */
     user() {
       return this.member.user;
@@ -61,6 +98,18 @@ export default {
     joinAt() {
       return this.member.joinAt;
     },
+    roleStr() {
+      const role = this.member.role;
+      if (role === MemberJson.ROLE_SUPER_ADMIN) {
+        return "项目主管";
+      } else if (role === MemberJson.ROLE_ADMIN) {
+        return "项目管理员";
+      } else if (role === MemberJson.ROLE_MEMBER) {
+        return "普通成员";
+      } else {
+        return "未知";
+      }
+    },
   },
   data() {
     return {
@@ -71,6 +120,14 @@ export default {
         { value: MemberJson.ROLE_MEMBER, label: "普通成员" },
       ],
     };
+  },
+  methods: {
+    roleSelectChange() {
+      this.$emit("role-change", this.member, this.roleValue);
+    },
+    removeBtnClick() {
+      this.$emit("remove-member", this.member);
+    },
   },
 };
 </script>
@@ -116,5 +173,18 @@ export default {
 .join-at {
   color: #909399;
   font-size: 14px;
+}
+
+.role-label{
+  padding: 8px;
+  border-radius: 10px;
+  color: white;
+  background-color:#909399;
+  font-size: 14px;
+}
+
+.role-select{
+  margin-right: 15px;
+  width: 150px;
 }
 </style>
