@@ -23,21 +23,42 @@
           :value="option.value"
         />
       </el-select>
-      <router-link to="/create-project">
-        <el-button type="primary" size="medium">新建项目</el-button>
-      </router-link>
+      <el-button type="primary" size="medium" @click="dialogVisible = true">
+        新建项目
+      </el-button>
     </div>
     <project-item
       v-for="project in showedProjects"
       :key="project.id"
       :project="project"
     />
+    <el-dialog title="创建项目" :visible.sync="dialogVisible">
+      <div class="attr-name">项目名称</div>
+      <input
+        class="create-input"
+        name="projectName"
+        v-model="projectName"
+        placeholder="项目名称"
+        autocomplete="off"
+      />
+      <div class="attr-name">项目描述</div>
+      <input
+        class="create-input"
+        name="projectDescription"
+        v-model="projectDescription"
+        placeholder="项目描述"
+        autocomplete="off"
+      />
+      <div class="create-btn-area">
+        <el-button type="primary" @click="createBtnClick">创建项目</el-button>
+      </div>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import { ProjectJson } from "../utils/jsonmodel";
-import { getUserProjectsAsync } from "../utils/ApiUtils";
+import { getUserProjectsAsync, createProjectAsync } from "../utils/ApiUtils";
 import UserProjectItem from "../components/UserProjectItem.vue";
 import { StringUtils } from "../utils/StringUtils";
 
@@ -59,6 +80,9 @@ export default {
         { value: "Name", label: "项目名称" },
       ],
       sortValue: "NearlyUpdate",
+      dialogVisible: false,
+      projectName: "",
+      projectDescription: "",
     };
   },
   computed: {
@@ -144,9 +168,30 @@ export default {
       try {
         this.projects = await getUserProjectsAsync(this.username);
       } catch (error) {
+        this.$message({ message: "获取项目失败", type: "error" });
         console.log("Get user projects failed: " + error);
         return;
       }
+    },
+    async createBtnClick() {
+      if (StringUtils.isEmpty(this.projectName)) {
+        this.$message({ message: "项目名称不能为空", type: "error" });
+        return;
+      }
+      let projectId;
+      try {
+        const project = await createProjectAsync(
+          this.projectName,
+          this.projectDescription
+        );
+        projectId = project.id;
+      } catch (error) {
+        this.$message({ message: "创建项目失败", type: "error" });
+        console.log("Create project failed: " + error);
+        return;
+      }
+      this.dialogVisible = false;
+      this.$router.push("/projects/" + projectId);
     },
   },
   components: {
@@ -187,5 +232,40 @@ export default {
 .input-select {
   margin-right: 10px;
   width: 150px;
+}
+
+.attr-name {
+  font-weight: bold;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.create-input {
+  width: 100%;
+  display: block;
+  margin-bottom: 10px;
+  background: #fafbfc;
+  border-color: #dcdfe6;
+  border-radius: 6px;
+  border-style: solid;
+  border-width: 1px;
+  padding: 8px 12px;
+  font-size: 16px;
+  transition: 0.3s;
+}
+
+.create-input:hover {
+  border-color: #409eff;
+}
+
+.create-input:focus {
+  outline: none;
+  border-color: #409eff;
+  box-shadow: 0 0 5px #409eff;
+}
+
+.create-btn-area {
+  display: flex;
+  justify-content: flex-end;
 }
 </style>
