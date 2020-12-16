@@ -11,7 +11,9 @@
       <span class="info">{{ createAt }}</span>
       <span class="attr-name">状态：</span>
       <span class="info">{{ statusStr }}</span>
-      <el-button size="mini" @click="readBtnClick">{{ readBtnText }}</el-button>
+      <el-button size="mini" :type="readBtnType" @click="readBtnClick">{{
+        readBtnText
+      }}</el-button>
     </div>
     <div class="body-area">
       <div>{{ body }}</div>
@@ -60,6 +62,9 @@ export default {
     readBtnText() {
       return this.read ? "标为未读" : "标为已读";
     },
+    readBtnType() {
+      return this.read ? null : "primary";
+    },
   },
   methods: {
     readBtnClick() {
@@ -74,7 +79,7 @@ export default {
   border: solid 1px #dcdfe6;
   border-radius: 10px;
   padding: 15px 25px;
-  margin: 10px;
+  margin-bottom: 15px;
 }
 
 .info-line {

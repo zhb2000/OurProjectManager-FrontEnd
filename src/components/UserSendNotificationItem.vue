@@ -62,7 +62,7 @@ export default {
   border: solid 1px #dcdfe6;
   border-radius: 10px;
   padding: 15px 25px;
-  margin: 10px;
+  margin-bottom: 15px;
 }
 
 .info-line {
