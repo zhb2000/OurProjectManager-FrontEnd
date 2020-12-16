@@ -25,7 +25,9 @@
 import {
   cancelInvitationAsync,
   createInvitationAsync,
+  createNotificationAsync,
   getInvitationsAsync,
+  getProjectAsync,
   getUserByNameAsync,
 } from "../utils/ApiUtils";
 import { InvitationJson } from "../utils/jsonmodel";
@@ -84,6 +86,7 @@ export default {
       await this.setInvitationsAsync();
     },
     async sendInvitationBtnClick() {
+      //获取收件人
       let receiver;
       try {
         receiver = await getUserByNameAsync(this.receiverUsername);
@@ -98,8 +101,10 @@ export default {
         }
         return;
       }
+      //发送邀请，并发送通知
+      let invitation;
       try {
-        await createInvitationAsync(this.projectId, receiver);
+        invitation = await createInvitationAsync(this.projectId, receiver);
       } catch (error) {
         if (errorTest(error, BusErrorType.RECEIVER_ALREADY_IN_PROJECT)) {
           this.$message({
@@ -113,6 +118,25 @@ export default {
       }
       this.$message({ message: "邀请发送成功", type: "success" });
       await this.setInvitationsAsync();
+      //发送消息给收件人
+      try {
+        const project = await getProjectAsync(this.projectId);
+        const invitationUrl =
+          "localhost:8081/projects/" +
+          this.projectId +
+          "/invitations/" +
+          invitation.id;
+        //TODO 这里直接生成了邀请的链接
+        await createNotificationAsync(
+          receiver.username,
+          "邀请你加入项目：" + project.name,
+          "邀请 ID：" + invitation.id + "，邀请链接：" + invitationUrl
+        );
+      } catch (error) {
+        this.$message({ message: "发送通知失败", type: "error" });
+        console.log("Send notification failed: " + error);
+        return;
+      }
     },
   },
   components: {
