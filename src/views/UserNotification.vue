@@ -208,7 +208,6 @@ export default {
 
 .send-btn-area {
   display: flex;
-
   justify-content: flex-end;
 }
 </style>
