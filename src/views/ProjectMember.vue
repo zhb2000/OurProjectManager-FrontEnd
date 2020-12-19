@@ -7,13 +7,14 @@
       :currentRole="currentRole"
       :currentUsername="currentUsername"
       @role-change="changeMemberRoleAsync"
-      @remove-member="removeMemberAsync"
+      @remove-member="removeBtnClick"
     />
   </div>
 </template>
 
 <script>
 import {
+  deleteMemberAsync,
   getCurrentRoleAsync,
   getCurrentUsernameAsync,
   getMembersAsync,
@@ -84,9 +85,37 @@ export default {
       }
       this.$message({ message: "成员权限更新成功", type: "success" });
     },
-    async removeMemberAsync(member) {
-      //TODO 移除项目成员
-      alert("remove member");
+    /** @param {MemberJson} member */
+    async removeBtnClick(member) {
+      if (confirm("是否将 " + member.user.username + " 移出项目？")) {
+        await this.doRemoveMemberAsync(member);
+      }
+      /*try {
+        await this.$confirm(
+          "是否将 " + member.user.username + " 移出项目？",
+          "移除成员",
+          {
+            confirmButtonText: "确认移除",
+            cancelButtonText: "取消",
+            type: "warning",
+          }
+        );
+        await this.doRemoveMemberAsync(member);
+      } catch (error) {
+        return;
+      }*/
+    },
+    /** @param {MemberJson} member */
+    async doRemoveMemberAsync(member) {
+      try {
+        await deleteMemberAsync(this.projectId, member.user.id);
+      } catch (error) {
+        this.$message({ message: "移除成员失败", type: "error" });
+        console.log("Remove member failed: " + error);
+        return;
+      }
+      this.$message({ message: "移除成员成功", type: "success" });
+      await this.setMembersAsync();
     },
   },
   components: {

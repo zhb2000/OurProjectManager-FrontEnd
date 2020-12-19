@@ -189,16 +189,29 @@ export default {
       this.$router.push("/login");
     },
     async deleteAccountBtnClick() {
-      this.$confirm("删除账户后数据将无法恢复，是否继续？", "删除账户", {
-        confirmButtonText: "确认删除",
-        cancelButtonText: "取消",
-        type: "warning",
-      }).then(this.deleteAccountAsync);
+      if (confirm("删除账户后数据将无法恢复，是否继续？")) {
+        await this.deleteAccountAsync();
+      }
+      /*try {
+        await this.$confirm(
+          "删除账户后数据将无法恢复，是否继续？",
+          "删除账户",
+          {
+            confirmButtonText: "确认删除",
+            cancelButtonText: "取消",
+            type: "warning",
+          }
+        );
+        await this.deleteAccountAsync();
+      } catch (error) {
+        return;
+      }*/
     },
     async deleteAccountAsync() {
       try {
         await deleteUserAsync(this.username);
       } catch (error) {
+        this.$message({ message: "删除账户失败", type: "error" });
         console.log("Delete user account failed: " + error);
         return;
       }

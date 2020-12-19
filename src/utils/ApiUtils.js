@@ -227,6 +227,15 @@ async function getMemberAsync(projectId, userId) {
 }
 
 /**
+ * 将某用户移出项目
+ * @param {number|string} projectId 
+ * @param {number|string} userId 
+ */
+async function deleteMemberAsync(projectId, userId) {
+    await axios.delete(`/api/projects/${projectId}/members/${userId}`);
+}
+
+/**
  * 当前用户是否为项目成员
  * @param {number | string} projectId 
  * @returns {Promise<boolean>}
@@ -453,6 +462,7 @@ export {
     clearStorage,
     getMembersAsync,
     updateMemberAsync,
+    deleteMemberAsync,
     getCurrentRoleAsync,
     getProjectAsync,
     getTasksAsync,

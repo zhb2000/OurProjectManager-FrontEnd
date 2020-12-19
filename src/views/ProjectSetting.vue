@@ -151,11 +151,23 @@ export default {
       await this.setProjectAsync();
     },
     async deleteProjectBtnClick() {
-      this.$confirm("删除项目后数据将无法恢复，是否继续？", "删除项目", {
-        confirmButtonText: "确认删除",
-        cancelButtonText: "取消",
-        type: "warning",
-      }).then(this.doDeleteAsync);
+      if (confirm("删除项目后数据将无法恢复，是否继续？")) {
+        await this.doDeleteAsync();
+      }
+      /*try {
+        await this.$confirm(
+          "删除项目后数据将无法恢复，是否继续？",
+          "删除项目",
+          {
+            confirmButtonText: "确认删除",
+            cancelButtonText: "取消",
+            type: "warning",
+          }
+        );
+        await this.doDeleteAsync();
+      } catch (error) {
+        return;
+      }*/
     },
     async doDeleteAsync() {
       try {
