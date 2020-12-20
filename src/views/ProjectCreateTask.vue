@@ -14,9 +14,9 @@
           v-model="body"
           placeholder="任务描述"
         />
-        <el-button class="create-btn" type="primary" @click="createBtnClick"
-          >创建任务</el-button
-        >
+        <el-button class="create-btn" type="primary" @click="createBtnClick">
+          创建任务
+        </el-button>
       </div>
       <div class="executor-area">
         <div class="executor-title">分配执行人</div>

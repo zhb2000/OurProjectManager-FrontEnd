@@ -144,7 +144,7 @@ export default {
   text-decoration: underline;
 }
 
-.username:focus {
+.username:active {
   color: #0366d6;
 }
 

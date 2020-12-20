@@ -303,7 +303,40 @@ async function getTaskAsync(projectId, taskId) {
     const result = await axios.get(`/api/projects/${projectId}/tasks/${taskId}`);
     const task = result.data;
     Object.setPrototypeOf(task, TaskJson.prototype);
+    if (task.executors) {
+        for (let executor of task.executors) {
+            Object.setPrototypeOf(executor, UserJson.prototype);
+        }
+    }
     return task;
+}
+
+/**
+ * 更新任务的标题、内容、执行人
+ * @param {number|string} projectId 
+ * @param {TaskJson} task 
+ */
+async function updateTaskAsync(projectId, task) {
+    const taskId = task.id;
+    await axios.put(`/api/projects/${projectId}/tasks/${taskId}`, task);
+}
+
+/**
+ * 更新任务的完成状态
+ * @param {number|string} projectId 
+ * @param {number|string} taskId 
+ * @param {boolean} complete 
+ */
+async function updateTaskCompleteAsync(projectId, taskId, complete) {
+    await axios.patch(`/api/projects/${projectId}/tasks/${taskId}`, { complete });
+}
+
+/**
+ * @param {number|string} projectId 
+ * @param {number|string} taskId 
+ */
+async function deleteTaskAsync(projectId, taskId) {
+    await axios.delete(`/api/projects/${projectId}/tasks/${taskId}`);
 }
 
 /**
@@ -467,6 +500,9 @@ export {
     getProjectAsync,
     getTasksAsync,
     getTaskAsync,
+    updateTaskAsync,
+    updateTaskCompleteAsync,
+    deleteTaskAsync,
     getInvitationsAsync,
     getInvitationAsync,
     cancelInvitationAsync,
