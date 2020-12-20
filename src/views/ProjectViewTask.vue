@@ -1,11 +1,18 @@
 // 任务详情页
 <template>
   <div>
-    <el-page-header @back="goBack" content="查看任务" />
+    <el-page-header @back="goBack" content="任务详情" />
+    <div class="title-area">
+      <span class="task-title">{{ taskTitle }}</span>
+      <div v-show="isComplete" class="complete-label">
+        <i class="el-icon-check" />
+        <span style="margin-left: 5px">已完成</span>
+      </div>
+    </div>
+    <!-- <el-divider /> -->
     <div class="view-task-grid">
       <div class="left-area">
-        <div>task: {{ task }}</div>
-        <div>currentRole: {{ currentRole }}</div>
+        <task-card :task="task" />
         <comment-item
           v-for="comment in comments"
           :key="comment.id"
@@ -13,6 +20,7 @@
           :showDelete="currentIsAdmin"
           @delete-comment="deleteCommentClick"
         />
+        <el-divider />
         <div class="write-comment-area">
           <div class="create-comment-title">发表评论</div>
           <textarea
@@ -115,6 +123,7 @@ import {
 import { StringUtils } from "../utils/StringUtils";
 import TaskCommentItem from "../components/TaskCommentItem.vue";
 import TaskExecutorItem from "../components/TaskExecutorItem.vue";
+import TaskViewCard from "../components/TaskViewCard.vue";
 
 export default {
   data() {
@@ -144,6 +153,9 @@ export default {
         this.currentRole === MemberJson.ROLE_SUPER_ADMIN
       );
     },
+    taskTitle() {
+      return this.task ? this.task.title : null;
+    },
     /** @returns {UserJson[]} */
     executors() {
       return this.task ? this.task.executors : [];
@@ -164,7 +176,7 @@ export default {
       return this.isComplete ? "success" : "primary";
     },
     completeBtnIcon() {
-      return this.isComplete ? "el-icon-check" : null;
+      return this.isComplete ? "el-icon-success" : null;
     },
     completeBtnPlain() {
       return !this.isComplete;
@@ -328,6 +340,7 @@ export default {
   components: {
     "comment-item": TaskCommentItem,
     "executor-item": TaskExecutorItem,
+    "task-card": TaskViewCard,
   },
 };
 </script>
@@ -337,6 +350,25 @@ export default {
   display: grid;
   grid-template-columns: 1fr 300px;
   margin-top: 20px;
+}
+
+.title-area {
+  margin-top: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.task-title {
+  font-size: 34px;
+  margin-right: 20px;
+}
+
+.complete-label {
+  background: #67c23a;
+  color: white;
+  padding: 5px 12px;
+  border-radius: 15px;
+  font-size: 14px;
 }
 
 .right-area {
