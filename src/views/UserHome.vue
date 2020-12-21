@@ -32,14 +32,6 @@
     </el-aside>
     <el-container>
       <el-main>
-        <!-- <div>
-          <h1>UserHome</h1>
-          <p>page user: {{ username }}</p>
-          <p>current user: {{ currentUsername }}</p>
-          <div>is current: {{ isCurrentUser }}</div>
-          <div><router-link to="/users/Bob">Bob</router-link></div>
-          <div><router-link to="/users/Alice123">Alice123</router-link></div>
-        </div> -->
         <router-view />
       </el-main>
     </el-container>
@@ -129,10 +121,12 @@ export default {
 .aside-item-active {
   font-weight: bold;
   color: white;
-  background: #0366d6;
+  /* background: #0366d6; */
+  background: #409eff;
 }
 
 .aside-item-active:hover {
-  background: #0366d6;
+  /* background: #0366d6; */
+  background: #409eff;
 }
 </style>

@@ -39,11 +39,6 @@
     </el-aside>
     <el-container>
       <el-main>
-        <!-- <div>
-          <h1>ProjectHome</h1>
-          <div>project id: {{ projectId }}</div>
-          <div>current role: {{ currentRole }}</div>
-        </div> -->
         <router-view />
       </el-main>
     </el-container>
@@ -163,10 +158,12 @@ export default {
 .aside-item-active {
   font-weight: bold;
   color: white;
-  background: #0366d6;
+  /* background: #0366d6; */
+  background: #409eff;
 }
 
 .aside-item-active:hover {
-  background: #0366d6;
+  /* background: #0366d6; */
+  background: #409eff;
 }
 </style>
