@@ -2,8 +2,7 @@
   <div id="app">
     <el-container id="app-container">
       <el-header id="app-header">
-        <div>header here</div>
-        <div><router-link to="/">go to root</router-link></div>
+        <header-bar />
       </el-header>
       <el-main id="app-main">
         <router-view />
@@ -11,6 +10,16 @@
     </el-container>
   </div>
 </template>
+
+<script>
+import AppHeaderBar from "./components/AppHeaderBar.vue";
+
+export default {
+  components: {
+    "header-bar": AppHeaderBar,
+  },
+};
+</script>
 
 <style>
 /**把网页的边界去掉 */
@@ -38,7 +47,7 @@ html {
 }
 
 #app-header {
-  background: lightblue;
+  padding: 0;
 }
 
 #app-container {
