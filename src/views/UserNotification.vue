@@ -1,9 +1,12 @@
 // 用户通知页面
 <template>
   <div>
-    <el-button type="primary" @click="dialogVisible = true"
-      >编写新消息</el-button
-    >
+    <div style="display: flex">
+      <div style="flex-grow: 1" />
+      <el-button type="primary" size="medium" @click="dialogVisible = true">
+        编写新消息
+      </el-button>
+    </div>
     <el-dialog title="编写新消息" :visible.sync="dialogVisible">
       <div>
         <input

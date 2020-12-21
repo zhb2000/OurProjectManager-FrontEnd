@@ -170,7 +170,7 @@ export default {
       return this.isComplete ? "已完成" : "未完成";
     },
     completeBtnStr() {
-      return this.isComplete ? "任务已完成" : "点击以完成任务";
+      return this.isComplete ? "已完成，点击取消" : "点击以完成任务";
     },
     completeBtnType() {
       return this.isComplete ? "success" : "primary";

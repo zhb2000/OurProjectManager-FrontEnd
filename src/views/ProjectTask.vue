@@ -1,20 +1,27 @@
 <template>
   <div>
-    <h2>project task</h2>
-    <div v-if="isAdmin">
-      <router-link to="create" append><button>创建任务</button></router-link>
+    <div v-if="isAdmin" class="input-area">
+      <div style="flex-grow: 1" />
+      <router-link to="create" append>
+        <el-button type="primary" size="medium">创建任务</el-button>
+      </router-link>
     </div>
     <task-item
       v-for="task in tasks"
       :key="task.id"
       :task="task"
       :projectId="projectId"
+      @complete-change="taskCompleteChange"
     />
   </div>
 </template>
 
 <script>
-import { getCurrentRoleAsync, getTasksAsync } from "../utils/ApiUtils";
+import {
+  getCurrentRoleAsync,
+  getTasksAsync,
+  updateTaskCompleteAsync,
+} from "../utils/ApiUtils";
 import { TaskJson, MemberJson } from "../utils/jsonmodel";
 import ProjectTaskItem from "../components/ProjectTaskItem.vue";
 
@@ -55,13 +62,31 @@ export default {
           this.currentRole = MemberJson.ROLE_MEMBER;
           this.currentRole = await getCurrentRoleAsync(this.projectId);
         };
-        const setTasksAsync = async () => {
-          this.tasks = [];
-          this.tasks = await getTasksAsync(this.projectId);
-        };
-        await Promise.all([setRoleAsync(), setTasksAsync()]);
+        await Promise.all([setRoleAsync(), this.setTasksAsync()]);
       } catch (error) {
-        console.log("Get role or tasks failed: " + error);
+        this.$message({ message: "角色获取失败", type: "error" });
+        console.log("Get role failed: " + error);
+        return;
+      }
+    },
+    async setTasksAsync() {
+      try {
+        this.tasks = await getTasksAsync(this.projectId);
+        this.tasks.sort((a, b) => b.createAt.localeCompare(a));
+      } catch (error) {
+        this.$message({ message: "任务获取失败", type: "error" });
+        console.log("Get tasks failed: " + error);
+        return;
+      }
+    },
+    /** @param {TaskJson} task */
+    async taskCompleteChange(task) {
+      try {
+        await updateTaskCompleteAsync(this.projectId, task.id, task.complete);
+      } catch (error) {
+        this.$message({ message: "更新任务完成状态失败", type: "error" });
+        console.log("Update task complete failed: " + error);
+        task.complete = !task.complete;
         return;
       }
     },
@@ -71,3 +96,10 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.input-area {
+  display: flex;
+  margin-bottom: 15px;
+}
+</style>
