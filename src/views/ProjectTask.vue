@@ -72,7 +72,7 @@ export default {
     async setTasksAsync() {
       try {
         this.tasks = await getTasksAsync(this.projectId);
-        this.tasks.sort((a, b) => b.createAt.localeCompare(a));
+        this.tasks.sort((a, b) => b.createAt.localeCompare(a.createAt));
       } catch (error) {
         this.$message({ message: "任务获取失败", type: "error" });
         console.log("Get tasks failed: " + error);

@@ -5,7 +5,7 @@
     </router-link>
     <input class="search-input" placeholder="搜索或跳转" />
     <div style="flex-grow: 1" />
-    <router-link to="/">
+    <router-link to="/dev">
       <i class="el-icon-monitor header-icon" />
     </router-link>
     <router-link :to="userNotificationUrl()">

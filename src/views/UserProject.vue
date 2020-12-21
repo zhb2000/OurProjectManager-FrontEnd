@@ -214,6 +214,10 @@ export default {
   transition: 0.3s;
 }
 
+.search-input::placeholder {
+  color: #909399;
+}
+
 .search-input:hover {
   border-color: #409eff;
 }

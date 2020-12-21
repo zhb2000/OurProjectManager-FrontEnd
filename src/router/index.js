@@ -50,6 +50,10 @@ const routes = [
   },
   {
     path: '/',
+    redirect: '/login'
+  },
+  {
+    path: '/dev',
     name: 'DevPanel',
     component: DevPanel
   },
