@@ -1,6 +1,6 @@
 <template>
   <div class="header-bar">
-    <router-link :to="userHomeUrl()" class="header-logo-link">
+    <router-link :to="userHomeUrl" class="header-logo-link">
       <span class="header-logo">Our Project Manager</span>
     </router-link>
     <input class="search-input" placeholder="搜索或跳转" />
@@ -8,16 +8,18 @@
     <router-link to="/dev">
       <i class="el-icon-monitor header-icon" />
     </router-link>
-    <router-link :to="userNotificationUrl()">
+    <router-link :to="userNotificationUrl">
       <i class="el-icon-bell header-icon" />
     </router-link>
-    <router-link :to="userProjectUrl()">
+    <router-link :to="userProjectUrl">
       <i class="el-icon-plus header-icon" />
     </router-link>
-    <el-dropdown @command="dropDownSelect">
-      <router-link :to="userHomeUrl()">
-        <el-avatar size="small" icon="el-icon-user-solid" />
-      </router-link>
+    <el-dropdown trigger="click" @command="dropDownSelect">
+      <el-avatar
+        size="small"
+        icon="el-icon-user-solid"
+        style="cursor: pointer"
+      />
       <el-dropdown-menu slot="dropdown">
         <el-dropdown-item command="home">主页</el-dropdown-item>
         <el-dropdown-item command="projects">项目</el-dropdown-item>
@@ -30,35 +32,49 @@
 </template>
 
 <script>
-import { CURRENT_USERNAME_KEY, logoutAsync } from "../utils/ApiUtils";
+import { getCurrentUsernameAsync, logoutAsync } from "../utils/ApiUtils";
 
 export default {
-  methods: {
-    currentUsername() {
-      //TODO modify get username in header bar
-      return sessionStorage.getItem(CURRENT_USERNAME_KEY);
-    },
+  data() {
+    return {
+      currentUsername: null,
+    };
+  },
+  computed: {
     userHomeUrl() {
-      return "/users/" + this.currentUsername();
+      return "/users/" + this.currentUsername;
     },
     userNotificationUrl() {
-      return "/users/" + this.currentUsername() + "/notifications";
+      return "/users/" + this.currentUsername + "/notifications";
     },
     userProjectUrl() {
-      return "/users/" + this.currentUsername() + "/projects";
+      return "/users/" + this.currentUsername + "/projects";
     },
     userSettingUrl() {
-      return "/users/" + this.currentUsername() + "/setting";
+      return "/users/" + this.currentUsername + "/setting";
+    },
+  },
+  watch: {
+    $route() {
+      this.pageChangedAsync();
+    },
+  },
+  created() {
+    this.pageChangedAsync();
+  },
+  methods: {
+    async pageChangedAsync() {
+      this.currentUsername = await getCurrentUsernameAsync();
     },
     async dropDownSelect(cmd) {
       if (cmd === "home") {
-        this.$router.push(this.userHomeUrl());
+        this.$router.push(this.userHomeUrl);
       } else if (cmd === "projects") {
-        this.$router.push(this.userProjectUrl());
+        this.$router.push(this.userProjectUrl);
       } else if (cmd === "notifications") {
-        this.$router.push(this.userNotificationUrl());
+        this.$router.push(this.userNotificationUrl);
       } else if (cmd === "setting") {
-        this.$router.push(this.userSettingUrl());
+        this.$router.push(this.userSettingUrl);
       } else if (cmd == "logout") {
         await logoutAsync();
         this.$router.push("/login");
