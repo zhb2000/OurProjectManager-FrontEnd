@@ -23,6 +23,13 @@
         <i class="el-icon-user-solid" />成员
       </router-link>
       <router-link
+        :to="statisticPath"
+        :class="[{ 'aside-item-active': isStatisticActive }, 'aside-item']"
+        v-if="isMember"
+      >
+        <i class="el-icon-data-analysis" />统计
+      </router-link>
+      <router-link
         :to="invitationsPath"
         :class="[{ 'aside-item-active': isInvitationsActive }, 'aside-item']"
         v-if="isAdmin"
@@ -82,6 +89,9 @@ export default {
     membersPath() {
       return this.projectHomePath + "/members";
     },
+    statisticPath() {
+      return this.projectHomePath + "/statistic"
+    },
     invitationsPath() {
       return this.projectHomePath + "/invitations";
     },
@@ -100,6 +110,9 @@ export default {
     },
     isMembersActive() {
       return this.$route.name === "ProjectMember";
+    },
+    isStatisticActive() {
+      return this.$route.name === "ProjectStatistic";
     },
     isInvitationsActive() {
       return this.$route.name === "ProjectInvitation";

@@ -18,7 +18,8 @@
         />
       </div>
       <div class="card-lower">
-        {{ body }}
+        <!-- {{ body }} -->
+        <markdown-preview :initialValue="body" />
       </div>
     </div>
   </div>
@@ -26,6 +27,7 @@
 
 <script>
 import { CommentJson, UserJson } from "../utils/jsonmodel";
+import { MarkdownPreview } from "vue-meditor";
 
 export default {
   props: {
@@ -65,6 +67,9 @@ export default {
       this.$emit("delete-comment", this.comment.id);
     },
   },
+  components: {
+    MarkdownPreview,
+  },
 };
 </script>
 
@@ -91,7 +96,8 @@ export default {
 }
 
 .card-lower {
-  padding: 15px;
+  /* padding: 15px; */
+  padding: 8px 10px 0px 10px;
 }
 
 .user-url {

@@ -17,6 +17,7 @@ import ProjectHome from '../views/ProjectHome.vue';
 import ProjectOverview from '../views/ProjectOverview.vue';
 import ProjectTask from '../views/ProjectTask.vue';
 import ProjectMember from '../views/ProjectMember.vue';
+import ProjectStatistic from '../views/ProjectStatistic.vue';
 import ProjectInvitation from '../views/ProjectInvitation.vue';
 import ProjectSetting from '../views/ProjectSetting.vue';
 import ProjectCreateTask from '../views/ProjectCreateTask.vue';
@@ -135,6 +136,11 @@ const routes = [
         path: 'members',
         name: 'ProjectMember',
         component: ProjectMember
+      },
+      {
+        path: 'statistic',
+        name: 'ProjectStatistic',
+        component: ProjectStatistic
       },
       {
         path: 'invitations',

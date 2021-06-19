@@ -11,7 +11,8 @@
         <div style="flex-grow: 1" />
       </div>
       <div class="card-lower">
-        {{ body }}
+        <!-- {{ body }} -->
+        <markdown-preview :initialValue="body" />
       </div>
     </div>
   </div>
@@ -19,6 +20,7 @@
 
 <script>
 import { TaskJson } from "../utils/jsonmodel";
+import { MarkdownPreview } from "vue-meditor";
 
 export default {
   props: {
@@ -47,8 +49,11 @@ export default {
       return this.task ? this.task.createAt : null;
     },
     body() {
-      return this.task ? this.task.body : null;
+      return this.task ? this.task.body : "";
     },
+  },
+  components: {
+    MarkdownPreview,
   },
 };
 </script>
@@ -76,7 +81,8 @@ export default {
 }
 
 .card-lower {
-  padding: 15px;
+  /* padding: 15px; */
+  padding: 8px 10px 0px 10px;
 }
 
 .user-url {
