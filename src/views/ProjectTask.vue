@@ -23,6 +23,7 @@ import {
   getTasksAsync,
   updateTaskCompleteAsync,
 } from "../utils/ApiUtils";
+// eslint-disable-next-line no-unused-vars
 import { TaskJson, MemberJson } from "../utils/jsonmodel";
 import ProjectTaskItem from "../components/ProjectTaskItem.vue";
 

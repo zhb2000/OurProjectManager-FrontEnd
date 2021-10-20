@@ -38,6 +38,7 @@
 
 <script>
 import { getCurrentRoleAsync, getProjectAsync } from "../utils/ApiUtils";
+// eslint-disable-next-line no-unused-vars
 import { ProjectJson, UserJson, MemberJson } from "../utils/jsonmodel";
 import ProjectOverviewAdminCard from "../components/ProjectOverviewAdminCard.vue";
 

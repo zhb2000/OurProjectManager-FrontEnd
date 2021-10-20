@@ -3,30 +3,7 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import { JWT_TOKEN_KEY } from '../utils/ApiUtils';
-
-// import HomeDemo from '../views/HomeDemo.vue';
-// import MyHome from '../views/MyHome.vue';
-// import DevPanel from '../views/DevPanel.vue';
-// import Login from '../views/Login.vue';
-// import SignUp from '../views/SignUp.vue';
-// import UserHome from '../views/UserHome.vue';
-// import UserOverview from '../views/UserOverview.vue';
-// import UserProject from '../views/UserProject.vue';
-// import UserNotification from '../views/UserNotification.vue';
-// import UserSetting from '../views/UserSetting.vue';
-// import ProjectHome from '../views/ProjectHome.vue';
-// import ProjectOverview from '../views/ProjectOverview.vue';
-// import ProjectTask from '../views/ProjectTask.vue';
-// import ProjectMember from '../views/ProjectMember.vue';
-// import ProjectStatistic from '../views/ProjectStatistic.vue';
-// import ProjectInvitation from '../views/ProjectInvitation.vue';
-// import ProjectSetting from '../views/ProjectSetting.vue';
-// import ProjectCreateTask from '../views/ProjectCreateTask.vue';
-// import ProjectViewTask from '../views/ProjectViewTask.vue';
-// import InvitationView from '../views/InvitationView.vue';
-// import CreateProject from '../views/CreateProject.vue';
-// import JumpTo from '../views/JumpTo.vue';
-
+import { routerMode } from '../MyConfig';
 const HomeDemo = () => import('../views/HomeDemo.vue');
 const MyHome = () => import('../views/MyHome.vue');
 const DevPanel = () => import('../views/DevPanel.vue');
@@ -199,8 +176,7 @@ const routes = [
 
 const router = new VueRouter({
     routes,
-    //TODO hash mode / history mode
-    // mode: 'history'
+    mode: routerMode
 });
 
 router.beforeEach((to, from, next) => {

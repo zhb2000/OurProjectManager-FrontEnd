@@ -43,6 +43,7 @@
 
 <script>
 import { createTaskAsync, getUserByNameAsync } from "../utils/ApiUtils";
+// eslint-disable-next-line no-unused-vars
 import { UserJson } from "../utils/jsonmodel";
 import { StringUtils } from "../utils/StringUtils";
 import {

@@ -30,11 +30,13 @@ import {
   getProjectAsync,
   getUserByNameAsync,
 } from "../utils/ApiUtils";
+// eslint-disable-next-line no-unused-vars
 import { InvitationJson } from "../utils/jsonmodel";
 import {
   responseErrorTest as errorTest,
   BusinessErrorType as BusErrorType,
 } from "../utils/ResponseErrorUtils";
+import { projectUrlPrefix } from "../MyConfig";
 import ProjectInvitationItem from "../components/ProjectInvitationItem.vue";
 
 export default {
@@ -74,9 +76,9 @@ export default {
         return;
       }
     },
-    async cancelInvitationClick(invitaionId) {
+    async cancelInvitationClick(invitationId) {
       try {
-        await cancelInvitationAsync(this.projectId, invitaionId);
+        await cancelInvitationAsync(this.projectId, invitationId);
       } catch (error) {
         this.$message({ message: "取消邀请失败", type: "error" });
         console.log("Cancel invitation failed: " + error);
@@ -122,10 +124,7 @@ export default {
       try {
         const project = await getProjectAsync(this.projectId);
         const invitationUrl =
-          "localhost:8081/projects/" +
-          this.projectId +
-          "/invitations/" +
-          invitation.id;
+          projectUrlPrefix() + this.projectId + "/invitations/" + invitation.id;
         //TODO 这里直接生成了邀请的链接
         await createNotificationAsync(
           receiver.username,

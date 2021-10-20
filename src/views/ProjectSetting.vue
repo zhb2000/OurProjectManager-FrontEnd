@@ -51,6 +51,7 @@
 </template>
 
 <script>
+// eslint-disable-next-line no-unused-vars
 import { ProjectJson, MemberJson } from "../utils/jsonmodel";
 import {
   deleteProjectAsync,

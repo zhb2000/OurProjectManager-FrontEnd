@@ -4,6 +4,7 @@ import router from './router';
 import axios from 'axios';
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
+import { baseURL } from './MyConfig';
 
 //axios 请求拦截器
 //设置统一的请求头，把 token 放里面
@@ -17,9 +18,8 @@ axios.interceptors.request.use(
     },
     error => Promise.reject(error)
 );
-//TODO baseURL
-// axios.defaults.baseURL = 'http://localhost:8080';
-axios.defaults.baseURL = 'http://47.96.23.180:8080';
+
+axios.defaults.baseURL = baseURL;
 
 Vue.config.productionTip = false;
 

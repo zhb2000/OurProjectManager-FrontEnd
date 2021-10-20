@@ -46,6 +46,7 @@
 </template>
 
 <script>
+// eslint-disable-next-line no-unused-vars
 import { NotificationJson } from "../utils/jsonmodel";
 import {
   createNotificationAsync,

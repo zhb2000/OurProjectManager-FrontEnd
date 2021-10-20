@@ -40,6 +40,7 @@
 </template>
 
 <script>
+// eslint-disable-next-line no-unused-vars
 import { MemberJson, UserJson } from "../utils/jsonmodel";
 
 export default {

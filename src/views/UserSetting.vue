@@ -73,6 +73,7 @@
 </template>
 
 <script>
+// eslint-disable-next-line no-unused-vars
 import { UserJson } from "../utils/jsonmodel";
 import {
   getUserByNameAsync,

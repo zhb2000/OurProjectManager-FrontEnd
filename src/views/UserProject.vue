@@ -57,6 +57,7 @@
 </template>
 
 <script>
+// eslint-disable-next-line no-unused-vars
 import { ProjectJson } from "../utils/jsonmodel";
 import { getUserProjectsAsync, createProjectAsync } from "../utils/ApiUtils";
 import UserProjectItem from "../components/UserProjectItem.vue";
