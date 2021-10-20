@@ -26,7 +26,7 @@
       </div>
     </el-dialog>
     <el-tabs v-model="activeTabName">
-      <el-tab-pane label="收件箱" name="recv">
+      <el-tab-pane label="收件箱" name="recv" :lazy="true">
         <recv-item
           v-for="recvItem in recvNotifications"
           :key="-recvItem.id"
@@ -34,7 +34,7 @@
           @read-changed="itemReadClick"
         />
       </el-tab-pane>
-      <el-tab-pane label="发件箱" name="send">
+      <el-tab-pane label="发件箱" name="send" :lazy="true">
         <send-item
           v-for="sendItem in sendNotifications"
           :key="sendItem.id"
@@ -57,9 +57,11 @@ import {
   responseErrorTest as errorTest,
   BusinessErrorType as BusErrorType,
 } from "../utils/ResponseErrorUtils";
-import UserRecvNotificationItem from "../components/UserRecvNotificationItem.vue";
-import UserSendNotificationItem from "../components/UserSendNotificationItem.vue";
 import { StringUtils } from "../utils/StringUtils";
+const UserRecvNotificationItem = () =>
+  import("../components/UserRecvNotificationItem.vue");
+const UserSendNotificationItem = () =>
+  import("../components/UserSendNotificationItem.vue");
 
 export default {
   data() {
