@@ -29,165 +29,166 @@ import JumpTo from '../views/JumpTo.vue';
 Vue.use(VueRouter);
 
 const routes = [
-  {
-    path: '/homedemo',
-    name: 'HomeDemo',
-    component: HomeDemo,
-    meta: { requiresLogin: true }
-  },
-  {
-    path: '/aboutdemo',
-    name: 'AboutDemo',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/AboutDemo.vue'),
-    meta: { requiresLogin: true }
-  },
-  {
-    path: '/myhome',
-    name: 'MyHome',
-    component: MyHome
-  },
-  {
-    path: '/',
-    redirect: '/login'
-  },
-  {
-    path: '/dev',
-    name: 'DevPanel',
-    component: DevPanel
-  },
-  //登录页面
-  {
-    path: '/login',
-    name: 'Login',
-    component: Login
-  },
-  //注册页面
-  {
-    path: '/signup',
-    name: 'SignUp',
-    component: SignUp
-  },
-  //创建项目页面
-  {
-    path: '/create-project',
-    name: 'CreateProject',
-    component: CreateProject,
-    meta: { requiresLogin: true }
-  },
-  //跳转到页面
-  {
-    path: '/jump-to',
-    name: 'JumpTo',
-    component: JumpTo,
-    meta: { requiresLogin: true }
-  },
-  //用户主页
-  {
-    path: '/users/:username',
-    name: 'UserHome',
-    component: UserHome,
-    redirect: '/users/:username/overview',
-    meta: { requiresLogin: true },
-    children: [
-      {
-        path: 'overview',
-        name: 'UserOverview',
-        component: UserOverview
-      },
-      {
-        path: 'projects',
-        name: 'UserProject',
-        component: UserProject
-      },
-      {
-        path: 'notifications',
-        name: 'UserNotification',
-        component: UserNotification
-      },
-      {
-        path: 'setting',
-        name: 'UserSetting',
-        component: UserSetting
-      }
-    ]
-  },
-  //项目主页
-  {
-    path: '/projects/:projectId',
-    name: 'ProjectHome',
-    component: ProjectHome,
-    redirect: '/projects/:projectId/overview',
-    meta: { requiresLogin: true },
-    children: [
-      {
-        path: 'overview',
-        name: 'ProjectOverview',
-        component: ProjectOverview
-      },
-      {
-        path: 'tasks',
-        name: 'ProjectTask',
-        component: ProjectTask
-      },
-      {
-        path: 'members',
-        name: 'ProjectMember',
-        component: ProjectMember
-      },
-      {
-        path: 'statistic',
-        name: 'ProjectStatistic',
-        component: ProjectStatistic
-      },
-      {
-        path: 'invitations',
-        name: 'ProjectInvitation',
-        component: ProjectInvitation
-      },
-      {
-        path: 'setting',
-        name: 'ProjectSetting',
-        component: ProjectSetting
-      },
-      {
-        path: 'tasks/create',
-        name: 'ProjectCreateTask',
-        component: ProjectCreateTask
-      },
-      {
-        path: 'tasks/:taskId',
-        name: 'ProjectViewTask',
-        component: ProjectViewTask
-      }
-    ]
-  },
-  //邀请查看页面
-  {
-    path: '/projects/:projectId/invitations/:invitationId',
-    name: 'InvitationView',
-    component: InvitationView,
-    meta: { requiresLogin: true }
-  }
+    {
+        path: '/homedemo',
+        name: 'HomeDemo',
+        component: HomeDemo,
+        meta: { requiresLogin: true }
+    },
+    {
+        path: '/aboutdemo',
+        name: 'AboutDemo',
+        // route level code-splitting
+        // this generates a separate chunk (about.[hash].js) for this route
+        // which is lazy-loaded when the route is visited.
+        component: () => import(/* webpackChunkName: "about" */ '../views/AboutDemo.vue'),
+        meta: { requiresLogin: true }
+    },
+    {
+        path: '/myhome',
+        name: 'MyHome',
+        component: MyHome
+    },
+    {
+        path: '/',
+        redirect: '/login'
+    },
+    {
+        path: '/dev',
+        name: 'DevPanel',
+        component: DevPanel
+    },
+    //登录页面
+    {
+        path: '/login',
+        name: 'Login',
+        component: Login
+    },
+    //注册页面
+    {
+        path: '/signup',
+        name: 'SignUp',
+        component: SignUp
+    },
+    //创建项目页面
+    {
+        path: '/create-project',
+        name: 'CreateProject',
+        component: CreateProject,
+        meta: { requiresLogin: true }
+    },
+    //跳转到页面
+    {
+        path: '/jump-to',
+        name: 'JumpTo',
+        component: JumpTo,
+        meta: { requiresLogin: true }
+    },
+    //用户主页
+    {
+        path: '/users/:username',
+        name: 'UserHome',
+        component: UserHome,
+        redirect: '/users/:username/overview',
+        meta: { requiresLogin: true },
+        children: [
+            {
+                path: 'overview',
+                name: 'UserOverview',
+                component: UserOverview
+            },
+            {
+                path: 'projects',
+                name: 'UserProject',
+                component: UserProject
+            },
+            {
+                path: 'notifications',
+                name: 'UserNotification',
+                component: UserNotification
+            },
+            {
+                path: 'setting',
+                name: 'UserSetting',
+                component: UserSetting
+            }
+        ]
+    },
+    //项目主页
+    {
+        path: '/projects/:projectId',
+        name: 'ProjectHome',
+        component: ProjectHome,
+        redirect: '/projects/:projectId/overview',
+        meta: { requiresLogin: true },
+        children: [
+            {
+                path: 'overview',
+                name: 'ProjectOverview',
+                component: ProjectOverview
+            },
+            {
+                path: 'tasks',
+                name: 'ProjectTask',
+                component: ProjectTask
+            },
+            {
+                path: 'members',
+                name: 'ProjectMember',
+                component: ProjectMember
+            },
+            {
+                path: 'statistic',
+                name: 'ProjectStatistic',
+                component: ProjectStatistic
+            },
+            {
+                path: 'invitations',
+                name: 'ProjectInvitation',
+                component: ProjectInvitation
+            },
+            {
+                path: 'setting',
+                name: 'ProjectSetting',
+                component: ProjectSetting
+            },
+            {
+                path: 'tasks/create',
+                name: 'ProjectCreateTask',
+                component: ProjectCreateTask
+            },
+            {
+                path: 'tasks/:taskId',
+                name: 'ProjectViewTask',
+                component: ProjectViewTask
+            }
+        ]
+    },
+    //邀请查看页面
+    {
+        path: '/projects/:projectId/invitations/:invitationId',
+        name: 'InvitationView',
+        component: InvitationView,
+        meta: { requiresLogin: true }
+    }
 ];
 
 const router = new VueRouter({
-  routes,
-  mode: 'history'
+    routes,
+    //TODO hash mode / history mode
+    // mode: 'history'
 });
 
 router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.requiresLogin)) {
-    if (!localStorage.getItem(JWT_TOKEN_KEY)) {
-      next('/login'); //未登录自动跳转到 Login
+    if (to.matched.some(record => record.meta.requiresLogin)) {
+        if (!localStorage.getItem(JWT_TOKEN_KEY)) {
+            next('/login'); //未登录自动跳转到 Login
+        } else {
+            next();
+        }
     } else {
-      next();
+        next();
     }
-  } else {
-    next();
-  }
 });
 
 export default router;
