@@ -5,9 +5,11 @@ const routerMode = 'hash';
 // const routerMode = 'history';
 
 function projectUrlPrefix() {
+    const base = 'http://47.96.23.180';
+    // const base = 'http://localhost';
     return (routerMode === 'hash')
-        ? `${baseURL}/#/projects/`
-        : `${baseURL}/projects/`;
+        ? `${base}/#/projects/`
+        : `${base}/projects/`;
 }
 
 export { baseURL, routerMode, projectUrlPrefix };
