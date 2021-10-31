@@ -47,17 +47,15 @@
 
 <script>
 // eslint-disable-next-line no-unused-vars
-import { NotificationJson } from "../utils/JsonModel";
-import * as api from "../utils/ApiUtils";
+import { NotificationJson } from "../../utils/JsonModel";
+import * as api from "../../utils/ApiUtils";
 import {
   responseErrorTest as errorTest,
   BusinessErrorType as BusErrorType,
-} from "../utils/ResponseErrorUtils";
-import { StringUtils } from "../utils/StringUtils";
-const UserRecvNotificationItem = () =>
-  import("../components/UserRecvNotificationItem.vue");
-const UserSendNotificationItem = () =>
-  import("../components/UserSendNotificationItem.vue");
+} from "../../utils/ResponseErrorUtils";
+import { StringUtils } from "../../utils/StringUtils";
+const RecvItem = () => import("../../components/user/RecvItem.vue");
+const SendItem = () => import("../../components/user/SendItem.vue");
 
 export default {
   data() {
@@ -174,8 +172,8 @@ export default {
     },
   },
   components: {
-    "recv-item": UserRecvNotificationItem,
-    "send-item": UserSendNotificationItem,
+    RecvItem,
+    SendItem,
   },
 };
 </script>

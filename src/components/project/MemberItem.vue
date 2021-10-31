@@ -41,7 +41,7 @@
 
 <script>
 // eslint-disable-next-line no-unused-vars
-import { MemberJson, UserJson } from "../utils/JsonModel";
+import { MemberJson, UserJson } from "../../utils/JsonModel";
 
 export default {
   props: {

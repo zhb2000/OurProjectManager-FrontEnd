@@ -22,7 +22,7 @@
 
 <script>
 import { ColumnChart } from "@opd/g2plot-vue";
-import { randInt, randBoolean, dateToDayStr } from "../utils/utils.js";
+import { randInt, randBoolean, dateToDayStr } from "../../utils/utils";
 
 export default {
   props: {

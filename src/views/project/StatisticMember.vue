@@ -1,7 +1,7 @@
 // 项目统计-成员贡献
 <template>
   <div class="member-grid">
-    <member-contribute-card
+    <member-contribute
       v-for="member in members"
       :key="member.id"
       :user="member.user"
@@ -10,8 +10,8 @@
 </template>
 
 <script>
-import * as api from "../utils/ApiUtils";
-import MemberContributeCard from "../components/MemberContributeCard.vue";
+import * as api from "../../utils/ApiUtils";
+import MemberContribute from "../../components/project/MemberContribute.vue";
 
 export default {
   data() {
@@ -46,7 +46,7 @@ export default {
     },
   },
   components: {
-    MemberContributeCard,
+    MemberContribute,
   },
 };
 </script>

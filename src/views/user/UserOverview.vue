@@ -37,8 +37,8 @@
 
 <script>
 // eslint-disable-next-line no-unused-vars
-import { UserJson } from "../utils/JsonModel";
-import * as api from "../utils/ApiUtils";
+import { UserJson } from "../../utils/JsonModel";
+import * as api from "../../utils/ApiUtils";
 
 export default {
   data() {

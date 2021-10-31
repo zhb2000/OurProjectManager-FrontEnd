@@ -18,10 +18,10 @@
 </template>
 
 <script>
-import * as api from "../utils/ApiUtils";
+import * as api from "../../utils/ApiUtils";
 // eslint-disable-next-line no-unused-vars
-import { TaskJson, MemberJson } from "../utils/JsonModel";
-import ProjectTaskItem from "../components/ProjectTaskItem.vue";
+import { TaskJson, MemberJson } from "../../utils/JsonModel";
+import TaskItem from "../../components/project/TaskItem.vue";
 
 export default {
   data() {
@@ -94,7 +94,7 @@ export default {
     },
   },
   components: {
-    "task-item": ProjectTaskItem,
+    TaskItem,
   },
 };
 </script>

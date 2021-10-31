@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import * as api from "../utils/ApiUtils";
+import * as api from "../../utils/ApiUtils";
 
 export default {
   data() {

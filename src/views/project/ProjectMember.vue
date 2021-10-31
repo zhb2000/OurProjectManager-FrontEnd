@@ -14,10 +14,10 @@
 </template>
 
 <script>
-import * as api from "../utils/ApiUtils";
-import { MemberJson } from "../utils/JsonModel";
-import ProjectMemberItem from "../components/ProjectMemberItem.vue";
-import { confirmAsync } from "../utils/UiUtils";
+import * as api from "../../utils/ApiUtils";
+import { MemberJson } from "../../utils/JsonModel";
+import MemberItem from "../../components/project/MemberItem.vue";
+import { confirmAsync } from "../../utils/UiUtils";
 
 export default {
   data() {
@@ -111,7 +111,7 @@ export default {
     },
   },
   components: {
-    "member-item": ProjectMemberItem,
+    MemberItem,
   },
 };
 </script>

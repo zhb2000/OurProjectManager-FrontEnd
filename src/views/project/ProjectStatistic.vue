@@ -2,22 +2,22 @@
   <div>
     <el-tabs v-model="activeTabName">
       <el-tab-pane label="项目活跃度" name="project-contribute" :lazy="true">
-        <project-statistic-project />
+        <statistic-project />
       </el-tab-pane>
       <el-tab-pane label="成员贡献" name="member-contribute" :lazy="true">
-        <project-statistic-member />
+        <statistic-member />
       </el-tab-pane>
       <el-tab-pane label="任务类型" name="task-type" :lazy="true">
-        <project-statistic-task-type />
+        <statistic-task />
       </el-tab-pane>
     </el-tabs>
   </div>
 </template>
 
 <script>
-const ProjectStatisticTaskType = () => import("./ProjectStatisticTaskType.vue");
-const ProjectStatisticMember = () => import("./ProjectStatisticMember.vue");
-const ProjectStatisticProject = () => import("./ProjectStatisticProject.vue");
+const StatisticProject = () => import("./StatisticProject.vue");
+const StatisticMember = () => import("./StatisticMember.vue");
+const StatisticTask = () => import("./StatisticTask.vue");
 
 export default {
   data() {
@@ -26,9 +26,9 @@ export default {
     };
   },
   components: {
-    ProjectStatisticTaskType,
-    ProjectStatisticMember,
-    ProjectStatisticProject,
+    StatisticProject,
+    StatisticMember,
+    StatisticTask,
   },
 };
 </script>

@@ -23,7 +23,7 @@ export default {
   methods: {
     async createBtnClick() {
       if (StringUtils.isEmpty(this.projectName)) {
-        alert("项目名不能为空");
+        this.$alert("项目名不能为空", "项目名不能为空");
         return;
       }
       let projectId;
@@ -34,7 +34,8 @@ export default {
         );
         projectId = project.id;
       } catch (error) {
-        alert(error);
+        this.$message({ message: "创建项目失败", type: "error" });
+        console.log("Create project failed: " + error);
         return;
       }
       this.$router.push("/projects/" + projectId);

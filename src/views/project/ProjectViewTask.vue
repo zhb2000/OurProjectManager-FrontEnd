@@ -107,17 +107,17 @@ import {
   MemberJson,
   // eslint-disable-next-line no-unused-vars
   UserJson,
-} from "../utils/JsonModel";
-import * as api from "../utils/ApiUtils";
+} from "../../utils/JsonModel";
+import * as api from "../../utils/ApiUtils";
 import {
   responseErrorTest as errTest,
   BusinessErrorType as BusErrType,
-} from "../utils/ResponseErrorUtils";
-import { StringUtils } from "../utils/StringUtils";
-import { confirmDeleteAsync } from "../utils/UiUtils";
-import TaskCommentItem from "../components/TaskCommentItem.vue";
-import TaskExecutorItem from "../components/TaskExecutorItem.vue";
-import TaskViewCard from "../components/TaskViewCard.vue";
+} from "../../utils/ResponseErrorUtils";
+import { StringUtils } from "../../utils/StringUtils";
+import { confirmDeleteAsync } from "../../utils/UiUtils";
+import TaskCommentItem from "../../components/project/TaskCommentItem.vue";
+import TaskExecutorItem from "../../components/project/TaskExecutorItem.vue";
+import TaskViewCard from "../../components/project/TaskViewCard.vue";
 
 export default {
   data() {

@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { TaskJson } from "../utils/JsonModel";
+import { TaskJson } from "../../utils/JsonModel";
 import { MarkdownPreview } from "vue-meditor";
 
 export default {

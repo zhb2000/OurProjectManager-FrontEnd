@@ -42,15 +42,15 @@
 </template>
 
 <script>
-import * as api from "../utils/ApiUtils";
+import * as api from "../../utils/ApiUtils";
 // eslint-disable-next-line no-unused-vars
-import { UserJson } from "../utils/JsonModel";
-import { StringUtils } from "../utils/StringUtils";
+import { UserJson } from "../../utils/JsonModel";
+import { StringUtils } from "../../utils/StringUtils";
 import {
   responseErrorTest as errTest,
   BusinessErrorType as BusErrType,
-} from "../utils/ResponseErrorUtils";
-import TaskExecutorItem from "../components/TaskExecutorItem.vue";
+} from "../../utils/ResponseErrorUtils";
+import TaskExecutorItem from "../../components/project/TaskExecutorItem.vue";
 
 export default {
   data() {

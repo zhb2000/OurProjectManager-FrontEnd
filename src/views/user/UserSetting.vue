@@ -74,13 +74,13 @@
 
 <script>
 // eslint-disable-next-line no-unused-vars
-import { UserJson } from "../utils/JsonModel";
-import * as api from "../utils/ApiUtils";
+import { UserJson } from "../../utils/JsonModel";
+import * as api from "../../utils/ApiUtils";
 import {
   responseErrorTest as errorTest,
   BusinessErrorType as BusErrorType,
-} from "../utils/ResponseErrorUtils";
-import { confirmAsync } from "../utils/UiUtils";
+} from "../../utils/ResponseErrorUtils";
+import { confirmAsync } from "../../utils/UiUtils";
 
 export default {
   data() {

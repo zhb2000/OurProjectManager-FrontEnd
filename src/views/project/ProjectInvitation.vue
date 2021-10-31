@@ -22,15 +22,15 @@
 </template>
 
 <script>
-import * as api from "../utils/ApiUtils";
+import * as api from "../../utils/ApiUtils";
 // eslint-disable-next-line no-unused-vars
-import { InvitationJson } from "../utils/JsonModel";
+import { InvitationJson } from "../../utils/JsonModel";
 import {
   responseErrorTest as errorTest,
   BusinessErrorType as BusErrorType,
-} from "../utils/ResponseErrorUtils";
-import { projectUrlPrefix } from "../MyConfig";
-import ProjectInvitationItem from "../components/ProjectInvitationItem.vue";
+} from "../../utils/ResponseErrorUtils";
+import { projectUrlPrefix } from "../../MyConfig";
+import InvitationItem from "../../components/project/InvitationItem.vue";
 
 export default {
   data() {
@@ -132,7 +132,7 @@ export default {
     },
   },
   components: {
-    "invitation-item": ProjectInvitationItem,
+    InvitationItem,
   },
 };
 </script>

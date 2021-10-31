@@ -37,10 +37,10 @@
 </template>
 
 <script>
-import * as api from "../utils/ApiUtils";
+import * as api from "../../utils/ApiUtils";
 // eslint-disable-next-line no-unused-vars
-import { ProjectJson, UserJson, MemberJson } from "../utils/JsonModel";
-import ProjectOverviewAdminCard from "../components/ProjectOverviewAdminCard.vue";
+import { ProjectJson, UserJson, MemberJson } from "../../utils/JsonModel";
+import AdminCard from "../../components/project/AdminCard.vue";
 
 export default {
   data() {
@@ -131,7 +131,7 @@ export default {
     },
   },
   components: {
-    "admin-card": ProjectOverviewAdminCard,
+    AdminCard,
   },
 };
 </script>

@@ -58,10 +58,10 @@
 
 <script>
 // eslint-disable-next-line no-unused-vars
-import { ProjectJson } from "../utils/JsonModel";
-import * as api from "../utils/ApiUtils";
-import UserProjectItem from "../components/UserProjectItem.vue";
-import { StringUtils } from "../utils/StringUtils";
+import { ProjectJson } from "../../utils/JsonModel";
+import * as api from "../../utils/ApiUtils";
+import ProjectItem from "../../components/user/ProjectItem.vue";
+import { StringUtils } from "../../utils/StringUtils";
 
 export default {
   data() {
@@ -196,7 +196,7 @@ export default {
     },
   },
   components: {
-    "project-item": UserProjectItem,
+    ProjectItem,
   },
 };
 </script>

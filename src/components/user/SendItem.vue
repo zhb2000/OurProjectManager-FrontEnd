@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { NotificationJson } from "../utils/JsonModel";
+import { NotificationJson } from "../../utils/JsonModel";
 
 export default {
   props: {

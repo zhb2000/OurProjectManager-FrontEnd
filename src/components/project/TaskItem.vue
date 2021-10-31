@@ -35,7 +35,7 @@
 </template>
 
 <script>
-import { TaskJson } from "../utils/JsonModel";
+import { TaskJson } from "../../utils/JsonModel";
 
 export default {
   props: {

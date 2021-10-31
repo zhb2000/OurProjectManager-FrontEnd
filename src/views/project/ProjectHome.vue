@@ -53,8 +53,8 @@
 </template>
 
 <script>
-import * as api from "../utils/ApiUtils";
-import { MemberJson } from "../utils/JsonModel";
+import * as api from "../../utils/ApiUtils";
+import { MemberJson } from "../../utils/JsonModel";
 
 export default {
   data() {

@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { UserJson } from "../utils/JsonModel";
+import { UserJson } from "../../utils/JsonModel";
 
 export default {
   props: {
