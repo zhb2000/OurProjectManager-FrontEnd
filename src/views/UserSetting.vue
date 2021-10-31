@@ -87,6 +87,7 @@ import {
   responseErrorTest as errorTest,
   BusinessErrorType as BusErrorType,
 } from "../utils/ResponseErrorUtils";
+import { confirmAsync } from "../utils/UiUtils";
 
 export default {
   data() {
@@ -190,23 +191,19 @@ export default {
       this.$router.push("/login");
     },
     async deleteAccountBtnClick() {
-      if (confirm("删除账户后数据将无法恢复，是否继续？")) {
+      const clickConfirm = await confirmAsync(
+        this,
+        "删除账户后数据将无法恢复，是否继续？",
+        "删除账户",
+        {
+          type: "warning",
+          confirmButtonText: "确认删除账户",
+          cancelButtonText: "取消",
+        }
+      );
+      if (clickConfirm) {
         await this.deleteAccountAsync();
       }
-      /*try {
-        await this.$confirm(
-          "删除账户后数据将无法恢复，是否继续？",
-          "删除账户",
-          {
-            confirmButtonText: "确认删除",
-            cancelButtonText: "取消",
-            type: "warning",
-          }
-        );
-        await this.deleteAccountAsync();
-      } catch (error) {
-        return;
-      }*/
     },
     async deleteAccountAsync() {
       try {

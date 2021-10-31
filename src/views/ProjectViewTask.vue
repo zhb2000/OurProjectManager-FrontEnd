@@ -124,6 +124,7 @@ import {
   BusinessErrorType as BusErrType,
 } from "../utils/ResponseErrorUtils";
 import { StringUtils } from "../utils/StringUtils";
+import { confirmDeleteAsync } from "../utils/UiUtils";
 import TaskCommentItem from "../components/TaskCommentItem.vue";
 import TaskExecutorItem from "../components/TaskExecutorItem.vue";
 import TaskViewCard from "../components/TaskViewCard.vue";
@@ -255,16 +256,20 @@ export default {
       this.$message({ message: "评论发表成功", type: "success" });
     },
     async deleteCommentClick(commentId) {
-      if (!confirm("确定要删除这条评论吗")) {
-        return;
-      }
-      try {
-        await deleteCommentsAsync(this.projectId, this.taskId, commentId);
-        await this.setCommentsAsync();
-      } catch (error) {
-        this.$message({ message: "评论删除失败", type: "error" });
-        console.log("Delete comment failed: " + error);
-        return;
+      const clickConfirm = await confirmDeleteAsync(
+        this,
+        "确定要删除这条评论吗",
+        "删除评论"
+      );
+      if (clickConfirm) {
+        try {
+          await deleteCommentsAsync(this.projectId, this.taskId, commentId);
+          await this.setCommentsAsync();
+        } catch (error) {
+          this.$message({ message: "评论删除失败", type: "error" });
+          console.log("Delete comment failed: " + error);
+          return;
+        }
       }
     },
     goBack() {
@@ -326,18 +331,22 @@ export default {
       }
     },
     async deleteBtnClick() {
-      if (!confirm("确定要删除这个任务吗")) {
-        return;
+      const clickConfirm = await confirmDeleteAsync(
+        this,
+        "确定要删除这个任务吗",
+        "删除任务"
+      );
+      if (clickConfirm) {
+        try {
+          await deleteTaskAsync(this.projectId, this.taskId);
+        } catch (error) {
+          this.$message({ message: "删除任务失败", type: "error" });
+          console.log("Delete task failed: " + error);
+          return;
+        }
+        this.$message({ message: "删除任务成功", type: "success" });
+        this.$router.back();
       }
-      try {
-        await deleteTaskAsync(this.projectId, this.taskId);
-      } catch (error) {
-        this.$message({ message: "删除任务失败", type: "error" });
-        console.log("Delete task failed: " + error);
-        return;
-      }
-      this.$message({ message: "删除任务成功", type: "success" });
-      this.$router.back();
     },
   },
   components: {

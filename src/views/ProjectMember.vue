@@ -23,6 +23,7 @@ import {
 } from "../utils/ApiUtils";
 import { MemberJson } from "../utils/jsonmodel";
 import ProjectMemberItem from "../components/ProjectMemberItem.vue";
+import { confirmAsync } from "../utils/UiUtils";
 
 export default {
   data() {
@@ -88,23 +89,19 @@ export default {
     },
     /** @param {MemberJson} member */
     async removeBtnClick(member) {
-      if (confirm("是否将 " + member.user.username + " 移出项目？")) {
+      const clickConfirm = await confirmAsync(
+        this,
+        `是否将${member.user.username}移出项目？`,
+        "移除成员",
+        {
+          type: "warning",
+          confirmButtonText: "确认移除",
+          cancelButtonText: "取消",
+        }
+      );
+      if (clickConfirm) {
         await this.doRemoveMemberAsync(member);
       }
-      /*try {
-        await this.$confirm(
-          "是否将 " + member.user.username + " 移出项目？",
-          "移除成员",
-          {
-            confirmButtonText: "确认移除",
-            cancelButtonText: "取消",
-            type: "warning",
-          }
-        );
-        await this.doRemoveMemberAsync(member);
-      } catch (error) {
-        return;
-      }*/
     },
     /** @param {MemberJson} member */
     async doRemoveMemberAsync(member) {
