@@ -48,12 +48,7 @@
 <script>
 // eslint-disable-next-line no-unused-vars
 import { NotificationJson } from "../utils/jsonmodel";
-import {
-  createNotificationAsync,
-  getRecvNotificationsAsync,
-  getSendNotificationsAsync,
-  updateNotificationReadAsync,
-} from "../utils/ApiUtils";
+import * as api from "../utils/ApiUtils";
 import {
   responseErrorTest as errorTest,
   BusinessErrorType as BusErrorType,
@@ -99,7 +94,9 @@ export default {
     },
     async setSendAsync() {
       try {
-        const notifications = await getSendNotificationsAsync(this.username);
+        const notifications = await api.getSendNotificationsAsync(
+          this.username
+        );
         notifications.sort((a, b) => b.createAt.localeCompare(a.createAt));
         this.sendNotifications = notifications;
       } catch (error) {
@@ -110,7 +107,9 @@ export default {
     },
     async setRecvAsync() {
       try {
-        const notifications = await getRecvNotificationsAsync(this.username);
+        const notifications = await api.getRecvNotificationsAsync(
+          this.username
+        );
         notifications.sort((a, b) => b.createAt.localeCompare(a.createAt));
         this.recvNotifications = notifications;
       } catch (error) {
@@ -129,7 +128,7 @@ export default {
         return;
       }
       try {
-        await createNotificationAsync(
+        await api.createNotificationAsync(
           this.receiverUsername,
           this.title,
           this.body
@@ -161,7 +160,11 @@ export default {
       }
       const read = !this.recvNotifications[index].read;
       try {
-        await updateNotificationReadAsync(this.username, notificationId, read);
+        await api.updateNotificationReadAsync(
+          this.username,
+          notificationId,
+          read
+        );
       } catch (error) {
         this.$message({ message: "更新已读状态失败", type: "error" });
         console.log("Update notification read failed: " + error);

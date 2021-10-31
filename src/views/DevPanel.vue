@@ -26,28 +26,24 @@
 </template>
 
 <script>
-import {
-  JWT_TOKEN_KEY,
-  CURRENT_USERNAME_KEY,
-  logoutAsync,
-} from "../utils/ApiUtils";
+import * as api from "../utils/ApiUtils";
 
 export default {
   data() {
     return {
-      tokenStr: localStorage.getItem(JWT_TOKEN_KEY),
-      userStr: sessionStorage.getItem(CURRENT_USERNAME_KEY),
+      tokenStr: localStorage.getItem(api.JWT_TOKEN_KEY),
+      userStr: sessionStorage.getItem(api.CURRENT_USERNAME_KEY),
     };
   },
   methods: {
     showTokenBtnClick() {
-      this.tokenStr = localStorage.getItem(JWT_TOKEN_KEY);
+      this.tokenStr = localStorage.getItem(api.JWT_TOKEN_KEY);
     },
     showUserBtnClick() {
-      this.userStr = sessionStorage.getItem(CURRENT_USERNAME_KEY);
+      this.userStr = sessionStorage.getItem(api.CURRENT_USERNAME_KEY);
     },
     async logoutBtnClick() {
-      await logoutAsync();
+      await api.logoutAsync();
       this.showTokenBtnClick();
       this.showUserBtnClick();
       alert("logout succeeded");

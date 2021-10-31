@@ -59,7 +59,7 @@
 <script>
 // eslint-disable-next-line no-unused-vars
 import { ProjectJson } from "../utils/jsonmodel";
-import { getUserProjectsAsync, createProjectAsync } from "../utils/ApiUtils";
+import * as api from "../utils/ApiUtils";
 import UserProjectItem from "../components/UserProjectItem.vue";
 import { StringUtils } from "../utils/StringUtils";
 
@@ -167,7 +167,7 @@ export default {
     async pageChangedAsync() {
       this.projects = [];
       try {
-        this.projects = await getUserProjectsAsync(this.username);
+        this.projects = await api.getUserProjectsAsync(this.username);
       } catch (error) {
         this.$message({ message: "获取项目失败", type: "error" });
         console.log("Get user projects failed: " + error);
@@ -181,7 +181,7 @@ export default {
       }
       let projectId;
       try {
-        const project = await createProjectAsync(
+        const project = await api.createProjectAsync(
           this.projectName,
           this.projectDescription
         );

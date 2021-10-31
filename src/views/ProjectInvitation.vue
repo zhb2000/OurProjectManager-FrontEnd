@@ -22,14 +22,7 @@
 </template>
 
 <script>
-import {
-  cancelInvitationAsync,
-  createInvitationAsync,
-  createNotificationAsync,
-  getInvitationsAsync,
-  getProjectAsync,
-  getUserByNameAsync,
-} from "../utils/ApiUtils";
+import * as api from "../utils/ApiUtils";
 // eslint-disable-next-line no-unused-vars
 import { InvitationJson } from "../utils/jsonmodel";
 import {
@@ -67,7 +60,7 @@ export default {
     },
     async setInvitationsAsync() {
       try {
-        const invitations = await getInvitationsAsync(this.projectId);
+        const invitations = await api.getInvitationsAsync(this.projectId);
         invitations.sort((a, b) => b.createAt.localeCompare(a.createAt));
         this.invitations = invitations;
       } catch (error) {
@@ -78,7 +71,7 @@ export default {
     },
     async cancelInvitationClick(invitationId) {
       try {
-        await cancelInvitationAsync(this.projectId, invitationId);
+        await api.cancelInvitationAsync(this.projectId, invitationId);
       } catch (error) {
         this.$message({ message: "取消邀请失败", type: "error" });
         console.log("Cancel invitation failed: " + error);
@@ -91,7 +84,7 @@ export default {
       //获取收件人
       let receiver;
       try {
-        receiver = await getUserByNameAsync(this.receiverUsername);
+        receiver = await api.getUserByNameAsync(this.receiverUsername);
       } catch (error) {
         if (errorTest(error, BusErrorType.USER_NOT_FOUND)) {
           this.$message({
@@ -106,7 +99,7 @@ export default {
       //发送邀请，并发送通知
       let invitation;
       try {
-        invitation = await createInvitationAsync(this.projectId, receiver);
+        invitation = await api.createInvitationAsync(this.projectId, receiver);
       } catch (error) {
         if (errorTest(error, BusErrorType.RECEIVER_ALREADY_IN_PROJECT)) {
           this.$message({
@@ -122,11 +115,11 @@ export default {
       await this.setInvitationsAsync();
       //发送消息给收件人
       try {
-        const project = await getProjectAsync(this.projectId);
+        const project = await api.getProjectAsync(this.projectId);
         const invitationUrl =
           projectUrlPrefix() + this.projectId + "/invitations/" + invitation.id;
         //TODO 这里直接生成了邀请的链接
-        await createNotificationAsync(
+        await api.createNotificationAsync(
           receiver.username,
           "邀请你加入项目：" + project.name,
           "邀请 ID：" + invitation.id + "，邀请链接：" + invitationUrl

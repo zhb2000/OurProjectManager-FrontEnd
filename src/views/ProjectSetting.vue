@@ -53,12 +53,7 @@
 <script>
 // eslint-disable-next-line no-unused-vars
 import { ProjectJson, MemberJson } from "../utils/jsonmodel";
-import {
-  deleteProjectAsync,
-  getCurrentRoleAsync,
-  getProjectAsync,
-  updateProjectNameAndDescriptionAsync,
-} from "../utils/ApiUtils";
+import * as api from "../utils/ApiUtils"
 import { confirmDeleteAsync } from "../utils/UiUtils";
 
 export default {
@@ -106,7 +101,7 @@ export default {
     async setProjectAsync() {
       this.project = null;
       try {
-        this.project = await getProjectAsync(this.projectId);
+        this.project = await api.getProjectAsync(this.projectId);
       } catch (error) {
         this.$message({ message: "获取项目信息失败", type: "error" });
         console.log("Get project failed: " + error);
@@ -116,7 +111,7 @@ export default {
     async setRoleAsync() {
       this.currentRole = MemberJson.ROLE_ADMIN;
       try {
-        this.currentRole = await getCurrentRoleAsync(this.projectId);
+        this.currentRole = await api.getCurrentRoleAsync(this.projectId);
       } catch (error) {
         this.$message({ message: "获取角色信息失败", type: "error" });
         console.log("Get role failed: " + error);
@@ -125,7 +120,7 @@ export default {
     },
     async updateNameBtnClick() {
       try {
-        await updateProjectNameAndDescriptionAsync(
+        await api.updateProjectNameAndDescriptionAsync(
           this.projectId,
           this.newProjectName,
           this.projectDescription
@@ -140,7 +135,7 @@ export default {
     },
     async updateDescriptionBtnClick() {
       try {
-        await updateProjectNameAndDescriptionAsync(
+        await api.updateProjectNameAndDescriptionAsync(
           this.projectId,
           this.projectName,
           this.newProjectDescription
@@ -165,7 +160,7 @@ export default {
     },
     async doDeleteAsync() {
       try {
-        await deleteProjectAsync(this.projectId);
+        await api.deleteProjectAsync(this.projectId);
       } catch (error) {
         this.$message({ message: "删除项目失败", type: "error" });
         console.log("Delete project failed: " + error);

@@ -38,7 +38,7 @@
 <script>
 // eslint-disable-next-line no-unused-vars
 import { UserJson } from "../utils/jsonmodel";
-import { getUserByNameAsync } from "../utils/ApiUtils";
+import * as api from "../utils/ApiUtils";
 
 export default {
   data() {
@@ -90,7 +90,7 @@ export default {
     async pageChangedAsync() {
       try {
         //console.log("user overview changed, page name: " + this.username);
-        this.user = await getUserByNameAsync(this.username);
+        this.user = await api.getUserByNameAsync(this.username);
       } catch (error) {
         this.$message({ message: "获取用户信息失败", type: "error" });
         console.log("get user by name failed: " + error);

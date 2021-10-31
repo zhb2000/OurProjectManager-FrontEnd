@@ -14,13 +14,7 @@
 </template>
 
 <script>
-import {
-  deleteMemberAsync,
-  getCurrentRoleAsync,
-  getCurrentUsernameAsync,
-  getMembersAsync,
-  updateMemberAsync,
-} from "../utils/ApiUtils";
+import * as api from "../utils/ApiUtils";
 import { MemberJson } from "../utils/jsonmodel";
 import ProjectMemberItem from "../components/ProjectMemberItem.vue";
 import { confirmAsync } from "../utils/UiUtils";
@@ -57,8 +51,8 @@ export default {
     },
     async setCurrentRoleAsync() {
       try {
-        this.currentUsername = await getCurrentUsernameAsync();
-        this.currentRole = await getCurrentRoleAsync(this.projectId);
+        this.currentUsername = await api.getCurrentUsernameAsync();
+        this.currentRole = await api.getCurrentRoleAsync(this.projectId);
       } catch (error) {
         this.$message({ message: "获取当前角色失败", type: "error" });
         console.log("Get role failed: " + error);
@@ -67,7 +61,7 @@ export default {
     },
     async setMembersAsync() {
       try {
-        this.members = await getMembersAsync(this.projectId);
+        this.members = await api.getMembersAsync(this.projectId);
       } catch (error) {
         this.$message({ message: "获取成员列表失败", type: "error" });
         console.log("Get members failed: " + error);
@@ -78,7 +72,7 @@ export default {
       try {
         member.role = newRole;
         console.log("new role: " + member.role);
-        await updateMemberAsync(this.projectId, member);
+        await api.updateMemberAsync(this.projectId, member);
       } catch (error) {
         this.$message({ message: "成员角色更新失败", type: "error" });
         console.log("Update role failed: " + error);
@@ -106,7 +100,7 @@ export default {
     /** @param {MemberJson} member */
     async doRemoveMemberAsync(member) {
       try {
-        await deleteMemberAsync(this.projectId, member.user.id);
+        await api.deleteMemberAsync(this.projectId, member.user.id);
       } catch (error) {
         this.$message({ message: "移除成员失败", type: "error" });
         console.log("Remove member failed: " + error);

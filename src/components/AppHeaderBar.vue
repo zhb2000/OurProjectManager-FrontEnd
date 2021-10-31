@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import { getCurrentUsernameAsync, logoutAsync } from "../utils/ApiUtils";
+import * as api from "../utils/ApiUtils";
 
 export default {
   data() {
@@ -64,7 +64,7 @@ export default {
   },
   methods: {
     async pageChangedAsync() {
-      this.currentUsername = await getCurrentUsernameAsync();
+      this.currentUsername = await api.getCurrentUsernameAsync();
     },
     async dropDownSelect(cmd) {
       if (cmd === "home") {
@@ -76,7 +76,7 @@ export default {
       } else if (cmd === "setting") {
         this.$router.push(this.userSettingUrl);
       } else if (cmd == "logout") {
-        await logoutAsync();
+        await api.logoutAsync();
         this.$router.push("/login");
       }
     },

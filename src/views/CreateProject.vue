@@ -11,7 +11,7 @@
 
 <script>
 import { StringUtils } from "../utils/StringUtils";
-import { createProjectAsync } from "../utils/ApiUtils";
+import * as api from "../utils/ApiUtils";
 
 export default {
   data() {
@@ -28,7 +28,7 @@ export default {
       }
       let projectId;
       try {
-        const project = await createProjectAsync(
+        const project = await api.createProjectAsync(
           this.projectName,
           this.projectDescription
         );

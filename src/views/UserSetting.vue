@@ -75,14 +75,7 @@
 <script>
 // eslint-disable-next-line no-unused-vars
 import { UserJson } from "../utils/jsonmodel";
-import {
-  getUserByNameAsync,
-  updateUsernameAndNicknameAsync,
-  updatePasswordAsync,
-  logoutAsync,
-  deleteUserAsync,
-  clearStorage,
-} from "../utils/ApiUtils";
+import * as api from "../utils/ApiUtils";
 import {
   responseErrorTest as errorTest,
   BusinessErrorType as BusErrorType,
@@ -129,7 +122,7 @@ export default {
     },
     async setUserAsync() {
       try {
-        this.user = await getUserByNameAsync(this.username);
+        this.user = await api.getUserByNameAsync(this.username);
       } catch (error) {
         this.$message({ message: "获取用户信息失败", type: "error" });
         console.log("get user by name failed: " + error);
@@ -138,7 +131,7 @@ export default {
     },
     async modifyNicknameBtnClick() {
       try {
-        await updateUsernameAndNicknameAsync(
+        await api.updateUsernameAndNicknameAsync(
           this.username,
           this.username,
           this.newNickname
@@ -153,12 +146,12 @@ export default {
     },
     async modifyUsernameBtnClick() {
       try {
-        await updateUsernameAndNicknameAsync(
+        await api.updateUsernameAndNicknameAsync(
           this.username,
           this.newUsername,
           this.nickname
         );
-        await logoutAsync();
+        await api.logoutAsync();
       } catch (error) {
         if (errorTest(error, BusErrorType.USER_ALREADY_EXIST)) {
           this.$message({ message: "同名用户已存在", type: "error" });
@@ -173,12 +166,12 @@ export default {
     },
     async modifyPasswordBtnClick() {
       try {
-        await updatePasswordAsync(
+        await api.updatePasswordAsync(
           this.username,
           this.oldPassword,
           this.newPassword
         );
-        await logoutAsync();
+        await api.logoutAsync();
       } catch (error) {
         if (errorTest(error, BusErrorType.WRONG_OLD_PASSWORD)) {
           this.$message({ message: "旧密码错误", type: "error" });
@@ -207,13 +200,13 @@ export default {
     },
     async deleteAccountAsync() {
       try {
-        await deleteUserAsync(this.username);
+        await api.deleteUserAsync(this.username);
       } catch (error) {
         this.$message({ message: "删除账户失败", type: "error" });
         console.log("Delete user account failed: " + error);
         return;
       }
-      clearStorage();
+      api.clearStorage();
       await this.$alert("请重新登录或注册", "用户账户删除成功");
       this.$router.push("/login");
     },

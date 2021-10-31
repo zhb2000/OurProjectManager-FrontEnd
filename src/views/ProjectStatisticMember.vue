@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import { getMembersAsync } from "../utils/ApiUtils";
+import * as api from "../utils/ApiUtils";
 import MemberContributeCard from "../components/MemberContributeCard.vue";
 
 export default {
@@ -37,7 +37,7 @@ export default {
     /** fetch members data */
     async pageChangedAsync() {
       try {
-        this.members = await getMembersAsync(this.projectId);
+        this.members = await api.getMembersAsync(this.projectId);
       } catch (error) {
         this.$message({ message: "获取成员列表失败", type: "error" });
         console.log("Get members failed: " + error);

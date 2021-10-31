@@ -42,7 +42,7 @@
 </template>
 
 <script>
-import { createTaskAsync, getUserByNameAsync } from "../utils/ApiUtils";
+import * as api from "../utils/ApiUtils";
 // eslint-disable-next-line no-unused-vars
 import { UserJson } from "../utils/jsonmodel";
 import { StringUtils } from "../utils/StringUtils";
@@ -76,7 +76,7 @@ export default {
         return;
       }
       try {
-        const task = await createTaskAsync(
+        const task = await api.createTaskAsync(
           this.projectId,
           this.title,
           this.body,
@@ -101,7 +101,7 @@ export default {
         }
       }
       try {
-        const user = await getUserByNameAsync(this.executorInput);
+        const user = await api.getUserByNameAsync(this.executorInput);
         this.executors.push(user);
         this.executorInput = "";
       } catch (error) {

@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import { getCurrentRoleAsync } from "../utils/ApiUtils";
+import * as api from "../utils/ApiUtils";
 import { MemberJson } from "../utils/jsonmodel";
 
 export default {
@@ -90,7 +90,7 @@ export default {
       return this.projectHomePath + "/members";
     },
     statisticPath() {
-      return this.projectHomePath + "/statistic"
+      return this.projectHomePath + "/statistic";
     },
     invitationsPath() {
       return this.projectHomePath + "/invitations";
@@ -133,7 +133,7 @@ export default {
     //get current current role in project
     async pageChangedAsync() {
       try {
-        this.currentRole = await getCurrentRoleAsync(this.projectId);
+        this.currentRole = await api.getCurrentRoleAsync(this.projectId);
       } catch (error) {
         console.log("Get current role failed: " + error);
         return;

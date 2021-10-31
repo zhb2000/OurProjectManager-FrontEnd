@@ -39,7 +39,7 @@
 </template>
 
 <script>
-import { getCurrentUsernameAsync } from "../utils/ApiUtils";
+import * as api from "../utils/ApiUtils";
 
 export default {
   data() {
@@ -81,7 +81,7 @@ export default {
     /** set current username */
     async pageChangedAsync() {
       try {
-        this.currentUsername = await getCurrentUsernameAsync();
+        this.currentUsername = await api.getCurrentUsernameAsync();
       } catch (error) {
         console.log("Get current username failed: " + error);
         return;

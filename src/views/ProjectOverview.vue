@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import { getCurrentRoleAsync, getProjectAsync } from "../utils/ApiUtils";
+import * as api from "../utils/ApiUtils";
 // eslint-disable-next-line no-unused-vars
 import { ProjectJson, UserJson, MemberJson } from "../utils/jsonmodel";
 import ProjectOverviewAdminCard from "../components/ProjectOverviewAdminCard.vue";
@@ -118,8 +118,8 @@ export default {
         this.currentRole = null;
         this.project = null;
         const promises = [
-          getCurrentRoleAsync(this.projectId),
-          getProjectAsync(this.projectId),
+          api.getCurrentRoleAsync(this.projectId),
+          api.getProjectAsync(this.projectId),
         ];
         const results = await Promise.all(promises);
         this.currentRole = results[0];

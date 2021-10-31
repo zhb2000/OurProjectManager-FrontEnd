@@ -47,12 +47,7 @@
 </template>
 
 <script>
-import {
-  acceptInvitationAsync,
-  rejectInvitationAsync,
-  getCurrentUserIdAsync,
-  getInvitationAsync,
-} from "../utils/ApiUtils";
+import * as api from "../utils/ApiUtils";
 import { InvitationJson } from "../utils/jsonmodel";
 
 export default {
@@ -146,7 +141,7 @@ export default {
     async setInvitationAsync() {
       try {
         this.invitation = null;
-        this.invitation = await getInvitationAsync(
+        this.invitation = await api.getInvitationAsync(
           this.projectId,
           this.invitationId
         );
@@ -159,7 +154,7 @@ export default {
     async setCurrentUserIdAsync() {
       try {
         this.currentUserId = null;
-        this.currentUserId = await getCurrentUserIdAsync();
+        this.currentUserId = await api.getCurrentUserIdAsync();
       } catch (error) {
         this.$message({ message: "获取用户 ID 失败", type: "error" });
         console.log("Get uid failed: " + error);
@@ -168,7 +163,7 @@ export default {
     },
     async acceptBtnClick() {
       try {
-        await acceptInvitationAsync(this.projectId, this.invitationId);
+        await api.acceptInvitationAsync(this.projectId, this.invitationId);
       } catch (error) {
         this.$message({ message: "接受邀请失败", type: "error" });
         console.log("Accept invitation failed: " + error);
@@ -179,7 +174,7 @@ export default {
     },
     async rejectBtnClick() {
       try {
-        await rejectInvitationAsync(this.projectId, this.invitationId);
+        await api.rejectInvitationAsync(this.projectId, this.invitationId);
       } catch (error) {
         this.$message({ message: "拒绝邀请失败", type: "error" });
         console.log("Reject invitation failed: " + error);

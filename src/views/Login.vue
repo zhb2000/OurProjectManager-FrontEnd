@@ -37,7 +37,7 @@ import {
   BusinessErrorType as BusErrType,
   responseErrorTest as errorTest,
 } from "../utils/ResponseErrorUtils";
-import { loginAsync } from "../utils/ApiUtils";
+import * as api from "../utils/ApiUtils";
 
 export default {
   mounted() {},
@@ -50,7 +50,7 @@ export default {
   methods: {
     async loginBtnClick() {
       try {
-        await loginAsync(this.username, this.password);
+        await api.loginAsync(this.username, this.password);
       } catch (error) {
         if (errorTest(error, BusErrType.WRONG_PASSWORD_OR_USERNAME)) {
           this.$message({ message: "用户名或密码不正确", type: "error" });

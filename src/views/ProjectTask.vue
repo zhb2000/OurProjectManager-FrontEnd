@@ -18,11 +18,7 @@
 </template>
 
 <script>
-import {
-  getCurrentRoleAsync,
-  getTasksAsync,
-  updateTaskCompleteAsync,
-} from "../utils/ApiUtils";
+import * as api from "../utils/ApiUtils";
 // eslint-disable-next-line no-unused-vars
 import { TaskJson, MemberJson } from "../utils/jsonmodel";
 import ProjectTaskItem from "../components/ProjectTaskItem.vue";
@@ -62,7 +58,7 @@ export default {
       try {
         const setRoleAsync = async () => {
           this.currentRole = MemberJson.ROLE_MEMBER;
-          this.currentRole = await getCurrentRoleAsync(this.projectId);
+          this.currentRole = await api.getCurrentRoleAsync(this.projectId);
         };
         await Promise.all([setRoleAsync(), this.setTasksAsync()]);
       } catch (error) {
@@ -73,7 +69,7 @@ export default {
     },
     async setTasksAsync() {
       try {
-        this.tasks = await getTasksAsync(this.projectId);
+        this.tasks = await api.getTasksAsync(this.projectId);
         this.tasks.sort((a, b) => b.createAt.localeCompare(a.createAt));
       } catch (error) {
         this.$message({ message: "任务获取失败", type: "error" });
@@ -84,7 +80,11 @@ export default {
     /** @param {TaskJson} task */
     async taskCompleteChange(task) {
       try {
-        await updateTaskCompleteAsync(this.projectId, task.id, task.complete);
+        await api.updateTaskCompleteAsync(
+          this.projectId,
+          task.id,
+          task.complete
+        );
       } catch (error) {
         this.$message({ message: "更新任务完成状态失败", type: "error" });
         console.log("Update task complete failed: " + error);

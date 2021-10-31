@@ -108,17 +108,7 @@ import {
   // eslint-disable-next-line no-unused-vars
   UserJson,
 } from "../utils/jsonmodel";
-import {
-  createCommentAsync,
-  deleteCommentsAsync,
-  deleteTaskAsync,
-  getCommentsAsync,
-  getCurrentRoleAsync,
-  getTaskAsync,
-  getUserByNameAsync,
-  updateTaskAsync,
-  updateTaskCompleteAsync,
-} from "../utils/ApiUtils";
+import * as api from "../utils/ApiUtils";
 import {
   responseErrorTest as errTest,
   BusinessErrorType as BusErrType,
@@ -208,7 +198,7 @@ export default {
       try {
         const setRoleAsync = async () => {
           this.currentRole = MemberJson.ROLE_MEMBER;
-          this.currentRole = await getCurrentRoleAsync(this.projectId);
+          this.currentRole = await api.getCurrentRoleAsync(this.projectId);
         };
         await Promise.all([
           setRoleAsync(),
@@ -223,7 +213,7 @@ export default {
     },
     async setTaskAsync() {
       try {
-        this.task = await getTaskAsync(this.projectId, this.taskId);
+        this.task = await api.getTaskAsync(this.projectId, this.taskId);
       } catch (error) {
         this.$message({ message: "获取任务失败", type: "error" });
         console.log("Get task failed: " + error);
@@ -232,7 +222,7 @@ export default {
     },
     async setCommentsAsync() {
       try {
-        this.comments = await getCommentsAsync(this.projectId, this.taskId);
+        this.comments = await api.getCommentsAsync(this.projectId, this.taskId);
       } catch (error) {
         this.$message({ message: "获取评论失败", type: "error" });
         console.log("Get comments failed: " + error);
@@ -245,7 +235,11 @@ export default {
         return;
       }
       try {
-        await createCommentAsync(this.projectId, this.taskId, this.commentBody);
+        await api.createCommentAsync(
+          this.projectId,
+          this.taskId,
+          this.commentBody
+        );
         this.commentBody = "";
         await this.setCommentsAsync();
       } catch (error) {
@@ -263,7 +257,7 @@ export default {
       );
       if (clickConfirm) {
         try {
-          await deleteCommentsAsync(this.projectId, this.taskId, commentId);
+          await api.deleteCommentsAsync(this.projectId, this.taskId, commentId);
           await this.setCommentsAsync();
         } catch (error) {
           this.$message({ message: "评论删除失败", type: "error" });
@@ -286,10 +280,10 @@ export default {
         }
       }
       try {
-        const user = await getUserByNameAsync(this.executorInput);
+        const user = await api.getUserByNameAsync(this.executorInput);
         this.executors.push(user);
         this.executorInput = "";
-        await updateTaskAsync(this.projectId, this.task);
+        await api.updateTaskAsync(this.projectId, this.task);
       } catch (error) {
         if (errTest(error, BusErrType.USER_NOT_FOUND)) {
           this.$message({
@@ -309,7 +303,7 @@ export default {
         for (let i = 0; i < this.executors.length; i++) {
           if (this.executors[i].username === user.username) {
             this.executors.splice(i, 1);
-            await updateTaskAsync(this.projectId, this.task);
+            await api.updateTaskAsync(this.projectId, this.task);
             break;
           }
         }
@@ -322,8 +316,8 @@ export default {
     async completeBtnClick() {
       try {
         const status = !this.task.complete;
-        await updateTaskCompleteAsync(this.projectId, this.taskId, status);
-        this.task = await getTaskAsync(this.projectId, this.taskId);
+        await api.updateTaskCompleteAsync(this.projectId, this.taskId, status);
+        this.task = await api.getTaskAsync(this.projectId, this.taskId);
       } catch (error) {
         this.$message({ message: "更新完成状态失败", type: "error" });
         console.log("Update task complete failed: " + error);
@@ -338,7 +332,7 @@ export default {
       );
       if (clickConfirm) {
         try {
-          await deleteTaskAsync(this.projectId, this.taskId);
+          await api.deleteTaskAsync(this.projectId, this.taskId);
         } catch (error) {
           this.$message({ message: "删除任务失败", type: "error" });
           console.log("Delete task failed: " + error);
