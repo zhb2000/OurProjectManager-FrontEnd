@@ -1,5 +1,6 @@
 <template>
   <div class="header-bar">
+    <button class="menu-btn" @click="menuBtnClick" />
     <router-link :to="userHomeUrl" class="header-logo-link">
       <span class="header-logo">Our Project Manager</span>
     </router-link>
@@ -80,6 +81,9 @@ export default {
         this.$router.push("/login");
       }
     },
+    menuBtnClick() {
+      this.$emit("menu-click");
+    },
   },
 };
 </script>
@@ -92,6 +96,24 @@ export default {
   display: flex;
   align-items: center;
   padding: 0 30px;
+}
+
+.menu-btn {
+  background: url("~@/assets/menu_white_24dp.svg");
+  background-size: cover;
+  background-position: center;
+  width: 30px;
+  height: 30px;
+  min-width: 30px;
+  border: 0px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 20px;
+  display: none;
+}
+
+.menu-btn:hover {
+  background-color: rgba(0, 0, 0, 0.2);
 }
 
 .header-logo-link {
@@ -136,5 +158,21 @@ export default {
 
 .header-icon:hover {
   color: #e9e9eb;
+}
+
+@media screen and (max-width: 800px) {
+  .menu-btn {
+    display: inline-block;
+  }
+
+  .header-logo-link {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .header-bar {
+    padding: 0 10px;
+  }
 }
 </style>

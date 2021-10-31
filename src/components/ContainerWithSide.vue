@@ -1,7 +1,7 @@
 <template>
   <el-container class="no-padding-margin" style="height: 100%">
     <el-header class="no-padding-margin" height="48px">
-      <header-bar />
+      <header-bar @menu-click="menuClick" />
     </el-header>
     <el-main class="no-padding-margin">
       <el-container style="height: 100%">
@@ -13,6 +13,18 @@
         </el-main>
       </el-container>
     </el-main>
+    <el-drawer
+      direction="ltr"
+      :size="250"
+      :visible.sync="drawerOpen"
+      :with-header="false"
+      :append-to-body="false"
+      :modal-append-to-body="false"
+    >
+      <div style="padding-top: 10px;">
+        <slot name="side"></slot>
+      </div>
+    </el-drawer>
   </el-container>
 </template>
 
@@ -20,6 +32,19 @@
 import AppHeaderBar from "./AppHeaderBar.vue";
 
 export default {
+  data() {
+    return { drawerOpen: false };
+  },
+  methods: {
+    menuClick() {
+      this.drawerOpen = !this.drawerOpen;
+    },
+  },
+  watch: {
+    $route() {
+      this.drawerOpen = false;
+    },
+  },
   components: { "header-bar": AppHeaderBar },
 };
 </script>
