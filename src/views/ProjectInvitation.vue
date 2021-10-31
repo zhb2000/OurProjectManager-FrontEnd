@@ -24,7 +24,7 @@
 <script>
 import * as api from "../utils/ApiUtils";
 // eslint-disable-next-line no-unused-vars
-import { InvitationJson } from "../utils/jsonmodel";
+import { InvitationJson } from "../utils/JsonModel";
 import {
   responseErrorTest as errorTest,
   BusinessErrorType as BusErrorType,

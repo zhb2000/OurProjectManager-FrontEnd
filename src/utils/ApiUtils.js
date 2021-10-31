@@ -7,7 +7,7 @@ import {
     ProjectJson,
     TaskJson,
     UserJson
-} from './jsonmodel';
+} from './JsonModel';
 
 const CURRENT_USERNAME_KEY = 'CURRENT_USERNAME';
 const JWT_TOKEN_KEY = 'JWT_TOKEN';

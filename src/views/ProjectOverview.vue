@@ -39,7 +39,7 @@
 <script>
 import * as api from "../utils/ApiUtils";
 // eslint-disable-next-line no-unused-vars
-import { ProjectJson, UserJson, MemberJson } from "../utils/jsonmodel";
+import { ProjectJson, UserJson, MemberJson } from "../utils/JsonModel";
 import ProjectOverviewAdminCard from "../components/ProjectOverviewAdminCard.vue";
 
 export default {

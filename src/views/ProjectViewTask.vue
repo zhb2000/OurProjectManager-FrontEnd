@@ -107,7 +107,7 @@ import {
   MemberJson,
   // eslint-disable-next-line no-unused-vars
   UserJson,
-} from "../utils/jsonmodel";
+} from "../utils/JsonModel";
 import * as api from "../utils/ApiUtils";
 import {
   responseErrorTest as errTest,

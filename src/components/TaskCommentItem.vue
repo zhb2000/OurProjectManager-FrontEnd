@@ -27,7 +27,7 @@
 
 <script>
 // eslint-disable-next-line no-unused-vars
-import { CommentJson, UserJson } from "../utils/jsonmodel";
+import { CommentJson, UserJson } from "../utils/JsonModel";
 import { MarkdownPreview } from "vue-meditor";
 
 export default {

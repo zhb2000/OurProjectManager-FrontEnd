@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import { ProjectJson } from "../utils/jsonmodel";
+import { ProjectJson } from "../utils/JsonModel";
 
 export default {
   props: {

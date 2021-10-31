@@ -47,7 +47,7 @@
 
 <script>
 // eslint-disable-next-line no-unused-vars
-import { NotificationJson } from "../utils/jsonmodel";
+import { NotificationJson } from "../utils/JsonModel";
 import * as api from "../utils/ApiUtils";
 import {
   responseErrorTest as errorTest,

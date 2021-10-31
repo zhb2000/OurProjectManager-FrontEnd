@@ -20,7 +20,7 @@
 <script>
 import * as api from "../utils/ApiUtils";
 // eslint-disable-next-line no-unused-vars
-import { TaskJson, MemberJson } from "../utils/jsonmodel";
+import { TaskJson, MemberJson } from "../utils/JsonModel";
 import ProjectTaskItem from "../components/ProjectTaskItem.vue";
 
 export default {

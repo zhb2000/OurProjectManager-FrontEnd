@@ -52,7 +52,7 @@
 
 <script>
 // eslint-disable-next-line no-unused-vars
-import { ProjectJson, MemberJson } from "../utils/jsonmodel";
+import { ProjectJson, MemberJson } from "../utils/JsonModel";
 import * as api from "../utils/ApiUtils"
 import { confirmDeleteAsync } from "../utils/UiUtils";
 

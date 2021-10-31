@@ -15,7 +15,7 @@
 
 <script>
 import * as api from "../utils/ApiUtils";
-import { MemberJson } from "../utils/jsonmodel";
+import { MemberJson } from "../utils/JsonModel";
 import ProjectMemberItem from "../components/ProjectMemberItem.vue";
 import { confirmAsync } from "../utils/UiUtils";
 

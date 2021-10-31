@@ -48,7 +48,7 @@
 
 <script>
 import * as api from "../utils/ApiUtils";
-import { InvitationJson } from "../utils/jsonmodel";
+import { InvitationJson } from "../utils/JsonModel";
 
 export default {
   data() {
