@@ -24,7 +24,6 @@ const ProjectSetting = () => import('../views/project/ProjectSetting.vue');
 const ProjectCreateTask = () => import('../views/project/ProjectCreateTask.vue');
 const ProjectViewTask = () => import('../views/project/ProjectViewTask.vue');
 const InvitationView = () => import('../views/InvitationView.vue');
-const CreateProject = () => import('../views/CreateProject.vue');
 const JumpTo = () => import('../views/JumpTo.vue');
 
 Vue.use(VueRouter);
@@ -54,119 +53,106 @@ const routes = [
         path: '/',
         redirect: '/login'
     },
-    {
+    {   //开发调试
         path: '/dev',
         name: 'DevPanel',
         component: DevPanel
     },
-    //登录页面
-    {
+    {   //登录
         path: '/login',
         name: 'Login',
         component: Login
     },
-    //注册页面
-    {
+    {   //注册
         path: '/signup',
         name: 'SignUp',
         component: SignUp
     },
-    //创建项目页面
-    {
-        path: '/create-project',
-        name: 'CreateProject',
-        component: CreateProject,
-        meta: { requiresLogin: true }
-    },
-    //跳转到页面
-    {
+    {   //跳转到
         path: '/jump-to',
         name: 'JumpTo',
         component: JumpTo,
         meta: { requiresLogin: true }
     },
-    //用户主页
-    {
+    {   //用户主页
         path: '/users/:username',
         name: 'UserHome',
         component: UserHome,
         redirect: '/users/:username/overview',
         meta: { requiresLogin: true },
         children: [
-            {
+            {   //概览
                 path: 'overview',
                 name: 'UserOverview',
                 component: UserOverview
             },
-            {
+            {   //项目
                 path: 'projects',
                 name: 'UserProject',
                 component: UserProject
             },
-            {
+            {   //通知
                 path: 'notifications',
                 name: 'UserNotification',
                 component: UserNotification
             },
-            {
+            {   //设置
                 path: 'setting',
                 name: 'UserSetting',
                 component: UserSetting
             }
         ]
     },
-    //项目主页
-    {
+    {   //项目主页
         path: '/projects/:projectId',
         name: 'ProjectHome',
         component: ProjectHome,
         redirect: '/projects/:projectId/overview',
         meta: { requiresLogin: true },
         children: [
-            {
+            {   //概览
                 path: 'overview',
                 name: 'ProjectOverview',
                 component: ProjectOverview
             },
-            {
+            {   //任务
                 path: 'tasks',
                 name: 'ProjectTask',
                 component: ProjectTask
             },
-            {
+            {   //成员
                 path: 'members',
                 name: 'ProjectMember',
                 component: ProjectMember
             },
-            {
+            {   //统计
                 path: 'statistic',
                 name: 'ProjectStatistic',
                 component: ProjectStatistic
             },
-            {
+            {   //邀请
                 path: 'invitations',
                 name: 'ProjectInvitation',
                 component: ProjectInvitation
             },
-            {
+            {   //设置
                 path: 'setting',
                 name: 'ProjectSetting',
                 component: ProjectSetting
             },
-            {
+            {   //创建任务
                 path: 'tasks/create',
                 name: 'ProjectCreateTask',
                 component: ProjectCreateTask
             },
-            {
+            {   //任务详情
                 path: 'tasks/:taskId',
                 name: 'ProjectViewTask',
                 component: ProjectViewTask
             }
         ]
     },
-    //邀请查看页面
-    {
+    {   //查看邀请详情
         path: '/projects/:projectId/invitations/:invitationId',
         name: 'InvitationView',
         component: InvitationView,

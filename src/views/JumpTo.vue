@@ -1,18 +1,22 @@
 <template>
-  <div>
-    <h1>SearchResult</h1>
+  <container-without-side>
     <div>
-      project id:<input v-model="projectId" />
-      <button @click="goProjectBtnClick">go project</button>
+      <h1>SearchResult</h1>
+      <div>
+        project id:<input v-model="projectId" />
+        <button @click="goProjectBtnClick">go project</button>
+      </div>
+      <div>
+        username:<input v-model="username" />
+        <button @click="goUserBtnClick">go user</button>
+      </div>
     </div>
-    <div>
-      username:<input v-model="username" />
-      <button @click="goUserBtnClick">go user</button>
-    </div>
-  </div>
+  </container-without-side>
 </template>
 
 <script>
+import ContainerWithoutSide from "../components/ContainerWithoutSide.vue";
+
 export default {
   data() {
     return {
@@ -28,5 +32,6 @@ export default {
       this.$router.push("/users/" + this.username);
     },
   },
+  components: { ContainerWithoutSide },
 };
 </script>

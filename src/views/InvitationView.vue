@@ -1,54 +1,57 @@
 // 查看邀请页面
 <template>
-  <div class="invitation-view-page">
-    <div class="invitation-card">
-      <div class="line">
-        <span class="attr-name">收件人：</span>
-        <router-link :to="recvPath" class="username">
-          {{ recvUsername }}
-        </router-link>
-        <span class="nickname">{{ recvNickname }}</span>
-      </div>
-      <div class="line">
-        <span class="attr-name">发送者：</span>
-        <router-link :to="sendPath" class="username">
-          {{ sendUsername }}
-        </router-link>
-        <span class="nickname">{{ sendNickname }}</span>
-      </div>
-      <div class="line">
-        <span class="attr-name">项目：</span>
-        <router-link :to="projectPath" class="project-name">
-          {{ projectName }}
-        </router-link>
-      </div>
-      <div class="line">
-        <span class="attr-name">邀请 ID：</span>
-        <span>{{ invitationId }}</span>
-      </div>
-      <div class="line">
-        <span class="attr-name">创建时间：</span>
-        <span>{{ createAt }}</span>
-      </div>
-      <div class="line">
-        <span class="attr-name">结束时间：</span>
-        <span>{{ endAt }}</span>
-      </div>
-      <div class="line">
-        <span class="attr-name">当前状态：</span>
-        <span>{{ statusStr }}</span>
-      </div>
-      <div v-if="isReceiver && isCreated" class="btn-group">
-        <el-button type="primary" @click="acceptBtnClick">接受邀请</el-button>
-        <el-button @click="rejectBtnClick">拒绝邀请</el-button>
+  <container-without-side>
+    <div class="invitation-view-page">
+      <div class="invitation-card">
+        <div class="line">
+          <span class="attr-name">收件人：</span>
+          <router-link :to="recvPath" class="username">
+            {{ recvUsername }}
+          </router-link>
+          <span class="nickname">{{ recvNickname }}</span>
+        </div>
+        <div class="line">
+          <span class="attr-name">发送者：</span>
+          <router-link :to="sendPath" class="username">
+            {{ sendUsername }}
+          </router-link>
+          <span class="nickname">{{ sendNickname }}</span>
+        </div>
+        <div class="line">
+          <span class="attr-name">项目：</span>
+          <router-link :to="projectPath" class="project-name">
+            {{ projectName }}
+          </router-link>
+        </div>
+        <div class="line">
+          <span class="attr-name">邀请 ID：</span>
+          <span>{{ invitationId }}</span>
+        </div>
+        <div class="line">
+          <span class="attr-name">创建时间：</span>
+          <span>{{ createAt }}</span>
+        </div>
+        <div class="line">
+          <span class="attr-name">结束时间：</span>
+          <span>{{ endAt }}</span>
+        </div>
+        <div class="line">
+          <span class="attr-name">当前状态：</span>
+          <span>{{ statusStr }}</span>
+        </div>
+        <div v-if="isReceiver && isCreated" class="btn-group">
+          <el-button type="primary" @click="acceptBtnClick">接受邀请</el-button>
+          <el-button @click="rejectBtnClick">拒绝邀请</el-button>
+        </div>
       </div>
     </div>
-  </div>
+  </container-without-side>
 </template>
 
 <script>
 import * as api from "../utils/ApiUtils";
 import { InvitationJson } from "../utils/JsonModel";
+import ContainerWithoutSide from "../components/ContainerWithoutSide.vue";
 
 export default {
   data() {
@@ -190,6 +193,7 @@ export default {
       return this.invitation && this.invitation.status === status;
     },
   },
+  components: { ContainerWithoutSide },
 };
 </script>
 
@@ -208,7 +212,7 @@ export default {
   border-radius: 10px;
   padding: 30px 40px;
   background: white;
-  box-shadow: 0px 2px 5px 1px rgba(0,0,0,0.2);
+  box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.2);
 }
 
 .line {

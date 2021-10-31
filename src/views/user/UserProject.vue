@@ -202,6 +202,7 @@ export default {
 </script>
 
 <style scoped>
+
 .search-input {
   width: 400px;
   margin-right: 10px;

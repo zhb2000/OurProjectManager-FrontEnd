@@ -1,7 +1,7 @@
 // 用户主页
 <template>
-  <el-container style="height: 100%">
-    <el-aside class="user-aside" width="250px">
+  <container-with-side>
+    <template v-slot:side>
       <router-link
         to="./overview"
         :class="[{ 'aside-item-active': isOverviewActive }, 'aside-item']"
@@ -29,17 +29,16 @@
       >
         <i class="el-icon-s-tools" />设置
       </router-link>
-    </el-aside>
-    <el-container>
-      <el-main>
-        <router-view />
-      </el-main>
-    </el-container>
-  </el-container>
+    </template>
+    <template v-slot:main>
+      <router-view style="padding: 20px;" />
+    </template>
+  </container-with-side>
 </template>
 
 <script>
 import * as api from "../../utils/ApiUtils";
+import ContainerWithSide from "../../components/ContainerWithSide.vue";
 
 export default {
   data() {
@@ -88,6 +87,7 @@ export default {
       }
     },
   },
+  components: { ContainerWithSide },
 };
 </script>
 

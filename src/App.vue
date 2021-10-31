@@ -1,34 +1,21 @@
 <template>
   <div id="app">
-    <el-container id="app-container">
-      <el-header id="app-header">
-        <header-bar />
-      </el-header>
-      <el-main id="app-main">
-        <router-view />
-      </el-main>
-    </el-container>
+    <router-view />
   </div>
 </template>
 
 <script>
-import AppHeaderBar from "./components/AppHeaderBar.vue";
-
-export default {
-  components: {
-    "header-bar": AppHeaderBar,
-  },
-};
+export default {};
 </script>
 
 <style>
-/**把网页的边界去掉 */
+/** 把网页的边界去掉 */
 body {
   margin: 0;
   height: 100%;
 }
 
-/**改变盒子模型 */
+/** 改变盒子模型 */
 * {
   box-sizing: border-box;
 }
@@ -46,15 +33,17 @@ html {
   height: 100%;
 }
 
-#app-header {
-  padding: 0;
+::-webkit-scrollbar {
+  width: 12px;
+  height: 12px;
 }
 
-#app-container {
-  height: 100%;
+::-webkit-scrollbar-thumb {
+  border-radius: 4px;
+  background-color: #97979fa1;
 }
 
-#app-main {
-  padding: 0px;
+::-webkit-scrollbar-thumb:hover {
+  background-color: grey;
 }
 </style>

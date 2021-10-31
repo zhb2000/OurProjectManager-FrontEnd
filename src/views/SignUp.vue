@@ -1,55 +1,58 @@
 <template>
-  <div class="sign-up-page">
-    <div class="sign-up-card">
-      <div class="welcome">欢迎注册 Our Project Manager</div>
-      <div class="create">注册账号</div>
-      <div class="attr-name">用户名</div>
-      <input
-        class="sign-up-input"
-        name="username"
-        autocomplete="username"
-        v-model="username"
-      />
-      <div class="attr-name">昵称</div>
-      <input
-        class="sign-up-input"
-        name="nickname"
-        autocomplete="nickname"
-        v-model="nickname"
-      />
-      <div class="attr-name">密码</div>
-      <input
-        class="sign-up-input"
-        type="password"
-        name="password"
-        autocomplete="new-password"
-        v-model="password"
-      />
-      <div class="attr-name">确认密码</div>
-      <input
-        class="sign-up-input"
-        type="password"
-        name="confirm-password"
-        autocomplete="new-password"
-        v-model="confirmPassword"
-      />
-      <el-button type="primary" class="sign-up-btn" @click="signUpBtnClick"
-        >注册账号</el-button
-      >
-      <router-link to="/login" class="login-link"
-        >已有账号？前去登录</router-link
-      >
+  <container-without-side>
+    <div class="sign-up-page">
+      <div class="sign-up-card">
+        <div class="welcome">欢迎注册 Our Project Manager</div>
+        <div class="create">注册账号</div>
+        <div class="attr-name">用户名</div>
+        <input
+          class="sign-up-input"
+          name="username"
+          autocomplete="username"
+          v-model="username"
+        />
+        <div class="attr-name">昵称</div>
+        <input
+          class="sign-up-input"
+          name="nickname"
+          autocomplete="nickname"
+          v-model="nickname"
+        />
+        <div class="attr-name">密码</div>
+        <input
+          class="sign-up-input"
+          type="password"
+          name="password"
+          autocomplete="new-password"
+          v-model="password"
+        />
+        <div class="attr-name">确认密码</div>
+        <input
+          class="sign-up-input"
+          type="password"
+          name="confirm-password"
+          autocomplete="new-password"
+          v-model="confirmPassword"
+        />
+        <el-button type="primary" class="sign-up-btn" @click="signUpBtnClick"
+          >注册账号</el-button
+        >
+        <router-link to="/login" class="login-link"
+          >已有账号？前去登录</router-link
+        >
+      </div>
     </div>
-  </div>
+  </container-without-side>
 </template>
 
 <script>
 import axios from "axios";
 import {
   BusinessErrorType as BusErrType,
-  responseErrorTest as errorTest,
+  responseErrorTest as errTest,
 } from "../utils/ResponseErrorUtils.js";
 import { StringUtils } from "../utils/StringUtils.js";
+import ContainerWithoutSide from "../components/ContainerWithoutSide.vue";
 
 export default {
   data() {
@@ -86,7 +89,7 @@ export default {
           password: this.password,
         });
       } catch (error) {
-        if (errorTest(error, BusErrType.USER_ALREADY_EXIST)) {
+        if (errTest(error, BusErrType.USER_ALREADY_EXIST)) {
           this.$message({ message: "同名用户已存在", type: "error" });
         } else {
           this.$message({ message: "注册失败", type: "error" });
@@ -98,6 +101,7 @@ export default {
       this.$router.push("/login");
     },
   },
+  components: { ContainerWithoutSide },
 };
 </script>
 

@@ -1,46 +1,48 @@
 <template>
-  <div class="login-page">
-    <div class="login-card">
-      <div class="welcome">欢迎登录</div>
-      <div class="attr-name">用户名</div>
-      <input
-        name="username"
-        autocomplete="username"
-        v-model="username"
-        class="login-input"
-      />
-      <div class="attr-name">密码</div>
-      <input
-        type="password"
-        name="password"
-        autocomplete="current-password"
-        v-model="password"
-        class="login-input"
-      />
-      <el-button
-        type="primary"
-        size="medium"
-        class="login-btn"
-        @click="loginBtnClick"
-      >
-        登录
-      </el-button>
-      <router-link to="/signup" class="sign-up-link">
-        没有账号？前去注册
-      </router-link>
+  <container-without-side>
+    <div class="login-page">
+      <div class="login-card">
+        <div class="welcome">欢迎登录</div>
+        <div class="attr-name">用户名</div>
+        <input
+          name="username"
+          autocomplete="username"
+          v-model="username"
+          class="login-input"
+        />
+        <div class="attr-name">密码</div>
+        <input
+          type="password"
+          name="password"
+          autocomplete="current-password"
+          v-model="password"
+          class="login-input"
+        />
+        <el-button
+          type="primary"
+          size="medium"
+          class="login-btn"
+          @click="loginBtnClick"
+        >
+          登录
+        </el-button>
+        <router-link to="/signup" class="sign-up-link">
+          没有账号？前去注册
+        </router-link>
+      </div>
     </div>
-  </div>
+  </container-without-side>
 </template>
 
 <script>
 import {
   BusinessErrorType as BusErrType,
-  responseErrorTest as errorTest,
+  responseErrorTest as errTest,
 } from "../utils/ResponseErrorUtils";
 import * as api from "../utils/ApiUtils";
+import ContainerWithoutSide from "../components/ContainerWithoutSide.vue";
 
 export default {
-  mounted() {},
   data() {
     return {
       username: "",
@@ -52,7 +54,7 @@ export default {
       try {
         await api.loginAsync(this.username, this.password);
       } catch (error) {
-        if (errorTest(error, BusErrType.WRONG_PASSWORD_OR_USERNAME)) {
+        if (errTest(error, BusErrType.WRONG_PASSWORD_OR_USERNAME)) {
           this.$message({ message: "用户名或密码不正确", type: "error" });
         } else {
           this.$message({ message: "登录失败", type: "error" });
@@ -63,6 +65,7 @@ export default {
       this.$router.push("/users/" + this.username);
     },
   },
+  components: { ContainerWithoutSide },
 };
 </script>
 
@@ -137,7 +140,7 @@ export default {
   color: #0366d6;
 }
 
-.welcome{
+.welcome {
   font-size: 25px;
   font-weight: lighter;
   align-self: center;
