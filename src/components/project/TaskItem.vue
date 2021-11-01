@@ -25,10 +25,12 @@
         </div>
       </div>
       <div class="lower-area">
-        <span>创建者：</span>
-        <span style="margin-right: 15px">{{ creatorUsername }}</span>
-        <span>创建时间：</span>
-        <span>{{ createAt }}</span>
+        <span style="white-space: nowrap; margin-top: 5px; margin-right: 15px">
+          创建者：{{ creatorUsername }}
+        </span>
+        <span style="white-space: nowrap; margin-top: 5px">
+          创建时间：{{ createAt }}
+        </span>
       </div>
     </div>
   </div>
@@ -120,13 +122,15 @@ export default {
   color: #606266;
   font-size: 14px;
   margin-top: 5px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .task-title {
   color: #0366d6;
   font-weight: bold;
   text-decoration: none;
-  /* transition: 0.1s; */
 }
 
 .task-title:hover {

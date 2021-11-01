@@ -1,6 +1,6 @@
 // 用户通知页面
 <template>
-  <div>
+  <div class="main-page">
     <div style="display: flex">
       <div style="flex-grow: 1" />
       <el-button type="primary" size="medium" @click="dialogVisible = true">
@@ -179,6 +179,10 @@ export default {
 </script>
 
 <style scoped>
+.main-page {
+  padding: 20px;
+}
+
 .send-input {
   display: block;
   width: 100%;

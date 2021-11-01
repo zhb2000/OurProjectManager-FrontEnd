@@ -3,18 +3,22 @@
   <div class="send-card">
     <div class="title">{{ title }}</div>
     <div class="info-line">
-      <span class="attr-name">收件人：</span>
-      <router-link :to="recvPath" class="username">
-        {{ recvUsername }}
-      </router-link>
-      <span class="attr-name">发送时间：</span>
-      <span class="info">{{ createAt }}</span>
-      <span class="attr-name">状态：</span>
-      <span class="info">{{ statusStr }}</span>
+      <span class="info-span">
+        <span class="attr-name">收件人：</span>
+        <router-link :to="recvPath" class="username">
+          {{ recvUsername }}
+        </router-link>
+      </span>
+      <span class="info-span">
+        <span class="attr-name">发送时间：</span>
+        <span class="info">{{ createAt }}</span>
+      </span>
+      <span class="info-span">
+        <span class="attr-name">状态：</span>
+        <span class="info">{{ statusStr }}</span>
+      </span>
     </div>
-    <div class="body-area">
-      <div>{{ body }}</div>
-    </div>
+    <div class="body-area">{{ body }}</div>
   </div>
 </template>
 
@@ -61,12 +65,23 @@ export default {
 .send-card {
   border: solid 1px #dcdfe6;
   border-radius: 10px;
-  padding: 15px 25px;
-  margin-bottom: 15px;
+  padding: 35px 30px;
+  margin-bottom: 20px;
+  margin-left: 10px;
+  margin-right: 10px;
 }
 
 .info-line {
-  margin: 5px 0;
+  margin-top: 15px;
+  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.info-span {
+  white-space: nowrap;
+  margin-top: 5px;
 }
 
 .info {
@@ -95,10 +110,19 @@ export default {
 }
 
 .title {
-  font-size: 26px;
+  font-size: 24px;
 }
 
 .body-area {
   margin-top: 10px;
+  word-wrap: break-word;
+}
+
+@media screen and (max-width: 600px) {
+  .send-card {
+    padding: 20px;
+    margin-left: 0px;
+    margin-right: 0px;
+  }
 }
 </style>

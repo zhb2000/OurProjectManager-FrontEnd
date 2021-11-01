@@ -88,7 +88,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .header-bar {
   background: #409eff;
   width: 100%;
@@ -173,6 +173,10 @@ export default {
 @media screen and (max-width: 600px) {
   .header-bar {
     padding: 0 10px;
+  }
+
+  .search-input {
+    display: none;
   }
 }
 </style>

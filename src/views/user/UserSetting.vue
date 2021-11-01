@@ -1,5 +1,6 @@
+<!-- 用户设置页面 -->
 <template>
-  <div>
+  <div style="padding: 20px">
     <h2 class="setting-header">修改昵称</h2>
     <div>当前昵称：{{ nickname }}</div>
     <label for="new-nickname" class="setting-label">新昵称</label>
@@ -236,7 +237,8 @@ export default {
 
 .setting-input {
   display: block;
-  width: 400px;
+  max-width: 400px;
+  width: 100%;
   background: #fafbfc;
   border-color: #dcdfe6;
   border-radius: 6px;

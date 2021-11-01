@@ -5,9 +5,9 @@
       {{ projectName }}
     </router-link>
     <div class="description">{{ project.description }}</div>
-    <div>
-      <span class="down-info"
-        >项目主管：
+    <div class="info-line">
+      <span class="down-info">
+        项目主管：
         <router-link :to="superAdminPath" class="super-admin">
           {{ superAdminName }}
         </router-link>
@@ -81,14 +81,23 @@ export default {
 }
 
 .description {
-  margin: 8px 0;
+  margin-top: 8px;
+  margin-bottom: 3px;
   color: #606266;
+}
+
+.info-line {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
 }
 
 .down-info {
   color: #909399;
   font-size: 14px;
-  margin: 0 20px 0 0;
+  margin-right: 20px;
+  margin-top: 5px;
+  white-space: nowrap;
 }
 
 .super-admin {
@@ -104,5 +113,11 @@ export default {
 
 .super-admin:active {
   color: #909399;
+}
+
+@media screen and (max-width: 600px) {
+  .project-item-card {
+    padding: 20;
+  }
 }
 </style>

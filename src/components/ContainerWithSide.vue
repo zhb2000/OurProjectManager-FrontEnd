@@ -49,7 +49,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .app-side {
   padding: 0px;
   margin: 0px;

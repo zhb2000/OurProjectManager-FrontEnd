@@ -1,6 +1,6 @@
 // 用户概览页面
 <template>
-  <div>
+  <div class="overview-page">
     <div class="avatar-container">
       <div>
         <el-avatar :size="150" style="user-avatar">
@@ -102,6 +102,10 @@ export default {
 </script>
 
 <style scoped>
+.main-page {
+  padding: 20px;
+}
+
 .username-left {
   font-size: 30px;
   font-weight: bold;
@@ -127,7 +131,7 @@ export default {
 
 .detail-card {
   padding: 20px 40px;
-  margin: 20px;
+  margin-top: 20px;
   border-style: solid;
   border-radius: 10px;
   border-width: 1px;
@@ -145,5 +149,15 @@ export default {
 
 .card-right-col {
   line-height: 40px;
+}
+
+@media screen and (max-width: 400px) {
+  .main-page {
+    padding: 20px 10px 20px 10px;
+  }
+
+  .detail-card {
+    padding: 10px 20px;
+  }
 }
 </style>

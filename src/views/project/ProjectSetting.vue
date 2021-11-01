@@ -1,4 +1,4 @@
-//项目设置页
+<!-- 项目设置页面 -->
 <template>
   <div>
     <h2 class="setting-header">修改项目名称</h2>
@@ -53,7 +53,7 @@
 <script>
 // eslint-disable-next-line no-unused-vars
 import { ProjectJson, MemberJson } from "../../utils/JsonModel";
-import * as api from "../../utils/ApiUtils"
+import * as api from "../../utils/ApiUtils";
 import { confirmDeleteAsync } from "../../utils/UiUtils";
 
 export default {
@@ -195,7 +195,8 @@ export default {
 
 .setting-input {
   display: block;
-  width: 400px;
+  max-width: 400px;
+  width: 100%;
   background: #fafbfc;
   border-color: #dcdfe6;
   border-radius: 6px;

@@ -6,7 +6,12 @@
         placeholder="收件人的用户名"
         v-model="receiverUsername"
       />
-      <el-button type="primary" size="medium" @click="sendInvitationBtnClick">
+      <el-button
+        type="primary"
+        size="medium"
+        class="sendBtn"
+        @click="sendInvitationBtnClick"
+      >
         发送邀请
       </el-button>
     </div>
@@ -92,6 +97,7 @@ export default {
             type: "error",
           });
         } else {
+          this.$message({ message: "查找用户失败", type: "error" });
           console.log("Find receiver failed: " + error);
         }
         return;
@@ -107,6 +113,7 @@ export default {
             type: "error",
           });
         } else {
+          this.$message({ message: "发送邀请失败", type: "error" });
           console.log("Send invitation failed: " + error);
         }
         return;
@@ -140,7 +147,7 @@ export default {
 <style scoped>
 .invitation-grid {
   display: grid;
-  grid-template-columns: 50% 50%;
+  grid-template-columns: 1fr 1fr;
 }
 
 .input-area {
@@ -168,5 +175,20 @@ export default {
   outline: none;
   border-color: #409eff;
   box-shadow: 0 0 5px #409eff;
+}
+
+@media screen and (max-width: 700px) {
+  .invitation-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .user-input {
+    width: 300px;
+  }
+
+  .sendBtn {
+    padding: 10px 10px;
+    margin-top: 10px;
+  }
 }
 </style>

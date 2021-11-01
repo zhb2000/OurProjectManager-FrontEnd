@@ -3,25 +3,25 @@
   <div>
     <div class="chart-header">热力图</div>
     <calendar-heatmap
-      style="margin: 20px"
+      class="chart"
       :values="heatmapData"
       :end-date="new Date()"
     />
     <div class="chart-header">完成任务</div>
     <column-chart
-      style="margin: 20px"
+      class="chart"
       v-bind="completeChartConfig"
       :data="completeChartData"
     />
     <div class="chart-header">创建任务</div>
     <column-chart
-      style="margin: 20px"
+      class="chart"
       v-bind="createChartConfig"
       :data="createChartData"
     />
     <div class="chart-header">评论数量</div>
     <column-chart
-      style="margin: 20px"
+      class="chart"
       v-bind="commentChartConfig"
       :data="commentChartData"
     />
@@ -115,10 +115,21 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .chart-header {
   margin: 0 20px;
   font-weight: bold;
   font-size: 25px;
+}
+
+.chart {
+  margin: 20px;
+}
+
+@media screen and (max-width: 700px) {
+  .chart {
+    margin-left: 0px;
+    margin-right: 0px;
+  }
 }
 </style>

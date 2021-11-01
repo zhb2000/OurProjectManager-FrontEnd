@@ -51,11 +51,22 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .member-grid {
   display: grid;
-  grid-template-columns: 50% 50%;
+  grid-template-columns: 1fr 1fr;
   margin-left: 10px;
   margin-right: 10px;
+  row-gap: 20px;
+  column-gap: 20px;
+}
+
+@media screen and (max-width: 700px) {
+  .member-grid {
+    grid-template-columns: 1fr;
+    margin-left: 0px;
+    margin-right: 0px;
+    row-gap: 20px;
+  }
 }
 </style>

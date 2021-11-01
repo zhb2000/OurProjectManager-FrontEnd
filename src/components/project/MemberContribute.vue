@@ -97,9 +97,8 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .contribute-card {
-  margin: 10px;
   border-style: solid;
   border-width: 1px;
   border-color: #dcdfe6;

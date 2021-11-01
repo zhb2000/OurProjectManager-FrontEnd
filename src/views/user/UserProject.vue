@@ -1,13 +1,18 @@
-// 用户项目页面
+<!-- 用户项目页面 -->
 <template>
-  <div>
+  <div class="main-page">
+    <!-- search and filter -->
     <div class="input-container">
       <input
         v-model="searchWord"
         placeholder="搜索你的项目"
-        class="search-input"
+        class="search-input input-item-base"
       />
-      <el-select v-model="filterValue" size="medium" class="input-select">
+      <el-select
+        v-model="filterValue"
+        size="medium"
+        class="input-select input-item-base"
+      >
         <el-option
           v-for="option in filterOptions"
           :key="option.value"
@@ -15,7 +20,11 @@
           :value="option.value"
         />
       </el-select>
-      <el-select v-model="sortValue" size="medium" class="input-select">
+      <el-select
+        v-model="sortValue"
+        size="medium"
+        class="input-select input-item-base"
+      >
         <el-option
           v-for="option in sortOptions"
           :key="option.value"
@@ -23,16 +32,29 @@
           :value="option.value"
         />
       </el-select>
-      <el-button type="primary" size="medium" @click="dialogVisible = true">
+      <el-button
+        class="input-item-base"
+        type="primary"
+        size="medium"
+        @click="dialogVisible = true"
+      >
         新建项目
       </el-button>
     </div>
+
+    <!-- project list -->
     <project-item
       v-for="project in showedProjects"
       :key="project.id"
       :project="project"
     />
-    <el-dialog title="创建项目" :visible.sync="dialogVisible">
+
+    <!-- create project dialog -->
+    <el-dialog
+      title="创建项目"
+      :width="dialogWidth"
+      :visible.sync="dialogVisible"
+    >
       <div class="attr-name">项目名称</div>
       <input
         class="create-input"
@@ -84,6 +106,7 @@ export default {
       dialogVisible: false,
       projectName: "",
       projectDescription: "",
+      windowWidth: window.innerWidth,
     };
   },
   computed: {
@@ -153,6 +176,15 @@ export default {
       }
       return arr;
     },
+    dialogWidth() {
+      if (this.windowWidth > 800) {
+        return "50%";
+      } else if (this.windowWidth > 400) {
+        return "80%";
+      } else {
+        return "90%";
+      }
+    },
   },
   watch: {
     async $route() {
@@ -160,7 +192,11 @@ export default {
     },
   },
   async mounted() {
+    this.$nextTick(() => window.addEventListener("resize", this.onResize));
     await this.pageChangedAsync();
+  },
+  beforeDestroy() {
+    window.removeEventListener("resize", this.onResize);
   },
   methods: {
     /** fetch user's projects */
@@ -194,14 +230,18 @@ export default {
       this.dialogVisible = false;
       this.$router.push("/projects/" + projectId);
     },
+    onResize() {
+      this.windowWidth = window.innerWidth;
+    },
   },
-  components: {
-    ProjectItem,
-  },
+  components: { ProjectItem },
 };
 </script>
 
 <style scoped>
+.main-page {
+  padding: 20px;
+}
 
 .search-input {
   width: 400px;
@@ -233,6 +273,12 @@ export default {
 .input-container {
   display: flex;
   align-content: center;
+  flex-wrap: wrap;
+}
+
+.input-item-base {
+  margin-top: 5px;
+  height: 36px;
 }
 
 .input-select {

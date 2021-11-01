@@ -2,7 +2,7 @@
 <template>
   <div>
     <div class="chart-header">任务类型占比</div>
-    <bar-chart style="margin: 20px" v-bind="typeConfig" :data="typeData" />
+    <bar-chart class="chart" v-bind="typeConfig" :data="typeData" />
   </div>
 </template>
 
@@ -47,10 +47,24 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .chart-header {
   margin: 0 20px;
   font-weight: bold;
   font-size: 25px;
+}
+
+.chart {
+  margin: 20px;
+}
+
+@media screen and (max-width: 700px) {
+  .chart {
+    margin: 20px 0px;
+  }
+
+  .chart-header {
+    margin: 0px;
+  }
 }
 </style>
