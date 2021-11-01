@@ -1,4 +1,4 @@
-// 项目内邀请条目
+<!-- 项目内邀请条目 -->
 <template>
   <div class="invitation-card">
     <div class="line">

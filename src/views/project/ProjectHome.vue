@@ -1,4 +1,4 @@
-// 项目主页
+<!-- 项目主页 -->
 <template>
   <container-with-side>
     <template v-slot:side>
@@ -45,7 +45,7 @@
       </router-link>
     </template>
     <template v-slot:main>
-      <router-view style="padding: 20px" />
+      <router-view />
     </template>
   </container-with-side>
 </template>

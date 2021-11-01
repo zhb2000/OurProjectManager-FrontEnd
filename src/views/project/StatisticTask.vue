@@ -1,4 +1,4 @@
-// 项目统计-任务类型
+<!-- 项目统计-任务类型 -->
 <template>
   <div>
     <div class="chart-header">任务类型占比</div>

@@ -1,4 +1,4 @@
-// 用户发送通知条目
+<!-- 用户发送通知条目 -->
 <template>
   <div class="send-card">
     <div class="title">{{ title }}</div>

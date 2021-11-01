@@ -50,7 +50,7 @@
 import { NotificationJson } from "../../utils/JsonModel";
 import * as api from "../../utils/ApiUtils";
 import {
-  responseErrorTest as errorTest,
+  responseErrorTest as errTest,
   BusinessErrorType as BusErrorType,
 } from "../../utils/ResponseErrorUtils";
 import { StringUtils } from "../../utils/StringUtils";
@@ -132,7 +132,7 @@ export default {
           this.body
         );
       } catch (error) {
-        if (errorTest(error, BusErrorType.USER_NOT_FOUND)) {
+        if (errTest(error, BusErrorType.USER_NOT_FOUND)) {
           this.$message({
             message: "用户 " + this.receiverUsername + " 不存在",
             type: "error",

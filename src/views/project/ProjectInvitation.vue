@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="main-page">
     <div class="input-area">
       <input
         class="user-input"
@@ -31,7 +31,7 @@ import * as api from "../../utils/ApiUtils";
 // eslint-disable-next-line no-unused-vars
 import { InvitationJson } from "../../utils/JsonModel";
 import {
-  responseErrorTest as errorTest,
+  responseErrorTest as errTest,
   BusinessErrorType as BusErrorType,
 } from "../../utils/ResponseErrorUtils";
 import { projectUrlPrefix } from "../../MyConfig";
@@ -91,7 +91,7 @@ export default {
       try {
         receiver = await api.getUserByNameAsync(this.receiverUsername);
       } catch (error) {
-        if (errorTest(error, BusErrorType.USER_NOT_FOUND)) {
+        if (errTest(error, BusErrorType.USER_NOT_FOUND)) {
           this.$message({
             message: "用户 " + this.receiverUsername + " 不存在",
             type: "error",
@@ -107,7 +107,7 @@ export default {
       try {
         invitation = await api.createInvitationAsync(this.projectId, receiver);
       } catch (error) {
-        if (errorTest(error, BusErrorType.RECEIVER_ALREADY_IN_PROJECT)) {
+        if (errTest(error, BusErrorType.RECEIVER_ALREADY_IN_PROJECT)) {
           this.$message({
             message: "用户 " + this.receiverUsername + " 已在项目中",
             type: "error",
@@ -145,6 +145,10 @@ export default {
 </script>
 
 <style scoped>
+.main-page {
+  padding: 20px;
+}
+
 .invitation-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;

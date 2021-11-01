@@ -1,4 +1,4 @@
-// 任务详情页面的卡片
+<!-- 任务详情页面的卡片 -->
 <template>
   <div class="task-outer">
     <router-link :to="userUrl">
@@ -11,7 +11,6 @@
         <div style="flex-grow: 1" />
       </div>
       <div class="card-lower">
-        <!-- {{ body }} -->
         <markdown-preview :initialValue="body" />
       </div>
     </div>

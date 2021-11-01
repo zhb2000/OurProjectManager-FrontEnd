@@ -1,4 +1,4 @@
-// 成员贡献卡片
+<!-- 成员贡献卡片 -->
 <template>
   <div class="contribute-card">
     <div class="card-header">

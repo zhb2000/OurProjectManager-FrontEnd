@@ -1,4 +1,4 @@
-// 评论条目
+<!-- 评论条目 -->
 <template>
   <div class="comment-outer">
     <router-link :to="userUrl">

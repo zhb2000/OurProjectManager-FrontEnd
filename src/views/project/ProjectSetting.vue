@@ -1,6 +1,6 @@
 <!-- 项目设置页面 -->
 <template>
-  <div>
+  <div class="main-page">
     <h2 class="setting-header">修改项目名称</h2>
     <div>当前名称：{{ projectName }}</div>
     <label for="new-project-name" class="setting-label">新项目名称</label>
@@ -174,6 +174,10 @@ export default {
 </script>
 
 <style scoped>
+.main-page {
+  padding: 20px;
+}
+
 .setting-header {
   border-style: solid;
   border-width: 0 0 1px 0;

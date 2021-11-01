@@ -1,5 +1,6 @@
+<!-- 项目统计页 -->
 <template>
-  <div>
+  <div class="main-page">
     <el-tabs v-model="activeTabName">
       <el-tab-pane label="项目活跃度" name="project-contribute" :lazy="true">
         <statistic-project />
@@ -32,3 +33,9 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.main-page {
+  padding: 20px;
+}
+</style>

@@ -1,6 +1,6 @@
-// 项目概览页面
+<!-- 项目概览页面 -->
 <template>
-  <div>
+  <div class="main-page">
     <div class="project-card">
       <el-avatar :size="150">
         <span style="font-size: 50px">{{ nameFirstChar }}</span>
@@ -137,6 +137,10 @@ export default {
 </script>
 
 <style scoped>
+.main-page {
+  padding: 20px;
+}
+
 .project-card {
   padding: 20px 40px;
   margin: 20px;

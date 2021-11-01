@@ -1,4 +1,4 @@
-// 项目统计-成员贡献
+<!-- 项目统计-成员贡献 -->
 <template>
   <div class="member-grid">
     <member-contribute
@@ -45,9 +45,7 @@ export default {
       }
     },
   },
-  components: {
-    MemberContribute,
-  },
+  components: { MemberContribute },
 };
 </script>
 

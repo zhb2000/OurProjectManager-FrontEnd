@@ -1,4 +1,4 @@
-// 用户收到通知条目
+<!-- 用户收到通知条目 -->
 <template>
   <div class="recv-card">
     <div :class="[{ 'bold-font': !read }, 'title']">{{ title }}</div>

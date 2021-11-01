@@ -1,6 +1,6 @@
-// 创建任务页面
+<!-- 创建任务页面 -->
 <template>
-  <div>
+  <div class="main-page">
     <el-page-header @back="goBack" content="创建任务" />
     <div class="create-task-grid">
       <div class="input-area">
@@ -50,7 +50,7 @@ import {
   responseErrorTest as errTest,
   BusinessErrorType as BusErrType,
 } from "../../utils/ResponseErrorUtils";
-import TaskExecutorItem from "../../components/project/TaskExecutorItem.vue";
+import ExecutorItem from "../../components/project/ExecutorItem.vue";
 
 export default {
   data() {
@@ -130,13 +130,15 @@ export default {
       this.$router.back();
     },
   },
-  components: {
-    "executor-item": TaskExecutorItem,
-  },
+  components: { ExecutorItem },
 };
 </script>
 
 <style scoped>
+.main-page {
+  padding: 20px;
+}
+
 .create-task-grid {
   display: grid;
   grid-template-columns: 1fr 300px;

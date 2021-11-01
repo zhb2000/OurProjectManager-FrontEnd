@@ -78,7 +78,7 @@
 import { UserJson } from "../../utils/JsonModel";
 import * as api from "../../utils/ApiUtils";
 import {
-  responseErrorTest as errorTest,
+  responseErrorTest as errTest,
   BusinessErrorType as BusErrorType,
 } from "../../utils/ResponseErrorUtils";
 import { confirmAsync } from "../../utils/UiUtils";
@@ -154,7 +154,7 @@ export default {
         );
         await api.logoutAsync();
       } catch (error) {
-        if (errorTest(error, BusErrorType.USER_ALREADY_EXIST)) {
+        if (errTest(error, BusErrorType.USER_ALREADY_EXIST)) {
           this.$message({ message: "同名用户已存在", type: "error" });
         } else {
           this.$message({ message: "用户名更新失败", type: "error" });
@@ -174,7 +174,7 @@ export default {
         );
         await api.logoutAsync();
       } catch (error) {
-        if (errorTest(error, BusErrorType.WRONG_OLD_PASSWORD)) {
+        if (errTest(error, BusErrorType.WRONG_OLD_PASSWORD)) {
           this.$message({ message: "旧密码错误", type: "error" });
         } else {
           console.log("Update password failed: " + error);

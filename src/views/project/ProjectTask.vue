@@ -1,6 +1,6 @@
-//项目任务列表页
+<!-- 项目任务列表页 -->
 <template>
-  <div>
+  <div class="main-page">
     <div v-if="isAdmin" class="input-area">
       <div style="flex-grow: 1" />
       <router-link to="create" append>
@@ -100,6 +100,10 @@ export default {
 </script>
 
 <style scoped>
+.main-page {
+  padding: 20px;
+}
+
 .input-area {
   display: flex;
   margin-bottom: 15px;

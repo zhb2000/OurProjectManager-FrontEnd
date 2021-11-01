@@ -1,4 +1,4 @@
-// 查看邀请页面
+<!-- 查看邀请页面 -->
 <template>
   <container-without-side>
     <div class="invitation-view-page">

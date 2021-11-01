@@ -1,4 +1,4 @@
-// 用户参加的项目条目
+<!-- 用户参加的项目条目 -->
 <template>
   <div class="project-item-card">
     <router-link :to="projectPath" class="project-name">

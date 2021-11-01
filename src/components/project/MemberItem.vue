@@ -1,4 +1,4 @@
-// 项目内成员条目
+<!-- 项目内成员条目 -->
 <template>
   <div class="member-card">
     <el-avatar :size="50" class="avatar">

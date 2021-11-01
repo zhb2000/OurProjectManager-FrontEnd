@@ -1,6 +1,6 @@
-//项目成员页
+<!-- 项目成员页 -->
 <template>
-  <div>
+  <div class="main-page">
     <member-item
       v-for="member in members"
       :key="member.userId"
@@ -117,4 +117,7 @@ export default {
 </script>
 
 <style scoped>
+.main-page {
+  padding: 20px;
+}
 </style>

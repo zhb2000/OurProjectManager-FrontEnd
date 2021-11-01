@@ -1,6 +1,6 @@
-// 任务详情页
+<!-- 任务详情页 -->
 <template>
-  <div>
+  <div class="main-page">
     <el-page-header @back="goBack" content="任务详情" />
     <div class="title-area">
       <span class="task-title">{{ taskTitle }}</span>
@@ -115,8 +115,8 @@ import {
 } from "../../utils/ResponseErrorUtils";
 import { StringUtils } from "../../utils/StringUtils";
 import { confirmDeleteAsync } from "../../utils/UiUtils";
-import TaskCommentItem from "../../components/project/TaskCommentItem.vue";
-import TaskExecutorItem from "../../components/project/TaskExecutorItem.vue";
+import CommentItem from "../../components/project/CommentItem.vue";
+import ExecutorItem from "../../components/project/ExecutorItem.vue";
 import TaskViewCard from "../../components/project/TaskViewCard.vue";
 
 export default {
@@ -344,14 +344,18 @@ export default {
     },
   },
   components: {
-    "comment-item": TaskCommentItem,
-    "executor-item": TaskExecutorItem,
+    CommentItem,
+    ExecutorItem,
     "task-card": TaskViewCard,
   },
 };
 </script>
 
 <style scoped>
+.main-page {
+  padding: 20px;
+}
+
 .view-task-grid {
   display: grid;
   grid-template-columns: 1fr 300px;
