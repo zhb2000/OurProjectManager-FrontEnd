@@ -21,9 +21,9 @@ const ProjectMember = () => import('../views/project/ProjectMember.vue');
 const ProjectStatistic = () => import('../views/project/ProjectStatistic.vue');
 const ProjectInvitation = () => import('../views/project/ProjectInvitation.vue');
 const ProjectSetting = () => import('../views/project/ProjectSetting.vue');
-const ProjectCreateTask = () => import('../views/project/ProjectCreateTask.vue');
-const ProjectViewTask = () => import('../views/project/ProjectViewTask.vue');
-const InvitationView = () => import('../views/InvitationView.vue');
+const CreateTask = () => import('../views/project/CreateTask.vue');
+const ViewTask = () => import('../views/project/ViewTask.vue');
+const ViewInvitation = () => import('../views/ViewInvitation.vue');
 const JumpTo = () => import('../views/JumpTo.vue');
 
 Vue.use(VueRouter);
@@ -142,20 +142,20 @@ const routes = [
             },
             {   //创建任务
                 path: 'tasks/create',
-                name: 'ProjectCreateTask',
-                component: ProjectCreateTask
+                name: 'CreateTask',
+                component: CreateTask
             },
             {   //任务详情
                 path: 'tasks/:taskId',
-                name: 'ProjectViewTask',
-                component: ProjectViewTask
+                name: 'ViewTask',
+                component: ViewTask
             }
         ]
     },
     {   //查看邀请详情
         path: '/projects/:projectId/invitations/:invitationId',
-        name: 'InvitationView',
-        component: InvitationView,
+        name: 'ViewInvitation',
+        component: ViewInvitation,
         meta: { requiresLogin: true }
     }
 ];
