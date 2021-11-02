@@ -3,6 +3,7 @@
   <div class="main-page">
     <el-page-header @back="goBack" content="创建任务" />
     <div class="create-task-grid">
+      <!-- 任务标题、主体内容 -->
       <div class="input-area">
         <input
           class="create-task-input title"
@@ -18,6 +19,8 @@
           创建任务
         </el-button>
       </div>
+
+      <!-- 任务执行人 -->
       <div class="executor-area">
         <div class="executor-title">分配执行人</div>
         <div class="executor-input-area">
@@ -211,5 +214,21 @@ export default {
 .add-btn {
   padding: 10px;
   border-radius: 6px;
+}
+
+@media screen and (max-width: 950px) {
+  .create-task-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .executor-area {
+    margin-left: 0px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .main-page {
+    padding: 20px 15px;
+  }
 }
 </style>

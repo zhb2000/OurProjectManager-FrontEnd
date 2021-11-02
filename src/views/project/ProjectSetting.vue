@@ -220,4 +220,10 @@ export default {
   border-color: #409eff;
   box-shadow: 0 0 5px #409eff;
 }
+
+@media screen and (max-width: 600px) {
+  .main-page {
+    padding: 15px;
+  }
+}
 </style>

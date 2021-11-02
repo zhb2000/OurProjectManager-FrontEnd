@@ -1,4 +1,4 @@
-// 用户通知页面
+<!-- 用户通知页面 -->
 <template>
   <div class="main-page">
     <div style="display: flex">
@@ -220,5 +220,11 @@ export default {
 .send-btn-area {
   display: flex;
   justify-content: flex-end;
+}
+
+@media screen and (max-width: 600px) {
+  .main-page {
+    padding: 15px;
+  }
 }
 </style>

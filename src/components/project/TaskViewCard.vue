@@ -62,6 +62,7 @@ export default {
   display: flex;
   margin-bottom: 20px;
 }
+
 .task-card {
   flex-grow: 1;
   margin-left: 15px;
@@ -77,6 +78,7 @@ export default {
   height: 40px;
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .card-lower {

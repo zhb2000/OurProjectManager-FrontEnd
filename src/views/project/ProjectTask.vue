@@ -108,4 +108,10 @@ export default {
   display: flex;
   margin-bottom: 15px;
 }
+
+@media screen and (max-width: 600px) {
+  .main-page {
+    padding: 15px;
+  }
+}
 </style>

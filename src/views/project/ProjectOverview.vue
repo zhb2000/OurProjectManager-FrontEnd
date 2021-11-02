@@ -187,4 +187,10 @@ export default {
   font-weight: bold;
   font-size: 25px;
 }
+
+@media screen and (max-width: 600px) {
+  .main-page {
+    padding: 15px;
+  }
+}
 </style>

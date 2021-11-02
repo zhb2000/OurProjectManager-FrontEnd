@@ -9,8 +9,8 @@
         <span style="margin-left: 5px">已完成</span>
       </div>
     </div>
-    <!-- <el-divider /> -->
     <div class="view-task-grid">
+      <!-- 评论楼层 -->
       <div class="left-area">
         <task-card :task="task" />
         <comment-item
@@ -38,6 +38,8 @@
           </el-button>
         </div>
       </div>
+
+      <!-- 任务信息卡片 -->
       <div class="right-area">
         <div class="right-title">任务信息</div>
         <el-button
@@ -465,5 +467,22 @@ export default {
 .create-comment-btn {
   display: inline-block;
   align-self: flex-end;
+}
+
+@media screen and (max-width: 950px) {
+  .view-task-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .right-area {
+    margin-left: 0px;
+    margin-top: 20px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .main-page {
+    padding: 20px 15px;
+  }
 }
 </style>

@@ -1,6 +1,6 @@
 <!-- 用户设置页面 -->
 <template>
-  <div style="padding: 20px">
+  <div class="main-page">
     <h2 class="setting-header">修改昵称</h2>
     <div>当前昵称：{{ nickname }}</div>
     <label for="new-nickname" class="setting-label">新昵称</label>
@@ -216,6 +216,10 @@ export default {
 </script>
 
 <style scoped>
+.main-page {
+  padding: 20px;
+}
+
 .setting-header {
   border-style: solid;
   border-width: 0 0 1px 0;
@@ -257,5 +261,11 @@ export default {
   outline: none;
   border-color: #409eff;
   box-shadow: 0 0 5px #409eff;
+}
+
+@media screen and (max-width: 600px) {
+  .main-page {
+    padding: 15px;
+  }
 }
 </style>

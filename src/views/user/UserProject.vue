@@ -320,4 +320,10 @@ export default {
   display: flex;
   justify-content: flex-end;
 }
+
+@media screen and (max-width: 600px) {
+  .main-page {
+    padding: 15px;
+  }
+}
 </style>

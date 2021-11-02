@@ -38,4 +38,10 @@ export default {
 .main-page {
   padding: 20px;
 }
+
+@media screen and (max-width: 600px) {
+  .main-page {
+    padding: 15px;
+  }
+}
 </style>

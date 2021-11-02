@@ -2,14 +2,14 @@
   <div class="main-page">
     <div class="input-area">
       <input
-        class="user-input"
+        class="user-input input-item-base"
         placeholder="收件人的用户名"
         v-model="receiverUsername"
       />
       <el-button
         type="primary"
         size="medium"
-        class="sendBtn"
+        class="sendBtn input-item-base"
         @click="sendInvitationBtnClick"
       >
         发送邀请
@@ -156,6 +156,14 @@ export default {
 
 .input-area {
   margin: 0 10px 10px 10px;
+  display: flex;
+  align-content: center;
+  flex-wrap: wrap;
+}
+
+.input-item-base {
+  margin-top: 5px;
+  height: 36px;
 }
 
 .user-input {
@@ -185,14 +193,11 @@ export default {
   .invitation-grid {
     grid-template-columns: 1fr;
   }
+}
 
-  .user-input {
-    width: 300px;
-  }
-
-  .sendBtn {
-    padding: 10px 10px;
-    margin-top: 10px;
+@media screen and (max-width: 600px) {
+  .main-page {
+    padding: 15px 5px;
   }
 }
 </style>

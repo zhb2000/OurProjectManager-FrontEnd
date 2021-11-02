@@ -18,7 +18,6 @@
         />
       </div>
       <div class="card-lower">
-        <!-- {{ body }} -->
         <markdown-preview :initialValue="body" />
       </div>
     </div>
@@ -94,6 +93,7 @@ export default {
   height: 40px;
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .card-lower {

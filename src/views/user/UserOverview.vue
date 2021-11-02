@@ -1,6 +1,6 @@
-// 用户概览页面
+<!-- 用户概览页面 -->
 <template>
-  <div class="overview-page">
+  <div class="main-page">
     <div class="avatar-container">
       <div>
         <el-avatar :size="150" style="user-avatar">
