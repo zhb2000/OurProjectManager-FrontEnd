@@ -80,13 +80,14 @@ export default {
 }
 
 .login-card {
+  width: 380px;
   display: flex;
   flex-direction: column;
   border: solid 1px #dcdfe6;
   border-radius: 10px;
   padding: 30px 40px;
   background: white;
-  box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
 }
 
 .attr-name {
@@ -95,7 +96,7 @@ export default {
 }
 
 .login-input {
-  width: 300px;
+  width: 100%;
   margin-bottom: 15px;
   background: #fafbfc;
   border-color: #dcdfe6;
@@ -145,5 +146,13 @@ export default {
   font-weight: lighter;
   align-self: center;
   margin-bottom: 25px;
+}
+
+@media screen and (max-width: 450px) {
+  .login-card {
+    margin: 15px;
+    padding: 20px;
+    width: 100%;
+  }
 }
 </style>

@@ -1,9 +1,12 @@
 <!-- 项目内成员条目 -->
 <template>
   <div class="member-card">
+    <!-- 头像 -->
     <el-avatar :size="50" class="avatar">
       <span style="font-size: 25px">{{ nameFirstChar }}</span>
     </el-avatar>
+
+    <!-- 用户名、加入时间 -->
     <div>
       <router-link :to="userPath" class="username">{{ username }}</router-link>
       <div>
@@ -11,31 +14,39 @@
         <span class="join-at">加入时间：{{ joinAt }}</span>
       </div>
     </div>
+
+    <!-- 占位用 -->
     <div style="flex-grow: 1" />
-    <div>
-      <el-select
-        v-if="showRoleSelect"
-        v-model="roleValue"
-        @change="roleSelectChange"
-        class="role-select"
+
+    <div style="display: flex; align-items: center">
+      <!-- 成员角色：选择器或标签二选一显示 -->
+      <div>
+        <el-select
+          v-if="showRoleSelect"
+          v-model="roleValue"
+          @change="roleSelectChange"
+          class="role-select"
+        >
+          <el-option
+            v-for="option in roleOptions"
+            :key="option.value"
+            :label="option.label"
+            :value="option.value"
+          />
+        </el-select>
+        <div v-if="!showRoleSelect" class="role-label">{{ roleStr }}</div>
+      </div>
+
+      <!-- 移出项目按钮 -->
+      <el-button
+        v-if="showRemoveBtn"
+        type="danger"
+        class="remove-btn"
+        @click="removeBtnClick"
       >
-        <el-option
-          v-for="option in roleOptions"
-          :key="option.value"
-          :label="option.label"
-          :value="option.value"
-        />
-      </el-select>
-      <span v-if="!showRoleSelect" class="role-label">{{ roleStr }}</span>
+        移出项目
+      </el-button>
     </div>
-    <el-button
-      v-if="showRemoveBtn"
-      type="danger"
-      class="remove-btn"
-      @click="removeBtnClick"
-    >
-      移出项目
-    </el-button>
   </div>
 </template>
 
@@ -157,13 +168,15 @@ export default {
 <style scoped>
 .member-card {
   padding: 20px;
-  margin: 16px 0;
+  margin-bottom: 15px;
   border-style: solid;
   border-width: 1px;
   border-color: #dcdfe6;
   border-radius: 10px;
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
+  row-gap: 5px;
 }
 
 .avatar {
@@ -172,7 +185,7 @@ export default {
 
 .username {
   font-weight: bold;
-  display: block;
+  display: inline-block;
   text-decoration: none;
   color: #0366d6;
   font-size: 20px;
@@ -195,6 +208,7 @@ export default {
 .join-at {
   color: #909399;
   font-size: 14px;
+  white-space: nowrap;
 }
 
 .role-label {
@@ -206,10 +220,18 @@ export default {
 }
 
 .role-select {
-  width: 150px;
+  width: 120px;
+  margin-right: 15px;
 }
 
 .remove-btn {
-  margin-left: 15px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+@media screen and (max-width: 400px) {
+  .member-card {
+    padding: 15px;
+  }
 }
 </style>

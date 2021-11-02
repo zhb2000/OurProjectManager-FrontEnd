@@ -212,7 +212,7 @@ export default {
   border-radius: 10px;
   padding: 30px 40px;
   background: white;
-  box-shadow: 0px 2px 5px 1px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
 }
 
 .line {

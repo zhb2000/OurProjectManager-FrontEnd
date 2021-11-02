@@ -1,6 +1,7 @@
 <!-- 项目概览页面 -->
 <template>
   <div class="main-page">
+    <!-- 项目信息卡片 -->
     <div class="project-card">
       <el-avatar :size="150">
         <span style="font-size: 50px">{{ nameFirstChar }}</span>
@@ -25,8 +26,12 @@
         </div>
       </div>
     </div>
+
+    <!-- 项目主管区域 -->
     <div class="admin-header">项目主管</div>
     <div class="admin-grid"><admin-card :user="superAdmin" /></div>
+
+    <!-- 项目管理员区域 -->
     <div v-if="showAdmins">
       <div class="admin-header">项目管理员</div>
       <div class="admin-grid">
@@ -138,12 +143,11 @@ export default {
 
 <style scoped>
 .main-page {
-  padding: 20px;
+  padding: 40px;
 }
 
 .project-card {
   padding: 20px 40px;
-  margin: 20px;
   border-style: solid;
   border-width: 1px;
   border-color: #dcdfe6;
@@ -160,7 +164,7 @@ export default {
 }
 
 .info-area {
-  margin: 0 0 0 40px;
+  margin-left: 40px;
 }
 
 .info-list-area {
@@ -179,13 +183,52 @@ export default {
 
 .admin-grid {
   display: grid;
-  grid-template-columns: 50% 50%;
+  grid-template-columns: 1fr 1fr;
+  row-gap: 15px;
+  column-gap: 15px;
 }
 
 .admin-header {
-  margin: 0 20px;
+  margin-top: 40px;
+  margin-bottom: 15px;
   font-weight: bold;
-  font-size: 25px;
+  font-size: 24px;
+}
+
+@media screen and (min-width: 800px) and (max-width: 950px) {
+  .project-card {
+    flex-direction: column;
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+
+  .info-area {
+    margin-left: 0px;
+    margin-top: 20px;
+  }
+
+  .admin-grid {
+    grid-template-columns: 1fr;
+    row-gap: 15px;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  .project-card {
+    flex-direction: column;
+    padding-left: 0px;
+    padding-right: 0px;
+  }
+
+  .info-area {
+    margin-left: 0px;
+    margin-top: 20px;
+  }
+
+  .admin-grid {
+    grid-template-columns: 1fr;
+    row-gap: 15px;
+  }
 }
 
 @media screen and (max-width: 600px) {

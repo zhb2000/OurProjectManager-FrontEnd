@@ -1,3 +1,4 @@
+<!-- 项目概览页的管理员卡片 -->
 <template>
   <div class="admin-card">
     <el-avatar :size="50" class="avatar">
@@ -16,9 +17,7 @@
 <script>
 export default {
   props: {
-    user: {
-      required: true,
-    },
+    user: { required: true },
   },
   computed: {
     /** @returns {string} */
@@ -51,8 +50,7 @@ export default {
 
 <style scoped>
 .admin-card {
-  padding: 20px;
-  margin: 20px;
+  padding: 20px 15px;
   border-style: solid;
   border-width: 1px;
   border-color: #dcdfe6;
@@ -67,7 +65,7 @@ export default {
 
 .username {
   font-weight: bold;
-  display: block;
+  display: inline-block;
   text-decoration: none;
   color: #0366d6;
   font-size: 20px;
@@ -85,10 +83,12 @@ export default {
 .nickname {
   color: #303133;
   margin-right: 20px;
+  white-space: nowrap;
 }
 
-.user-id{
+.user-id {
   color: #909399;
   font-size: 14px;
+  white-space: nowrap;
 }
 </style>

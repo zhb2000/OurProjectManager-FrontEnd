@@ -64,7 +64,7 @@ export default {
     grid-template-columns: 1fr;
     margin-left: 0px;
     margin-right: 0px;
-    row-gap: 20px;
+    row-gap: 15px;
   }
 }
 </style>

@@ -34,12 +34,12 @@
           autocomplete="new-password"
           v-model="confirmPassword"
         />
-        <el-button type="primary" class="sign-up-btn" @click="signUpBtnClick"
-          >注册账号</el-button
-        >
-        <router-link to="/login" class="login-link"
-          >已有账号？前去登录</router-link
-        >
+        <el-button type="primary" class="sign-up-btn" @click="signUpBtnClick">
+          注册账号
+        </el-button>
+        <router-link to="/login" class="login-link">
+          已有账号？前去登录
+        </router-link>
       </div>
     </div>
   </container-without-side>
@@ -111,12 +111,13 @@ export default {
   width: 100%;
   height: 100%;
   justify-content: center;
+  padding: 40px 0px;
 }
 
 .sign-up-card {
+  width: 500px;
   display: flex;
   flex-direction: column;
-  margin-top: 40px;
 }
 
 .attr-name {
@@ -125,7 +126,7 @@ export default {
 }
 
 .sign-up-input {
-  width: 500px;
+  width: 100%;
   margin-bottom: 15px;
   background: #fafbfc;
   border-color: #dcdfe6;
@@ -148,12 +149,12 @@ export default {
 }
 
 .sign-up-btn {
-  display: block;
+  display: inline-block;
   margin-top: 10px;
 }
 
 .login-link {
-  display: block;
+  display: inline-block;
   align-self: center;
   margin-top: 15px;
   text-decoration: none;
@@ -180,5 +181,13 @@ export default {
   font-weight: bold;
   align-self: center;
   margin-bottom: 25px;
+}
+
+@media screen and (max-width: 600px) {
+  .sign-up-card {
+    width: 100%;
+    padding-left: 15px;
+    padding-right: 15px;
+  }
 }
 </style>
