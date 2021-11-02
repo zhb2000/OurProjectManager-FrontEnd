@@ -45,6 +45,7 @@
 import * as api from "../../utils/ApiUtils";
 // eslint-disable-next-line no-unused-vars
 import { ProjectJson, UserJson, MemberJson } from "../../utils/JsonModel";
+import * as DateUtils from "../../utils/DateUtils";
 import AdminCard from "../../components/project/AdminCard.vue";
 
 export default {
@@ -71,11 +72,11 @@ export default {
     },
     /** @returns {string} */
     createAt() {
-      return this.project ? this.project.createAt : null;
+      return this.project ? DateUtils.beautify(this.project.createAt) : null;
     },
     /** @returns {string} */
     updateAt() {
-      return this.project ? this.project.updateAt : null;
+      return this.project ? DateUtils.beautify(this.project.updateAt) : null;
     },
     /** @returns {UserJson} */
     superAdmin() {
@@ -155,6 +156,7 @@ export default {
   color: #303133;
   display: flex;
   align-items: center;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
 }
 
 .project-name-title {

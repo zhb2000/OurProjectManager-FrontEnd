@@ -25,9 +25,10 @@
 </template>
 
 <script>
+import { MarkdownPreview } from "vue-meditor";
+import * as DateUtils from "../../utils/DateUtils";
 // eslint-disable-next-line no-unused-vars
 import { CommentJson, UserJson } from "../../utils/JsonModel";
-import { MarkdownPreview } from "vue-meditor";
 
 export default {
   props: {
@@ -49,14 +50,14 @@ export default {
       return this.user.username;
     },
     userUrl() {
-      return "/users/" + this.username;
+      return `/users/${encodeURIComponent(this.username)}`;
     },
     nameFirstChar() {
       const name = this.username.trim();
       return name.length > 0 ? name[0] : " ";
     },
     createAt() {
-      return this.comment.createAt;
+      return DateUtils.beautify(this.comment.createAt);
     },
     body() {
       return this.comment.body;
@@ -67,9 +68,7 @@ export default {
       this.$emit("delete-comment", this.comment.id);
     },
   },
-  components: {
-    MarkdownPreview,
-  },
+  components: { MarkdownPreview },
 };
 </script>
 

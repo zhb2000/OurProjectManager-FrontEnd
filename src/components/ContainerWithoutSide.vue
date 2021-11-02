@@ -1,7 +1,7 @@
 <template>
   <el-container class="app-container">
     <el-header class="app-header" height="48px">
-      <header-bar />
+      <header-bar :showMenu="false" />
     </el-header>
     <el-main class="app-main">
       <slot><!-- main --></slot>

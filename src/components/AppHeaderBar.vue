@@ -1,6 +1,6 @@
 <template>
   <div class="header-bar">
-    <button class="menu-btn" @click="menuBtnClick" />
+    <button v-if="showMenu" class="menu-btn" @click="menuBtnClick" />
     <router-link :to="userHomeUrl" class="header-logo-link">
       <span class="header-logo">Our Project Manager</span>
     </router-link>
@@ -36,6 +36,9 @@
 import * as api from "../utils/ApiUtils";
 
 export default {
+  props: {
+    showMenu: { type: Boolean, default: true },
+  },
   data() {
     return {
       currentUsername: null,
@@ -43,16 +46,16 @@ export default {
   },
   computed: {
     userHomeUrl() {
-      return "/users/" + this.currentUsername;
+      return `/users/${encodeURIComponent(this.currentUsername)}`;
     },
     userNotificationUrl() {
-      return "/users/" + this.currentUsername + "/notifications";
+      return `/users/${encodeURIComponent(this.currentUsername)}/notifications`;
     },
     userProjectUrl() {
-      return "/users/" + this.currentUsername + "/projects";
+      return `/users/${encodeURIComponent(this.currentUsername)}/projects`;
     },
     userSettingUrl() {
-      return "/users/" + this.currentUsername + "/setting";
+      return `/users/${encodeURIComponent(this.currentUsername)}/setting`;
     },
   },
   watch: {

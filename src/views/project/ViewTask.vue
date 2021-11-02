@@ -115,7 +115,8 @@ import {
   responseErrorTest as errTest,
   BusinessErrorType as BusErrType,
 } from "../../utils/ResponseErrorUtils";
-import { StringUtils } from "../../utils/StringUtils";
+import * as StringUtils from "../../utils/StringUtils";
+import * as DateUtils from "../../utils/DateUtils";
 import { confirmDeleteAsync } from "../../utils/UiUtils";
 import CommentItem from "../../components/project/CommentItem.vue";
 import ExecutorItem from "../../components/project/ExecutorItem.vue";
@@ -181,10 +182,10 @@ export default {
       return this.task.completer.username;
     },
     completerUrl() {
-      return "/users/" + this.completerUsername;
+      return `/users/${encodeURIComponent(this.completerUsername)}`;
     },
     completeAt() {
-      return this.task.completeAt;
+      return DateUtils.beautify(this.task.completeAt);
     },
   },
   watch: {

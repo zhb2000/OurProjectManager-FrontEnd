@@ -51,6 +51,7 @@
 </template>
 
 <script>
+import * as DateUtils from "../../utils/DateUtils";
 // eslint-disable-next-line no-unused-vars
 import { MemberJson, UserJson } from "../../utils/JsonModel";
 
@@ -121,7 +122,7 @@ export default {
       return this.user.nickname;
     },
     userPath() {
-      return "/users/" + this.username;
+      return `/users/${encodeURIComponent(this.username)}`;
     },
     /** @returns {string} */
     nameFirstChar() {
@@ -129,7 +130,7 @@ export default {
       return name.length > 0 ? name[0] : " ";
     },
     joinAt() {
-      return this.member.joinAt;
+      return DateUtils.beautify(this.member.joinAt);
     },
     roleStr() {
       const role = this.member.role;

@@ -51,7 +51,7 @@ import {
   BusinessErrorType as BusErrType,
   responseErrorTest as errTest,
 } from "../utils/ResponseErrorUtils.js";
-import { StringUtils } from "../utils/StringUtils.js";
+import * as StringUtils from "../utils/StringUtils";
 import ContainerWithoutSide from "../components/ContainerWithoutSide.vue";
 
 export default {

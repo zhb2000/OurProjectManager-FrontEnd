@@ -56,7 +56,6 @@ export default {
   border-style: solid;
   background: #f3f4f5;
   border-color: #e4e6e8;
-  /* border-color: lightgray; */
   border-width: 0 1px 0 0;
   box-shadow: 0px 0 4px rgba(0, 0, 0, 0.12), 0 0 6px rgba(0, 0, 0, 0.04);
 }

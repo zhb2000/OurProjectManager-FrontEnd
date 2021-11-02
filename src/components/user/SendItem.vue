@@ -24,6 +24,7 @@
 
 <script>
 import { NotificationJson } from "../../utils/JsonModel";
+import * as DateUtils from "../../utils/DateUtils";
 
 export default {
   props: {
@@ -43,7 +44,7 @@ export default {
       return this.receiver.nickname;
     },
     recvPath() {
-      return "/users/" + this.recvUsername;
+      return `/users/${encodeURIComponent(this.recvUsername)}`;
     },
     title() {
       return this.notification.title;
@@ -52,7 +53,7 @@ export default {
       return this.notification.body;
     },
     createAt() {
-      return this.notification.createAt;
+      return DateUtils.beautify(this.notification.createAt);
     },
     statusStr() {
       return this.notification.read ? "已读" : "未读";

@@ -53,7 +53,7 @@ import {
   responseErrorTest as errTest,
   BusinessErrorType as BusErrorType,
 } from "../../utils/ResponseErrorUtils";
-import { StringUtils } from "../../utils/StringUtils";
+import * as StringUtils from "../../utils/StringUtils";
 const RecvItem = () => import("../../components/user/RecvItem.vue");
 const SendItem = () => import("../../components/user/SendItem.vue");
 

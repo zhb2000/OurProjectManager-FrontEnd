@@ -9,7 +9,7 @@
         {{ username }}
       </router-link>
       <div class="nickname">
-        {{nickname}}
+        {{ nickname }}
       </div>
     </div>
     <div class="under-area">
@@ -22,7 +22,8 @@
 
 <script>
 import { ColumnChart } from "@opd/g2plot-vue";
-import { randInt, randBoolean, dateToDayStr } from "../../utils/utils";
+import { randInt, randBoolean } from "../../utils/utils";
+import { dateToDayStr } from "../../utils/DateUtils";
 
 export default {
   props: {
@@ -57,7 +58,7 @@ export default {
     },
     /** @returns {string} */
     userPath() {
-      return "/users/" + this.username;
+      return `/users/${encodeURIComponent(this.username)}`;
     },
     /** @returns {string} */
     nameFirstChar() {

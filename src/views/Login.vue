@@ -62,7 +62,7 @@ export default {
         }
         return;
       }
-      this.$router.push("/users/" + this.username);
+      this.$router.push(`/users/${encodeURIComponent(this.username)}`);
     },
   },
   components: { ContainerWithoutSide },

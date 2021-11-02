@@ -51,6 +51,7 @@
 <script>
 import * as api from "../utils/ApiUtils";
 import { InvitationJson } from "../utils/JsonModel";
+import * as DateUtils from "../utils/DateUtils";
 import ContainerWithoutSide from "../components/ContainerWithoutSide.vue";
 
 export default {
@@ -78,7 +79,7 @@ export default {
       return this.$route.params.projectId;
     },
     projectPath() {
-      return "/projects/" + this.projectId;
+      return `/projects/${this.projectId}`;
     },
     isReceiver() {
       return (
@@ -92,7 +93,7 @@ export default {
       return this.invitation ? this.invitation.receiver.nickname : null;
     },
     recvPath() {
-      return "/users/" + this.recvUsername;
+      return `/users/${encodeURIComponent(this.recvUsername)}`;
     },
     sendUsername() {
       return this.invitation ? this.invitation.sender.username : null;
@@ -101,16 +102,18 @@ export default {
       return this.invitation ? this.invitation.sender.nickname : null;
     },
     sendPath() {
-      return "/users/" + this.sendUsername;
+      return `/users/${encodeURIComponent(this.sendUsername)}`;
     },
     createAt() {
-      return this.invitation ? this.invitation.createAt : null;
+      return this.invitation
+        ? DateUtils.beautify(this.invitation.createAt)
+        : null;
     },
     endAt() {
       if (this.isCreated) {
         return "暂无";
       }
-      return this.invitation ? this.invitation.endAt : null;
+      return this.invitation ? DateUtils.beautify(this.invitation.endAt) : null;
     },
     statusStr() {
       if (this.invitation.status === InvitationJson.STATUS_CREATED) {

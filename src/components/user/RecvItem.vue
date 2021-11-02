@@ -32,6 +32,7 @@
 
 <script>
 import { NotificationJson } from "../../utils/JsonModel";
+import * as DateUtils from "../../utils/DateUtils";
 
 export default {
   props: {
@@ -51,7 +52,7 @@ export default {
       return this.sender.nickname;
     },
     sendPath() {
-      return "/users/" + this.sendUsername;
+      return `/users/${encodeURIComponent(this.sendUsername)}`;
     },
     title() {
       return this.notification.title;
@@ -60,7 +61,7 @@ export default {
       return this.notification.body;
     },
     createAt() {
-      return this.notification.createAt;
+      return DateUtils.beautify(this.notification.createAt);
     },
     read() {
       return this.notification.read;

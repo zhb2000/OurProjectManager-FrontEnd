@@ -38,6 +38,7 @@
 
 <script>
 import { TaskJson } from "../../utils/JsonModel";
+import * as DateUtils from "../../utils/DateUtils";
 
 export default {
   props: {
@@ -52,7 +53,7 @@ export default {
   },
   computed: {
     taskPath() {
-      return "/projects/" + this.projectId + "/tasks/" + this.task.id;
+      return `/projects/${this.projectId}/tasks/${this.task.id}`;
     },
     taskTitle() {
       return this.task.title;
@@ -64,7 +65,7 @@ export default {
       return this.creator.username;
     },
     createAt() {
-      return this.task.createAt;
+      return DateUtils.beautify(this.task.createAt);
     },
     isComplete() {
       return this.task.complete;

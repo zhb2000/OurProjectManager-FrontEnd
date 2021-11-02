@@ -20,6 +20,7 @@
 
 <script>
 import { ProjectJson } from "../../utils/JsonModel";
+import * as DateUtils from "../../utils/DateUtils";
 
 export default {
   props: {
@@ -30,7 +31,7 @@ export default {
   },
   computed: {
     projectPath() {
-      return "/projects/" + this.project.id;
+      return `/projects/${this.project.id}`;
     },
     projectName() {
       return this.project.name;
@@ -42,13 +43,13 @@ export default {
       return this.project.id;
     },
     updateAt() {
-      return this.project.updateAt;
+      return DateUtils.beautify(this.project.updateAt);
     },
     superAdminName() {
       return this.project.superAdmin.username;
     },
     superAdminPath() {
-      return "/users/" + this.superAdminName;
+      return `/users/${encodeURIComponent(this.superAdminName)}`;
     },
   },
 };

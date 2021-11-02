@@ -83,7 +83,7 @@
 import { ProjectJson } from "../../utils/JsonModel";
 import * as api from "../../utils/ApiUtils";
 import ProjectItem from "../../components/user/ProjectItem.vue";
-import { StringUtils } from "../../utils/StringUtils";
+import * as StringUtils from "../../utils/StringUtils";
 
 export default {
   data() {

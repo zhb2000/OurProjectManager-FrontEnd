@@ -19,16 +19,4 @@ function randBoolean(probability) {
     return Math.random() < probability;
 }
 
-/**
- * YYYY-MM-DD
- * @param {Date} date 
- */
-function dateToDayStr(date) {
-    return new Date(date).toJSON().slice(0, 10);
-}
-
-export {
-    randInt,
-    randBoolean,
-    dateToDayStr
-}
+export { randInt, randBoolean };

@@ -112,7 +112,8 @@ async function createProjectAsync(name, description) {
  * @throws
  */
 async function getUserByNameAsync(username) {
-    const result = await axios.get(`/api/users/${username}`);
+    console.log(`/api/users/${encodeURIComponent(username)}`);
+    const result = await axios.get(`/api/users/${encodeURIComponent(username)}`);
     const user = result.data;
     Object.setPrototypeOf(user, UserJson.prototype);
     return user;
@@ -125,7 +126,8 @@ async function getUserByNameAsync(username) {
  * @throws
  */
 async function getUserProjectsAsync(username) {
-    const result = await axios.get(`/api/users/${username}/projects`);
+    const result = await axios.get(
+        `/api/users/${encodeURIComponent(username)}/projects`);
     const projects = result.data;
     for (let project of projects) {
         Object.setPrototypeOf(project, ProjectJson.prototype);
@@ -140,7 +142,8 @@ async function getUserProjectsAsync(username) {
  * @throws
  */
 async function getRecvNotificationsAsync(username) {
-    const result = await axios.get(`/api/users/${username}/notifications/recv`);
+    const result = await axios.get(
+        `/api/users/${encodeURIComponent(username)}/notifications/recv`);
     const recvNotifications = result.data;
     for (let notification of recvNotifications) {
         Object.setPrototypeOf(notification, NotificationJson.prototype);
@@ -155,7 +158,8 @@ async function getRecvNotificationsAsync(username) {
  * @throws
  */
 async function getSendNotificationsAsync(username) {
-    const result = await axios.get(`/api/users/${username}/notifications/send`);
+    const result = await axios.get(
+        `/api/users/${encodeURIComponent(username)}/notifications/send`);
     const sendNotifications = result.data;
     for (let notification of sendNotifications) {
         Object.setPrototypeOf(notification, NotificationJson.prototype);
@@ -170,17 +174,21 @@ async function getSendNotificationsAsync(username) {
  * @throws
  */
 async function createNotificationAsync(receiverUsername, title, body) {
-    await axios.post(`/api/users/${receiverUsername}/notifications`, { title, body });
+    await axios.post(
+        `/api/users/${encodeURIComponent(receiverUsername)}/notifications`,
+        { title, body });
 }
 
 /**
  * @param {string} username 
- * @param {number|string} notificationId 
+ * @param {number} notificationId 
  * @param {boolean} read 
  * @throws
  */
 async function updateNotificationReadAsync(username, notificationId, read) {
-    await axios.patch(`/api/users/${username}/notifications/${notificationId}`, { read });
+    await axios.patch(
+        `/api/users/${encodeURIComponent(username)}/notifications/${notificationId}`,
+        { read });
 }
 
 /**
@@ -191,7 +199,8 @@ async function updateNotificationReadAsync(username, notificationId, read) {
  * @throws
  */
 async function updateUsernameAndNicknameAsync(username, newUsername, newNickname) {
-    await axios.put(`/api/users/${username}`,
+    await axios.put(
+        `/api/users/${encodeURIComponent(username)}`,
         { username: newUsername, nickname: newNickname });
 }
 
@@ -203,7 +212,9 @@ async function updateUsernameAndNicknameAsync(username, newUsername, newNickname
  * @throws
  */
 async function updatePasswordAsync(username, oldPassword, newPassword) {
-    await axios.put(`/api/users/${username}/password`, { oldPassword, newPassword });
+    await axios.put(
+        `/api/users/${encodeURIComponent(username)}/password`,
+        { oldPassword, newPassword });
 }
 
 /**
@@ -212,12 +223,12 @@ async function updatePasswordAsync(username, oldPassword, newPassword) {
  * @throws
  */
 async function deleteUserAsync(username) {
-    await axios.delete(`/api/users/${username}`);
+    await axios.delete(`/api/users/${encodeURIComponent(username)}`);
 }
 
 /**
  * 获取项目内成员列表
- * @param {number | string} projectId 
+ * @param {number} projectId 
  * @returns {Promise<MemberJson[]>}
  * @throws
  */
@@ -232,8 +243,8 @@ async function getMembersAsync(projectId) {
 
 /**
  * 获取某用户在项目内的成员信息
- * @param {number | string} projectId 
- * @param {number | string} userId 
+ * @param {number} projectId 
+ * @param {number} userId 
  * @returns {Promise<MemberJson>}
  * @throws
  */
@@ -246,8 +257,8 @@ async function getMemberAsync(projectId, userId) {
 
 /**
  * 将某用户移出项目
- * @param {number|string} projectId 
- * @param {number|string} userId 
+ * @param {number} projectId 
+ * @param {number} userId 
  * @throws
  */
 async function deleteMemberAsync(projectId, userId) {
@@ -256,7 +267,7 @@ async function deleteMemberAsync(projectId, userId) {
 
 /**
  * 当前用户是否为项目成员
- * @param {number | string} projectId 
+ * @param {number} projectId 
  * @returns {Promise<boolean>}
  * @throws
  */
@@ -267,7 +278,7 @@ async function getIsMemberAsync(projectId) {
 
 /**
  * 获取当前用户在项目内的角色
- * @param {number | string} projectId
+ * @param {number} projectId
  * @returns {Promise<string>} 若用户不在项目内则返回 null
  * @throws
  */
@@ -283,7 +294,7 @@ async function getCurrentRoleAsync(projectId) {
 
 /**
  * 更新成员角色
- * @param {number | string} projectId
+ * @param {number} projectId
  * @param {MemberJson} member 
  * @throws
  */
@@ -294,7 +305,7 @@ async function updateMemberAsync(projectId, member) {
 
 /**
  * 获取项目
- * @param {number | string} projectId 
+ * @param {number} projectId 
  * @returns {Promise<ProjectJson>}
  * @throws
  */
@@ -307,7 +318,7 @@ async function getProjectAsync(projectId) {
 
 /**
  * 获取任务列表
- * @param {number | string} projectId 
+ * @param {number} projectId 
  * @returns {Promise<TaskJson[]>}
  * @throws
  */
@@ -322,8 +333,8 @@ async function getTasksAsync(projectId) {
 
 /**
  * 获取任务内容
- * @param {number | string} projectId 
- * @param {number | string} taskId 
+ * @param {number} projectId 
+ * @param {number} taskId 
  * @returns {Promise<TaskJson>}
  * @throws
  */
@@ -341,7 +352,7 @@ async function getTaskAsync(projectId, taskId) {
 
 /**
  * 更新任务的标题、内容、执行人
- * @param {number|string} projectId 
+ * @param {number} projectId 
  * @param {TaskJson} task 
  * @throws
  */
@@ -352,8 +363,8 @@ async function updateTaskAsync(projectId, task) {
 
 /**
  * 更新任务的完成状态
- * @param {number|string} projectId 
- * @param {number|string} taskId 
+ * @param {number} projectId 
+ * @param {number} taskId 
  * @param {boolean} complete 
  * @throws
  */
@@ -363,8 +374,8 @@ async function updateTaskCompleteAsync(projectId, taskId, complete) {
 
 /**
  * 删除任务
- * @param {number|string} projectId 
- * @param {number|string} taskId 
+ * @param {number} projectId 
+ * @param {number} taskId 
  * @throws
  */
 async function deleteTaskAsync(projectId, taskId) {
@@ -373,7 +384,7 @@ async function deleteTaskAsync(projectId, taskId) {
 
 /**
  * 获取邀请列表
- * @param {number|string} projectId 
+ * @param {number} projectId 
  * @returns {Promise<InvitationJson[]>}
  * @throws
  */
@@ -388,8 +399,8 @@ async function getInvitationsAsync(projectId) {
 
 /**
  * 获取邀请信息
- * @param {number|string} projectId 
- * @param {number|string} invitationId 
+ * @param {number} projectId 
+ * @param {number} invitationId 
  * @returns {Promise<InvitationJson>}
  * @throws
  */
@@ -403,8 +414,8 @@ async function getInvitationAsync(projectId, invitationId) {
 
 /**
  * 取消邀请
- * @param {number|string} projectId 
- * @param {number|string} invitationId 
+ * @param {number} projectId 
+ * @param {number} invitationId 
  * @throws
  */
 async function cancelInvitationAsync(projectId, invitationId) {
@@ -414,8 +425,8 @@ async function cancelInvitationAsync(projectId, invitationId) {
 
 /**
  * 接受邀请
- * @param {number|string} projectId 
- * @param {number|string} invitationId 
+ * @param {number} projectId 
+ * @param {number} invitationId 
  * @throws
  */
 async function acceptInvitationAsync(projectId, invitationId) {
@@ -425,8 +436,8 @@ async function acceptInvitationAsync(projectId, invitationId) {
 
 /**
  * 拒绝邀请
- * @param {number|string} projectId 
- * @param {number|string} invitationId 
+ * @param {number} projectId 
+ * @param {number} invitationId 
  * @throws
  */
 async function rejectInvitationAsync(projectId, invitationId) {
@@ -436,7 +447,7 @@ async function rejectInvitationAsync(projectId, invitationId) {
 
 /**
  * 创建邀请
- * @param {number|string} projectId 
+ * @param {number} projectId 
  * @param {UserJson} receiver 
  * @returns {Promise<InvitationJson>}
  * @throws
@@ -452,7 +463,7 @@ async function createInvitationAsync(projectId, receiver) {
 
 /**
  * 更新项目名称和项目描述
- * @param {number|string} projectId 
+ * @param {number} projectId 
  * @param {string} newName 
  * @param {string} newDescription 
  * @throws
@@ -464,7 +475,7 @@ async function updateProjectNameAndDescriptionAsync(projectId, newName, newDescr
 
 /**
  * 删除项目
- * @param {number|string} projectId 
+ * @param {number} projectId 
  * @throws
  */
 async function deleteProjectAsync(projectId) {
@@ -473,7 +484,7 @@ async function deleteProjectAsync(projectId) {
 
 /**
  * 创建任务
- * @param {number|string} projectId 
+ * @param {number} projectId 
  * @param {string} title 
  * @param {string} body 
  * @param {UserJson[]} executors 
@@ -490,8 +501,8 @@ async function createTaskAsync(projectId, title, body, executors) {
 
 /**
  * 获取任务列表
- * @param {number|string} projectId 
- * @param {number|string} taskId 
+ * @param {number} projectId 
+ * @param {number} taskId 
  * @returns {Promise<CommentJson[]>}
  * @throws
  */
@@ -507,8 +518,8 @@ async function getCommentsAsync(projectId, taskId) {
 
 /**
  * 创建评论
- * @param {number|string} projectId 
- * @param {number|string} taskId 
+ * @param {number} projectId 
+ * @param {number} taskId 
  * @param {string} body 
  * @returns {Promise<CommentJson>}
  * @throws
@@ -523,9 +534,9 @@ async function createCommentAsync(projectId, taskId, body) {
 
 /**
  * 删除评论
- * @param {number|string} projectId 
- * @param {number|string} taskId 
- * @param {number|string} commentId 
+ * @param {number} projectId 
+ * @param {number} taskId 
+ * @param {number} commentId 
  * @throws
  */
 async function deleteCommentsAsync(projectId, taskId, commentId) {

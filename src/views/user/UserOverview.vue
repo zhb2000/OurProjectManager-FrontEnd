@@ -39,6 +39,7 @@
 // eslint-disable-next-line no-unused-vars
 import { UserJson } from "../../utils/JsonModel";
 import * as api from "../../utils/ApiUtils";
+import * as DateUtils from "../../utils/DateUtils";
 
 export default {
   data() {
@@ -66,11 +67,11 @@ export default {
     },
     /** @returns {string} */
     createAt() {
-      return this.user ? this.user.createAt : null;
+      return this.user ? DateUtils.beautify(this.user.createAt) : null;
     },
     /** @returns {string} */
     updateAt() {
-      return this.user ? this.user.updateAt : null;
+      return this.user ? DateUtils.beautify(this.user.updateAt) : null;
     },
     usernameFirstChar() {
       const name = this.username.trim();
@@ -139,6 +140,7 @@ export default {
   color: #303133;
   display: grid;
   grid-template-columns: auto auto;
+  box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
 }
 
 .card-left-col {

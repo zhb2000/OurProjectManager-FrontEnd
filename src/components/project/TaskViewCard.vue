@@ -18,14 +18,13 @@
 </template>
 
 <script>
-import { TaskJson } from "../../utils/JsonModel";
 import { MarkdownPreview } from "vue-meditor";
+import { TaskJson } from "../../utils/JsonModel";
+import * as DateUtils from "../../utils/DateUtils";
 
 export default {
   props: {
-    task: {
-      type: TaskJson,
-    },
+    task: { type: TaskJson },
   },
   computed: {
     user() {
@@ -35,7 +34,7 @@ export default {
       return this.user ? this.user.username : null;
     },
     userUrl() {
-      return "/users/" + this.username;
+      return `/users/${encodeURIComponent(this.username)}`;
     },
     nameFirstChar() {
       if (!this.username) {
@@ -45,15 +44,13 @@ export default {
       return name.length > 0 ? name[0] : " ";
     },
     createAt() {
-      return this.task ? this.task.createAt : null;
+      return this.task ? DateUtils.beautify(this.task.createAt) : null;
     },
     body() {
       return this.task ? this.task.body : "";
     },
   },
-  components: {
-    MarkdownPreview,
-  },
+  components: { MarkdownPreview },
 };
 </script>
 

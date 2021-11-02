@@ -43,8 +43,12 @@
 </template>
 
 <script>
-// eslint-disable-next-line no-unused-vars
-import { InvitationJson, UserJson } from "../../utils/JsonModel";
+import * as DateUtils from "../../utils/DateUtils";
+import {
+  InvitationJson,
+  // eslint-disable-next-line no-unused-vars
+  UserJson,
+} from "../../utils/JsonModel";
 
 export default {
   props: {
@@ -72,7 +76,7 @@ export default {
       return this.receiver.nickname;
     },
     recvPath() {
-      return "/users/" + this.recvUsername;
+      return `/users/${encodeURIComponent(this.recvUsername)}`;
     },
     sendUsername() {
       return this.sender.username;
@@ -81,19 +85,18 @@ export default {
       return this.sender.nickname;
     },
     sendPath() {
-      return "/users/" + this.sendUsername;
+      return `/users/${encodeURIComponent(this.sendUsername)}`;
     },
     invitationId() {
       return this.invitation.id;
     },
     createAt() {
-      return this.invitation.createAt;
+      return DateUtils.beautify(this.invitation.createAt);
     },
     endAt() {
-      if (this.isCreated) {
-        return "暂无";
-      }
-      return this.invitation.endAt;
+      return this.isCreated
+        ? "暂无"
+        : DateUtils.beautify(this.invitation.endAt);
     },
     statusStr() {
       if (this.invitation.status === InvitationJson.STATUS_CREATED) {

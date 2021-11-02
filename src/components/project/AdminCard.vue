@@ -34,7 +34,7 @@ export default {
     },
     /** @returns {string} */
     userPath() {
-      return "/users/" + this.username;
+      return `/users/${encodeURIComponent(this.username)}`;
     },
     /** @returns {string} */
     nameFirstChar() {

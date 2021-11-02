@@ -29,7 +29,7 @@ export default {
       this.$router.push("/projects/" + this.projectId);
     },
     goUserBtnClick() {
-      this.$router.push("/users/" + this.username);
+      this.$router.push(`/users/${encodeURIComponent(this.username)}`);
     },
   },
   components: { ContainerWithoutSide },

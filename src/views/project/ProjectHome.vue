@@ -77,25 +77,25 @@ export default {
       return this.currentRole === MemberJson.ROLE_SUPER_ADMIN;
     },
     projectHomePath() {
-      return "/projects/" + this.projectId;
+      return `/projects/${this.projectId}`;
     },
     overviewPath() {
-      return this.projectHomePath + "/overview";
+      return `${this.projectHomePath}/overview`;
     },
     tasksPath() {
-      return this.projectHomePath + "/tasks";
+      return `${this.projectHomePath}/tasks`;
     },
     membersPath() {
-      return this.projectHomePath + "/members";
+      return `${this.projectHomePath}/members`;
     },
     statisticPath() {
-      return this.projectHomePath + "/statistic";
+      return `${this.projectHomePath}/statistic`;
     },
     invitationsPath() {
-      return this.projectHomePath + "/invitations";
+      return `${this.projectHomePath}/invitations`;
     },
     settingPath() {
-      return this.projectHomePath + "/setting";
+      return `${this.projectHomePath}/setting`;
     },
     isOverviewActive() {
       return this.$route.name === "ProjectOverview";
@@ -103,8 +103,8 @@ export default {
     isTasksActive() {
       return (
         this.$route.name === "ProjectTask" ||
-        this.$route.name === "ProjectCreateTask" ||
-        this.$route.name === "ProjectViewTask"
+        this.$route.name === "CreateTask" ||
+        this.$route.name === "ViewTask"
       );
     },
     isMembersActive() {
@@ -129,7 +129,7 @@ export default {
     this.pageChangedAsync();
   },
   methods: {
-    //get current current role in project
+    /** Get current role in project */
     async pageChangedAsync() {
       try {
         this.currentRole = await api.getCurrentRoleAsync(this.projectId);
