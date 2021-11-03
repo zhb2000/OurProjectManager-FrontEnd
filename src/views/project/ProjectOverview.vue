@@ -29,7 +29,9 @@
 
     <!-- 项目主管区域 -->
     <div class="admin-header">项目主管</div>
-    <div class="admin-grid"><admin-card :user="superAdmin" /></div>
+    <div class="admin-grid">
+      <admin-card v-if="superAdmin != null" :user="superAdmin" />
+    </div>
 
     <!-- 项目管理员区域 -->
     <div v-if="showAdmins">
@@ -43,10 +45,12 @@
 
 <script>
 import * as api from "../../utils/ApiUtils";
-// eslint-disable-next-line no-unused-vars
-import { ProjectJson, UserJson, MemberJson } from "../../utils/JsonModel";
+import { MemberJson } from "../../utils/JsonModel";
 import * as DateUtils from "../../utils/DateUtils";
+import * as StrUtils from "../../utils/StringUtils";
 import AdminCard from "../../components/project/AdminCard.vue";
+/** @typedef {import("../../utils/JsonModel").UserJson} UserJson */
+/** @typedef {import("../../utils/JsonModel").ProjectJson} ProjectJson */
 
 export default {
   data() {
@@ -62,37 +66,37 @@ export default {
     projectId() {
       return this.$route.params.projectId;
     },
-    /** @type {string} */
+    /** @returns {string?} */
     projectName() {
-      return this.project ? this.project.name : null;
+      return this.project?.name;
     },
-    /** @type {string} */
+    /** @returns {string?} */
     description() {
-      return this.project ? this.project.description : null;
+      return this.project?.description;
     },
-    /** @returns {string} */
+    /** @returns {string?} */
     createAt() {
-      return this.project ? DateUtils.beautify(this.project.createAt) : null;
+      return this.project != null
+        ? DateUtils.beautify(this.project.createAt)
+        : null;
     },
-    /** @returns {string} */
+    /** @returns {string?} */
     updateAt() {
-      return this.project ? DateUtils.beautify(this.project.updateAt) : null;
+      return this.project != null
+        ? DateUtils.beautify(this.project.updateAt)
+        : null;
     },
-    /** @returns {UserJson} */
+    /** @returns {UserJson?} */
     superAdmin() {
-      return this.project ? this.project.superAdmin : null;
+      return this.project?.superAdmin;
     },
     /** @returns {UserJson[]} */
     admins() {
-      return this.project ? this.project.admins : [];
+      return this.project?.admins ?? [];
     },
-    /** @type {string} */
+    /** @returns {string} */
     nameFirstChar() {
-      if (!this.projectName) {
-        return " ";
-      }
-      const name = this.projectName.trim();
-      return name.length > 0 ? name[0] : " ";
+      return StrUtils.firstCharOfName(this.projectName);
     },
     myRoleStr() {
       if (this.currentRole === MemberJson.ROLE_SUPER_ADMIN) {
@@ -106,7 +110,7 @@ export default {
       }
     },
     showAdmins() {
-      return this.admins && this.admins.length > 0;
+      return this.admins != null && this.admins.length > 0;
     },
   },
   watch: {
@@ -136,9 +140,7 @@ export default {
       }
     },
   },
-  components: {
-    AdminCard,
-  },
+  components: { AdminCard },
 };
 </script>
 

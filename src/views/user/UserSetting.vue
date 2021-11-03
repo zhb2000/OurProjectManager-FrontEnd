@@ -74,14 +74,13 @@
 </template>
 
 <script>
-// eslint-disable-next-line no-unused-vars
-import { UserJson } from "../../utils/JsonModel";
 import * as api from "../../utils/ApiUtils";
 import {
   responseErrorTest as errTest,
   BusinessErrorType as BusErrorType,
 } from "../../utils/ResponseErrorUtils";
 import { confirmAsync } from "../../utils/UiUtils";
+/** @typedef {import("../../utils/JsonModel").UserJson} UserJson */
 
 export default {
   data() {

@@ -36,10 +36,10 @@
 </template>
 
 <script>
-// eslint-disable-next-line no-unused-vars
-import { UserJson } from "../../utils/JsonModel";
 import * as api from "../../utils/ApiUtils";
 import * as DateUtils from "../../utils/DateUtils";
+import * as StrUtils from "../../utils/StringUtils";
+/** @typedef {import("../../utils/JsonModel").UserJson} UserJson */
 
 export default {
   data() {
@@ -53,29 +53,28 @@ export default {
     username() {
       return this.$route.params.username;
     },
-    /** @returns {string} */
+    /** @returns {string?} */
     nickname() {
-      return this.user ? this.user.nickname : null;
+      return this.user?.nickname;
     },
-    /** @returns {number} */
+    /** @returns {number?} */
     userId() {
-      return this.user ? this.user.id : null;
+      return this.user?.id;
     },
-    /** @returns {string} */
+    /** @returns {string?} */
     projectCount() {
-      return this.user ? this.user.projectCount : null;
+      return this.user?.projectCount;
     },
-    /** @returns {string} */
+    /** @returns {string?} */
     createAt() {
-      return this.user ? DateUtils.beautify(this.user.createAt) : null;
+      return this.user != null ? DateUtils.beautify(this.user.createAt) : null;
     },
-    /** @returns {string} */
+    /** @returns {string?} */
     updateAt() {
-      return this.user ? DateUtils.beautify(this.user.updateAt) : null;
+      return this.user != null ? DateUtils.beautify(this.user.updateAt) : null;
     },
     usernameFirstChar() {
-      const name = this.username.trim();
-      return name.length > 0 ? name[0] : " ";
+      return StrUtils.firstCharOfName(this.username);
     },
   },
   watch: {
@@ -90,7 +89,6 @@ export default {
     /** fetch user data */
     async pageChangedAsync() {
       try {
-        //console.log("user overview changed, page name: " + this.username);
         this.user = await api.getUserByNameAsync(this.username);
       } catch (error) {
         this.$message({ message: "获取用户信息失败", type: "error" });

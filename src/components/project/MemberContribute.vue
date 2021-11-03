@@ -24,12 +24,12 @@
 import { ColumnChart } from "@opd/g2plot-vue";
 import { randInt, randBoolean } from "../../utils/utils";
 import { dateToDayStr } from "../../utils/DateUtils";
+import * as StrUtils from "../../utils/StringUtils";
+import { UserJson } from "../../utils/JsonModel";
 
 export default {
   props: {
-    user: {
-      required: true,
-    },
+    user: { type: UserJson, required: true },
   },
   data() {
     const self = this;
@@ -39,22 +39,18 @@ export default {
         height: 170,
         xField: "date",
         yField: "count",
-        xAxis: {
-          label: {
-            autoRotate: false,
-          },
-        },
+        xAxis: { label: { autoRotate: false } },
       },
     };
   },
   computed: {
     /** @returns {string} */
     username() {
-      return this.user ? this.user.username : null;
+      return this.user.username;
     },
     /** @returns {string} */
     nickname() {
-      return this.user ? this.user.nickname : null;
+      return this.user.nickname;
     },
     /** @returns {string} */
     userPath() {
@@ -62,11 +58,7 @@ export default {
     },
     /** @returns {string} */
     nameFirstChar() {
-      if (!this.username) {
-        return " ";
-      }
-      const name = this.username.trim();
-      return name.length > 0 ? name[0] : " ";
+      return StrUtils.firstCharOfName(this.username);
     },
   },
   methods: {
@@ -92,9 +84,7 @@ export default {
       return result;
     },
   },
-  components: {
-    ColumnChart,
-  },
+  components: { ColumnChart },
 };
 </script>
 

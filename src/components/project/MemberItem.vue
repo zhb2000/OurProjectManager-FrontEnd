@@ -52,23 +52,15 @@
 
 <script>
 import * as DateUtils from "../../utils/DateUtils";
-// eslint-disable-next-line no-unused-vars
-import { MemberJson, UserJson } from "../../utils/JsonModel";
+import { MemberJson } from "../../utils/JsonModel";
+import * as StrUtils from "../../utils/StringUtils";
+/** @typedef {import("../../utils/JsonModel").UserJson} UserJson */
 
 export default {
   props: {
-    member: {
-      type: MemberJson,
-      required: true,
-    },
-    currentRole: {
-      type: String,
-      required: true,
-    },
-    currentUsername: {
-      type: String,
-      required: true,
-    },
+    member: { type: MemberJson, required: true },
+    currentRole: { type: String, required: true },
+    currentUsername: { type: String, required: true },
   },
   computed: {
     currentIsAdmin() {
@@ -126,8 +118,7 @@ export default {
     },
     /** @returns {string} */
     nameFirstChar() {
-      const name = this.username.trim();
-      return name.length > 0 ? name[0] : " ";
+      return StrUtils.firstCharOfName(this.username);
     },
     joinAt() {
       return DateUtils.beautify(this.member.joinAt);

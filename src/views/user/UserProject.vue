@@ -79,11 +79,10 @@
 </template>
 
 <script>
-// eslint-disable-next-line no-unused-vars
-import { ProjectJson } from "../../utils/JsonModel";
 import * as api from "../../utils/ApiUtils";
 import ProjectItem from "../../components/user/ProjectItem.vue";
-import * as StringUtils from "../../utils/StringUtils";
+import * as StrUtils from "../../utils/StringUtils";
+/** @typedef {import("../../utils/JsonModel").ProjectJson} ProjectJson */
 
 export default {
   data() {
@@ -119,7 +118,7 @@ export default {
       if (!this.projects) {
         return [];
       }
-      if (StringUtils.isEmpty(this.searchWord)) {
+      if (StrUtils.isEmpty(this.searchWord)) {
         return this.projects;
       }
       const arr = [];
@@ -211,7 +210,7 @@ export default {
       }
     },
     async createBtnClick() {
-      if (StringUtils.isEmpty(this.projectName)) {
+      if (StrUtils.isEmpty(this.projectName)) {
         this.$message({ message: "项目名称不能为空", type: "error" });
         return;
       }

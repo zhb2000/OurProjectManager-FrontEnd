@@ -28,10 +28,7 @@ import * as DateUtils from "../../utils/DateUtils";
 
 export default {
   props: {
-    notification: {
-      type: NotificationJson,
-      required: true,
-    },
+    notification: { type: NotificationJson, required: true },
   },
   computed: {
     receiver() {

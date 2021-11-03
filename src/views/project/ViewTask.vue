@@ -12,7 +12,9 @@
     <div class="view-task-grid">
       <!-- 评论楼层 -->
       <div class="left-area">
-        <task-card :task="task" />
+        <!-- 顶楼（主帖内容） -->
+        <task-card v-if="task != null" :task="task" />
+        <!-- 评论楼层 -->
         <comment-item
           v-for="comment in comments"
           :key="comment.id"
@@ -101,26 +103,21 @@
 </template>
 
 <script>
-import {
-  // eslint-disable-next-line no-unused-vars
-  TaskJson,
-  // eslint-disable-next-line no-unused-vars
-  CommentJson,
-  MemberJson,
-  // eslint-disable-next-line no-unused-vars
-  UserJson,
-} from "../../utils/JsonModel";
+import { MemberJson } from "../../utils/JsonModel";
 import * as api from "../../utils/ApiUtils";
 import {
   responseErrorTest as errTest,
   BusinessErrorType as BusErrType,
 } from "../../utils/ResponseErrorUtils";
-import * as StringUtils from "../../utils/StringUtils";
+import * as StrUtils from "../../utils/StringUtils";
 import * as DateUtils from "../../utils/DateUtils";
 import { confirmDeleteAsync } from "../../utils/UiUtils";
 import CommentItem from "../../components/project/CommentItem.vue";
 import ExecutorItem from "../../components/project/ExecutorItem.vue";
 import TaskViewCard from "../../components/project/TaskViewCard.vue";
+/** @typedef {import("../../utils/JsonModel").UserJson} UserJson */
+/** @typedef {import("../../utils/JsonModel").TaskJson} TaskJson */
+/** @typedef {import("../../utils/JsonModel").CommentJson} CommentJson */
 
 export default {
   data() {
@@ -233,7 +230,7 @@ export default {
       }
     },
     async createCommentBtnClick() {
-      if (StringUtils.isEmpty(this.commentBody)) {
+      if (StrUtils.isEmpty(this.commentBody)) {
         this.$message("评论内容不能为空");
         return;
       }
@@ -273,7 +270,7 @@ export default {
       this.$router.back();
     },
     async addExecutorBtnClick() {
-      if (StringUtils.isEmpty(this.executorInput)) {
+      if (StrUtils.isEmpty(this.executorInput)) {
         return;
       }
       for (let user of this.executors) {

@@ -46,14 +46,13 @@
 
 <script>
 import * as api from "../../utils/ApiUtils";
-// eslint-disable-next-line no-unused-vars
-import { UserJson } from "../../utils/JsonModel";
-import * as StringUtils from "../../utils/StringUtils";
+import * as StrUtils from "../../utils/StringUtils";
 import {
   responseErrorTest as errTest,
   BusinessErrorType as BusErrType,
 } from "../../utils/ResponseErrorUtils";
 import ExecutorItem from "../../components/project/ExecutorItem.vue";
+/** @typedef {import("../../utils/JsonModel").UserJson} UserJson */
 
 export default {
   data() {
@@ -74,7 +73,7 @@ export default {
   },
   methods: {
     async createBtnClick() {
-      if (StringUtils.isEmpty(this.title)) {
+      if (StrUtils.isEmpty(this.title)) {
         this.$message({ message: "任务标题不能为空", type: "error" });
         return;
       }
@@ -94,7 +93,7 @@ export default {
       }
     },
     async addExecutorBtnClick() {
-      if (StringUtils.isEmpty(this.executorInput)) {
+      if (StrUtils.isEmpty(this.executorInput)) {
         return;
       }
       for (let user of this.executors) {

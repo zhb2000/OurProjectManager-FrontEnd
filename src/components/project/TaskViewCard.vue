@@ -21,33 +21,30 @@
 import { MarkdownPreview } from "vue-meditor";
 import { TaskJson } from "../../utils/JsonModel";
 import * as DateUtils from "../../utils/DateUtils";
+import * as StrUtils from "../../utils/StringUtils";
 
 export default {
   props: {
-    task: { type: TaskJson },
+    task: { type: TaskJson, required: true },
   },
   computed: {
     user() {
-      return this.task ? this.task.creator : null;
+      return this.task.creator;
     },
     username() {
-      return this.user ? this.user.username : null;
+      return this.user.username;
     },
     userUrl() {
       return `/users/${encodeURIComponent(this.username)}`;
     },
     nameFirstChar() {
-      if (!this.username) {
-        return " ";
-      }
-      const name = this.username.trim();
-      return name.length > 0 ? name[0] : " ";
+      return StrUtils.firstCharOfName(this.username);
     },
     createAt() {
-      return this.task ? DateUtils.beautify(this.task.createAt) : null;
+      return DateUtils.beautify(this.task.createAt);
     },
     body() {
-      return this.task ? this.task.body : "";
+      return this.task.body;
     },
   },
   components: { MarkdownPreview },

@@ -24,10 +24,7 @@ import * as DateUtils from "../../utils/DateUtils";
 
 export default {
   props: {
-    project: {
-      type: ProjectJson,
-      required: true,
-    },
+    project: { type: ProjectJson, required: true },
   },
   computed: {
     projectPath() {

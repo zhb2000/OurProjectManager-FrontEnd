@@ -19,9 +19,9 @@
 
 <script>
 import * as api from "../../utils/ApiUtils";
-// eslint-disable-next-line no-unused-vars
-import { TaskJson, MemberJson } from "../../utils/JsonModel";
+import { MemberJson } from "../../utils/JsonModel";
 import TaskItem from "../../components/project/TaskItem.vue";
+/** @typedef {import("../../utils/JsonModel").TaskJson} TaskJson */
 
 export default {
   data() {
@@ -33,9 +33,9 @@ export default {
     };
   },
   computed: {
-    /** @returns {string} */
+    /** @returns {number} */
     projectId() {
-      return this.$route.params.projectId;
+      return parseInt(this.$route.params.projectId);
     },
     isAdmin() {
       return (

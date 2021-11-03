@@ -14,21 +14,15 @@
 
 <script>
 import { UserJson } from "../../utils/JsonModel";
+import * as StrUtils from "../../utils/StringUtils";
 
 export default {
   props: {
-    user: {
-      type: UserJson,
-      required: true,
-    },
+    user: { type: UserJson, required: true },
   },
   computed: {
     firstChar() {
-      if (!this.user.username) {
-        return " ";
-      }
-      const name = this.user.username.trim();
-      return name.length > 0 ? name[0] : " ";
+      return StrUtils.firstCharOfName(this.user.username);
     },
   },
   methods: {

@@ -28,14 +28,13 @@
 
 <script>
 import * as api from "../../utils/ApiUtils";
-// eslint-disable-next-line no-unused-vars
-import { InvitationJson } from "../../utils/JsonModel";
 import {
   responseErrorTest as errTest,
   BusinessErrorType as BusErrorType,
 } from "../../utils/ResponseErrorUtils";
 import { projectUrlPrefix } from "../../MyConfig";
 import InvitationItem from "../../components/project/InvitationItem.vue";
+/** @typedef {import("../../utils/JsonModel").InvitationJson} InvitationJson */
 
 export default {
   data() {

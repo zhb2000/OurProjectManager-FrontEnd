@@ -46,16 +46,15 @@
 </template>
 
 <script>
-// eslint-disable-next-line no-unused-vars
-import { NotificationJson } from "../../utils/JsonModel";
 import * as api from "../../utils/ApiUtils";
 import {
   responseErrorTest as errTest,
   BusinessErrorType as BusErrorType,
 } from "../../utils/ResponseErrorUtils";
-import * as StringUtils from "../../utils/StringUtils";
+import * as StrUtils from "../../utils/StringUtils";
 const RecvItem = () => import("../../components/user/RecvItem.vue");
 const SendItem = () => import("../../components/user/SendItem.vue");
+/** @typedef {import("../../utils/JsonModel").NotificationJson} NotificationJson */
 
 export default {
   data() {
@@ -117,11 +116,11 @@ export default {
       }
     },
     async sendBtnClick() {
-      if (StringUtils.isEmpty(this.receiverUsername)) {
+      if (StrUtils.isEmpty(this.receiverUsername)) {
         this.$message({ message: "接收者用户名不能为空", type: "error" });
         return;
       }
-      if (StringUtils.isEmpty(this.title)) {
+      if (StrUtils.isEmpty(this.title)) {
         this.$message({ message: "消息标题不能为空", type: "error" });
         return;
       }

@@ -51,7 +51,7 @@ import {
   BusinessErrorType as BusErrType,
   responseErrorTest as errTest,
 } from "../utils/ResponseErrorUtils.js";
-import * as StringUtils from "../utils/StringUtils";
+import * as StrUtils from "../utils/StringUtils";
 import ContainerWithoutSide from "../components/ContainerWithoutSide.vue";
 
 export default {
@@ -71,7 +71,7 @@ export default {
         this.nickname,
         this.password,
         this.confirmPassword,
-      ].some((s) => StringUtils.isEmpty(s));
+      ].some((s) => StrUtils.isEmpty(s));
     },
     async signUpBtnClick() {
       if (this.someInputEmpty()) {

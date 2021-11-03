@@ -42,14 +42,8 @@ import * as DateUtils from "../../utils/DateUtils";
 
 export default {
   props: {
-    task: {
-      type: TaskJson,
-      required: true,
-    },
-    projectId: {
-      type: [String, Number],
-      required: true,
-    },
+    task: { type: TaskJson, required: true },
+    projectId: { type: Number, required: true },
   },
   computed: {
     taskPath() {

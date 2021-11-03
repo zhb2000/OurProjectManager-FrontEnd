@@ -15,22 +15,25 @@
 </template>
 
 <script>
+import { UserJson } from "../../utils/JsonModel";
+import * as StrUtils from "../../utils/StringUtils";
+
 export default {
   props: {
-    user: { required: true },
+    user: { type: UserJson, required: true },
   },
   computed: {
     /** @returns {string} */
     username() {
-      return this.user ? this.user.username : null;
+      return this.user.username;
     },
     /** @returns {string} */
     nickname() {
-      return this.user ? this.user.nickname : null;
+      return this.user.nickname;
     },
     /** @returns {number} */
     userId() {
-      return this.user ? this.user.id : null;
+      return this.user.id;
     },
     /** @returns {string} */
     userPath() {
@@ -38,11 +41,7 @@ export default {
     },
     /** @returns {string} */
     nameFirstChar() {
-      if (!this.username) {
-        return " ";
-      }
-      const name = this.username.trim();
-      return name.length > 0 ? name[0] : " ";
+      return StrUtils.firstCharOfName(this.username);
     },
   },
 };

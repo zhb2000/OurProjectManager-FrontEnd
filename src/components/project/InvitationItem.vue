@@ -44,18 +44,12 @@
 
 <script>
 import * as DateUtils from "../../utils/DateUtils";
-import {
-  InvitationJson,
-  // eslint-disable-next-line no-unused-vars
-  UserJson,
-} from "../../utils/JsonModel";
+import { InvitationJson } from "../../utils/JsonModel";
+/** @typedef {import("../../utils/JsonModel").UserJson} UserJson */
 
 export default {
   props: {
-    invitation: {
-      type: InvitationJson,
-      required: true,
-    },
+    invitation: { type: InvitationJson, required: true },
   },
   computed: {
     isCreated() {

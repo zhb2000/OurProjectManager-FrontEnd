@@ -27,22 +27,15 @@
 <script>
 import { MarkdownPreview } from "vue-meditor";
 import * as DateUtils from "../../utils/DateUtils";
-// eslint-disable-next-line no-unused-vars
-import { CommentJson, UserJson } from "../../utils/JsonModel";
+import { CommentJson } from "../../utils/JsonModel";
+import * as StrUtils from "../../utils/StringUtils";
 
 export default {
   props: {
-    comment: {
-      type: CommentJson,
-      required: true,
-    },
-    showDelete: {
-      type: Boolean,
-      required: true,
-    },
+    comment: { type: CommentJson, required: true },
+    showDelete: { type: Boolean, required: true },
   },
   computed: {
-    /** @returns {UserJson} */
     user() {
       return this.comment.user;
     },
@@ -53,8 +46,7 @@ export default {
       return `/users/${encodeURIComponent(this.username)}`;
     },
     nameFirstChar() {
-      const name = this.username.trim();
-      return name.length > 0 ? name[0] : " ";
+      return StrUtils.firstCharOfName(this.username);
     },
     createAt() {
       return DateUtils.beautify(this.comment.createAt);

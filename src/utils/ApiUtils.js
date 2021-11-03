@@ -20,7 +20,7 @@ const JWT_TOKEN_KEY = 'JWT_TOKEN';
 async function getWhoamiUserAsync() {
     const result = await axios.get('/api/whoami');
     const user = result.data;
-    Object.setPrototypeOf(user, UserJson.prototype);
+    UserJson.convert(user);
     return user;
 }
 
@@ -102,7 +102,7 @@ async function logoutAsync() {
 async function createProjectAsync(name, description) {
     const result = await axios.post('/api/projects', { name, description });
     const project = result.data;
-    Object.setPrototypeOf(project, ProjectJson.prototype);
+    ProjectJson.convert(project);
     return project;
 }
 
@@ -112,10 +112,9 @@ async function createProjectAsync(name, description) {
  * @throws
  */
 async function getUserByNameAsync(username) {
-    console.log(`/api/users/${encodeURIComponent(username)}`);
     const result = await axios.get(`/api/users/${encodeURIComponent(username)}`);
     const user = result.data;
-    Object.setPrototypeOf(user, UserJson.prototype);
+    UserJson.convert(user);
     return user;
 }
 
@@ -128,10 +127,9 @@ async function getUserByNameAsync(username) {
 async function getUserProjectsAsync(username) {
     const result = await axios.get(
         `/api/users/${encodeURIComponent(username)}/projects`);
+    /** @type {Array} */
     const projects = result.data;
-    for (let project of projects) {
-        Object.setPrototypeOf(project, ProjectJson.prototype);
-    }
+    projects.forEach(project => ProjectJson.convert(project));
     return projects;
 }
 
@@ -144,10 +142,10 @@ async function getUserProjectsAsync(username) {
 async function getRecvNotificationsAsync(username) {
     const result = await axios.get(
         `/api/users/${encodeURIComponent(username)}/notifications/recv`);
+    /** @type {Array} */
     const recvNotifications = result.data;
-    for (let notification of recvNotifications) {
-        Object.setPrototypeOf(notification, NotificationJson.prototype);
-    }
+    recvNotifications.forEach(
+        notification => NotificationJson.convert(notification));
     return recvNotifications;
 }
 
@@ -160,10 +158,10 @@ async function getRecvNotificationsAsync(username) {
 async function getSendNotificationsAsync(username) {
     const result = await axios.get(
         `/api/users/${encodeURIComponent(username)}/notifications/send`);
+    /** @type {Array} */
     const sendNotifications = result.data;
-    for (let notification of sendNotifications) {
-        Object.setPrototypeOf(notification, NotificationJson.prototype);
-    }
+    sendNotifications.forEach(
+        notification => NotificationJson.convert(notification));
     return sendNotifications;
 }
 
@@ -234,10 +232,9 @@ async function deleteUserAsync(username) {
  */
 async function getMembersAsync(projectId) {
     const result = await axios.get(`/api/projects/${projectId}/members`);
+    /** @type {Array} */
     const members = result.data;
-    for (let member of members) {
-        Object.setPrototypeOf(member, MemberJson.prototype);
-    }
+    members.forEach(member => MemberJson.convert(member));
     return members;
 }
 
@@ -251,7 +248,7 @@ async function getMembersAsync(projectId) {
 async function getMemberAsync(projectId, userId) {
     const result = await axios.get(`/api/projects/${projectId}/members/${userId}`);
     const member = result.data;
-    Object.setPrototypeOf(member, MemberJson.prototype);
+    MemberJson.convert(member);
     return member;
 }
 
@@ -312,7 +309,7 @@ async function updateMemberAsync(projectId, member) {
 async function getProjectAsync(projectId) {
     const result = await axios.get(`/api/projects/${projectId}`);
     const project = result.data;
-    Object.setPrototypeOf(project, ProjectJson.prototype);
+    ProjectJson.convert(project);
     return project;
 }
 
@@ -324,10 +321,9 @@ async function getProjectAsync(projectId) {
  */
 async function getTasksAsync(projectId) {
     const result = await axios.get(`/api/projects/${projectId}/tasks`);
+    /** @type {Array} */
     const tasks = result.data;
-    for (let task of tasks) {
-        Object.setPrototypeOf(task, TaskJson.prototype);
-    }
+    tasks.forEach(task => TaskJson.convert(task));
     return tasks;
 }
 
@@ -341,12 +337,7 @@ async function getTasksAsync(projectId) {
 async function getTaskAsync(projectId, taskId) {
     const result = await axios.get(`/api/projects/${projectId}/tasks/${taskId}`);
     const task = result.data;
-    Object.setPrototypeOf(task, TaskJson.prototype);
-    if (task.executors) {
-        for (let executor of task.executors) {
-            Object.setPrototypeOf(executor, UserJson.prototype);
-        }
-    }
+    TaskJson.convert(task);
     return task;
 }
 
@@ -390,10 +381,9 @@ async function deleteTaskAsync(projectId, taskId) {
  */
 async function getInvitationsAsync(projectId) {
     const result = await axios.get(`/api/projects/${projectId}/invitations`);
+    /** @type {Array} */
     const invitations = result.data;
-    for (let invitation of invitations) {
-        Object.setPrototypeOf(invitation, InvitationJson.prototype);
-    }
+    invitations.forEach(invitation => InvitationJson.convert(invitation));
     return invitations;
 }
 
@@ -408,7 +398,7 @@ async function getInvitationAsync(projectId, invitationId) {
     const result = await axios.get(
         `/api/projects/${projectId}/invitations/${invitationId}`);
     const invitation = result.data;
-    Object.setPrototypeOf(invitation, InvitationJson.prototype);
+    InvitationJson.convert(invitation);
     return invitation;
 }
 
@@ -457,7 +447,7 @@ async function createInvitationAsync(projectId, receiver) {
         `/api/projects/${projectId}/invitations`,
         { receiver });
     const invitation = result.data;
-    Object.setPrototypeOf(invitation, InvitationJson.prototype);
+    InvitationJson.convert(invitation);
     return invitation;
 }
 
@@ -495,7 +485,7 @@ async function createTaskAsync(projectId, title, body, executors) {
     const result = await axios.post(`/api/projects/${projectId}/tasks`,
         { title, body, executors });
     const task = result.data;
-    Object.setPrototypeOf(task, TaskJson.prototype);
+    TaskJson.convert(task);
     return task;
 }
 
@@ -509,10 +499,9 @@ async function createTaskAsync(projectId, title, body, executors) {
 async function getCommentsAsync(projectId, taskId) {
     const result = await axios.get(
         `/api/projects/${projectId}/tasks/${taskId}/comments`);
+    /** @type {Array} */
     const comments = result.data;
-    for (let comment of comments) {
-        Object.setPrototypeOf(comment, CommentJson.prototype);
-    }
+    comments.forEach(comment => CommentJson.convert(comment));
     return comments;
 }
 
@@ -528,7 +517,7 @@ async function createCommentAsync(projectId, taskId, body) {
     const result = await axios.post(
         `/api/projects/${projectId}/tasks/${taskId}/comments`, { body });
     const comment = result.data;
-    Object.setPrototypeOf(comment, CommentJson.prototype);
+    CommentJson.convert(comment);
     return comment;
 }
 

@@ -40,9 +40,7 @@ export default {
     showMenu: { type: Boolean, default: true },
   },
   data() {
-    return {
-      currentUsername: null,
-    };
+    return { currentUsername: null };
   },
   computed: {
     userHomeUrl() {

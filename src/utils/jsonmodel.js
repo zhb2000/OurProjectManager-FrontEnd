@@ -13,6 +13,10 @@ class UserJson {
         /** @type {string} */
         this.projectCount = null;
     }
+    /** @param {object} user */
+    static convert(user) {
+        Object.setPrototypeOf(user, UserJson.prototype);
+    }
 }
 
 class NotificationJson {
@@ -31,6 +35,12 @@ class NotificationJson {
         this.sender = null;
         /** @type {UserJson} */
         this.receiver = null;
+    }
+    /** @param {object} notification */
+    static convert(notification) {
+        UserJson.convert(notification.sender);
+        UserJson.convert(notification.receiver);
+        Object.setPrototypeOf(notification, NotificationJson.prototype);
     }
 }
 
@@ -51,6 +61,12 @@ class ProjectJson {
         /** @type {UserJson[]} */
         this.admins = null;
     }
+    /** @param {object} project */
+    static convert(project) {
+        UserJson.convert(project.superAdmin);
+        project.admins.forEach(user => UserJson.convert(user));
+        Object.setPrototypeOf(project, ProjectJson.prototype);
+    }
 }
 
 class MemberJson {
@@ -62,9 +78,17 @@ class MemberJson {
         /** @type {string} */
         this.joinAt = null;
     }
+    /** 项目主管 */
     static ROLE_SUPER_ADMIN = 'SuperAdmin';
+    /** 项目管理员 */
     static ROLE_ADMIN = 'Admin';
+    /** 普通成员 */
     static ROLE_MEMBER = 'Member';
+    /** @param {object} member */
+    static convert(member) {
+        UserJson.convert(member.user);
+        Object.setPrototypeOf(member, MemberJson.prototype);
+    }
 }
 
 class TaskJson {
@@ -90,6 +114,13 @@ class TaskJson {
         /** @type {UserJson} */
         this.completer = null;
     }
+    /** @param {object} task */
+    static convert(task) {
+        UserJson.convert(task.creator);
+        task.executors.forEach(user => UserJson.convert(user));
+        UserJson.convert(task.completer);
+        Object.setPrototypeOf(task, TaskJson.prototype);
+    }
 }
 
 class CommentJson {
@@ -102,6 +133,11 @@ class CommentJson {
         this.createAt = null;
         /** @type {UserJson} */
         this.user = null;
+    }
+    /** @param {object} comment */
+    static convert(comment) {
+        UserJson.convert(comment.user);
+        Object.setPrototypeOf(comment, CommentJson.prototype);
     }
 }
 
@@ -126,6 +162,13 @@ class InvitationJson {
     static STATUS_CANCELED = 'canceled';
     static STATUS_ACCEPTED = 'accepted';
     static STATUS_REJECTED = 'rejected';
+    /** @param {object} invitation */
+    static convert(invitation) {
+        UserJson.convert(invitation.sender);
+        UserJson.convert(invitation.receiver);
+        ProjectJson.convert(invitation.project);
+        Object.setPrototypeOf(invitation, InvitationJson.prototype);
+    }
 }
 
 class ApiResponseJson {
@@ -134,6 +177,10 @@ class ApiResponseJson {
         this.type = null;
         /** @type {string} */
         this.message = null;
+    }
+    /** @param {object} response */
+    static convert(response) {
+        Object.setPrototypeOf(response, ApiResponseJson.prototype);
     }
 }
 
