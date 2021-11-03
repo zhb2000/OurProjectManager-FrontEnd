@@ -87,7 +87,7 @@ export default {
   border: solid 1px #dcdfe6;
   border-radius: 10px;
   padding: 15px 20px;
-  margin: 10px 0;
+  margin: 15px 0;
   display: flex;
   align-items: center;
 }

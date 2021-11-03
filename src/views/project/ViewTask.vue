@@ -13,7 +13,13 @@
       <!-- 评论楼层 -->
       <div class="left-area">
         <!-- 顶楼（主帖内容） -->
-        <task-card v-if="task != null" :task="task" />
+        <task-main
+          v-if="task != null"
+          :task="task"
+          :showEdit="currentCanEdit"
+          @edit-task="editTaskClick"
+        />
+
         <!-- 评论楼层 -->
         <comment-item
           v-for="comment in comments"
@@ -23,6 +29,8 @@
           @delete-comment="deleteCommentClick"
         />
         <el-divider />
+
+        <!-- 撰写评论区域 -->
         <div class="write-comment-area">
           <div class="create-comment-title">发表评论</div>
           <textarea
@@ -114,7 +122,7 @@ import * as DateUtils from "../../utils/DateUtils";
 import { confirmDeleteAsync } from "../../utils/UiUtils";
 import CommentItem from "../../components/project/CommentItem.vue";
 import ExecutorItem from "../../components/project/ExecutorItem.vue";
-import TaskViewCard from "../../components/project/TaskViewCard.vue";
+import TaskMain from "../../components/project/TaskMain.vue";
 /** @typedef {import("../../utils/JsonModel").UserJson} UserJson */
 /** @typedef {import("../../utils/JsonModel").TaskJson} TaskJson */
 /** @typedef {import("../../utils/JsonModel").CommentJson} CommentJson */
@@ -133,19 +141,23 @@ export default {
     };
   },
   computed: {
-    /** @returns {string} */
+    /** @returns {number} */
     projectId() {
-      return this.$route.params.projectId;
+      return parseInt(this.$route.params.projectId);
     },
-    /** @returns {string} */
+    /** @returns {number} */
     taskId() {
-      return this.$route.params.taskId;
+      return parseInt(this.$route.params.taskId);
     },
     currentIsAdmin() {
       return (
         this.currentRole === MemberJson.ROLE_ADMIN ||
         this.currentRole === MemberJson.ROLE_SUPER_ADMIN
       );
+    },
+    currentCanEdit() {
+      //TODO 作者自己可编辑
+      return true;
     },
     taskTitle() {
       return this.task ? this.task.title : null;
@@ -266,6 +278,10 @@ export default {
         }
       }
     },
+    async editTaskClick() {
+      //TODO edit task
+      await this.$alert("编辑任务功能尚未完成");
+    },
     goBack() {
       this.$router.back();
     },
@@ -343,11 +359,7 @@ export default {
       }
     },
   },
-  components: {
-    CommentItem,
-    ExecutorItem,
-    "task-card": TaskViewCard,
-  },
+  components: { TaskMain, CommentItem, ExecutorItem },
 };
 </script>
 

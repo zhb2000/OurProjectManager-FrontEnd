@@ -23,7 +23,7 @@
       <div>
         <el-select
           v-if="showRoleSelect"
-          v-model="roleValue"
+          :value="roleValue"
           @change="roleSelectChange"
           class="role-select"
         >
@@ -135,10 +135,13 @@ export default {
         return "未知";
       }
     },
+    roleValue() {
+      return this.member.role;
+    },
   },
   data() {
     return {
-      roleValue: this.member.role,
+      // roleValue: this.member.role,
       roleOptions: [
         { value: MemberJson.ROLE_SUPER_ADMIN, label: "项目主管" },
         { value: MemberJson.ROLE_ADMIN, label: "项目管理员" },
@@ -147,8 +150,8 @@ export default {
     };
   },
   methods: {
-    roleSelectChange() {
-      this.$emit("role-change", this.member, this.roleValue);
+    roleSelectChange(newRole) {
+      this.$emit("role-change", this.member, newRole);
     },
     removeBtnClick() {
       this.$emit("remove-member", this.member);

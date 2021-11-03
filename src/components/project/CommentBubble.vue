@@ -1,17 +1,18 @@
-<!-- 任务详情页面的卡片 -->
+<!-- 评论条目框架 -->
 <template>
-  <div class="task-outer">
+  <div class="comment-outer">
     <router-link :to="userUrl">
       <el-avatar size="medium">{{ nameFirstChar }}</el-avatar>
     </router-link>
-    <div class="task-card">
+    <div class="comment-card">
       <div class="card-upper">
         <router-link :to="userUrl" class="user-url">{{ username }}</router-link>
         <div class="create-at">{{ createAt }}</div>
         <div style="flex-grow: 1" />
+        <slot name="button"><!--edit or delete button--></slot>
       </div>
       <div class="card-lower">
-        <markdown-preview :initialValue="body" />
+        <markdown-preview :initialValue="body" ref="markdownContent" />
       </div>
     </div>
   </div>
@@ -19,18 +20,16 @@
 
 <script>
 import { MarkdownPreview } from "vue-meditor";
-import { TaskJson } from "../../utils/JsonModel";
-import * as DateUtils from "../../utils/DateUtils";
+import { UserJson } from "../../utils/JsonModel";
 import * as StrUtils from "../../utils/StringUtils";
 
 export default {
   props: {
-    task: { type: TaskJson, required: true },
+    user: { type: UserJson, required: true },
+    createAt: { type: String, required: true },
+    body: { type: String, required: true },
   },
   computed: {
-    user() {
-      return this.task.creator;
-    },
     username() {
       return this.user.username;
     },
@@ -40,24 +39,29 @@ export default {
     nameFirstChar() {
       return StrUtils.firstCharOfName(this.username);
     },
-    createAt() {
-      return DateUtils.beautify(this.task.createAt);
-    },
-    body() {
-      return this.task.body;
-    },
+  },
+  mounted() {
+    //HACK 修改 Markdown 内容的 padding
+    /** @type {HTMLDivElement} */
+    const outerDiv = this.$refs.markdownContent.$refs.preview;
+    console.assert(outerDiv instanceof HTMLDivElement);
+    /** @type {HTMLDivElement} */
+    const firstChild = outerDiv.firstElementChild;
+    console.assert(firstChild != null);
+    console.assert(firstChild instanceof HTMLDivElement);
+    //原 padding 在 CSS 中被设为 important，只能这么改
+    firstChild.setAttribute("style", "padding: 0px !important");
   },
   components: { MarkdownPreview },
 };
 </script>
 
 <style scoped>
-.task-outer {
+.comment-outer {
   display: flex;
   margin-bottom: 20px;
 }
-
-.task-card {
+.comment-card {
   flex-grow: 1;
   margin-left: 15px;
   border-radius: 6px;
@@ -76,8 +80,9 @@ export default {
 }
 
 .card-lower {
-  /* padding: 15px; */
-  padding: 8px 10px 0px 10px;
+  /* 注：Markdown 中的段落带有 8px 的 margin-bottom */
+  padding: 15px 15px 7px 15px;
+  /* padding: 8px 10px 0px 10px; */
 }
 
 .user-url {

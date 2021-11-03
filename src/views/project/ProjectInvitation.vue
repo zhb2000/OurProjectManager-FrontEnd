@@ -45,9 +45,9 @@ export default {
     };
   },
   computed: {
-    /** @returns {string} */
+    /** @returns {number} */
     projectId() {
-      return this.$route.params.projectId;
+      return parseInt(this.$route.params.projectId);
     },
   },
   watch: {

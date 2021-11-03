@@ -74,9 +74,9 @@ export default {
     projectName() {
       return this.invitation ? this.invitation.project.name : null;
     },
-    /** @returns {string} */
+    /** @returns {number} */
     projectId() {
-      return this.$route.params.projectId;
+      return parseInt(this.$route.params.projectId);
     },
     projectPath() {
       return `/projects/${this.projectId}`;

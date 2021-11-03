@@ -1,17 +1,20 @@
 <!-- 用户项目页面 -->
 <template>
   <div class="main-page">
-    <!-- search and filter -->
+    <!-- search, filter and sort -->
     <div class="input-container">
+      <!-- 搜索框 -->
       <input
         v-model="searchWord"
         placeholder="搜索你的项目"
         class="search-input input-item-base"
       />
+      <!-- 按项目类型筛选 -->
       <el-select
         v-model="filterValue"
         size="medium"
         class="input-select input-item-base"
+        style="width: 120px"
       >
         <el-option
           v-for="option in filterOptions"
@@ -20,10 +23,12 @@
           :value="option.value"
         />
       </el-select>
+      <!-- 排序选项 -->
       <el-select
         v-model="sortValue"
         size="medium"
         class="input-select input-item-base"
+        style="width: 120px"
       >
         <el-option
           v-for="option in sortOptions"
@@ -95,12 +100,14 @@ export default {
         { value: "SuperAdmin", label: "我创建的" },
         { value: "Admin", label: "我管理的" },
       ],
+      /** @type {'All' | 'SuperAdmin' | 'Admin'} */
       filterValue: "All",
       sortOptions: [
         { value: "NearlyUpdate", label: "最近更新" },
         { value: "CreateAt", label: "创建时间" },
         { value: "Name", label: "项目名称" },
       ],
+      /** @type {'NearlyUpdate' | 'CreateAt' | 'Name'} */
       sortValue: "NearlyUpdate",
       dialogVisible: false,
       projectName: "",
@@ -114,66 +121,39 @@ export default {
       return this.$route.params.username;
     },
     /** @returns {ProjectJson[]} */
-    afterSearchProjects() {
-      if (!this.projects) {
-        return [];
-      }
-      if (StrUtils.isEmpty(this.searchWord)) {
-        return this.projects;
-      }
-      const arr = [];
-      for (let project of this.projects) {
-        if (
-          project.name.toLowerCase().includes(this.searchWord.toLowerCase())
-        ) {
-          arr.push(project);
-        }
-      }
-      return arr;
-    },
-    afterFilterProjects() {
-      if (this.filterValue === "SuperAdmin") {
-        const arr = [];
-        for (let project of this.afterSearchProjects) {
-          if (project.superAdmin.username === this.username) {
-            arr.push(project);
-          }
-        }
-        return arr;
-      } else if (this.filterValue === "Admin") {
-        const arr = [];
-        for (let project of this.afterSearchProjects) {
-          if (project.superAdmin.username === this.username) {
-            arr.push(project);
-          } else {
-            for (let admin of project.admins) {
-              if (admin.username === this.username) {
-                arr.push(project);
-              }
-            }
-          }
-        }
-        return arr;
-      } else {
-        // All
-        return this.afterSearchProjects;
-      }
-    },
-    /** @returns {ProjectJson[]} */
     showedProjects() {
-      const arr = [];
-      for (let project of this.afterFilterProjects) {
-        arr.push(project);
-      }
-      if (this.sortValue === "NearlyUpdate") {
-        arr.sort((pa, pb) => pb.updateAt.localeCompare(pa.updateAt));
-      } else if (this.sortValue === "CreateAt") {
-        arr.sort((pa, pb) => pa.createAt.localeCompare(pb.createAt));
+      /** @type {(project: ProjectJson) => boolean} */
+      let searcher; //过滤搜索词
+      if (StrUtils.notEmpty(this.searchWord)) {
+        searcher = (project) =>
+          StrUtils.includeIgnoreCase(project.name, this.searchWord);
       } else {
-        // Name
-        arr.sort((pa, pb) => pa.name.localeCompare(pb.name));
+        searcher = () => true;
       }
-      return arr;
+
+      /** @type {(project: ProjectJson) => boolean} */
+      let filter; //过滤项目类型
+      if (this.filterValue === "SuperAdmin") {
+        filter = (project) => project.superAdmin.username === this.username;
+      } else if (this.filterValue === "Admin") {
+        filter = (project) =>
+          project.superAdmin.username === this.username ||
+          project.admins.map((admin) => admin.username).includes(this.username);
+      } else {
+        filter = () => true; // All
+      }
+
+      /** @type {(a: ProjectJson, b: ProjectJson) => number} */
+      let comparator; //排序
+      if (this.sortValue === "NearlyUpdate") {
+        comparator = (a, b) => b.updateAt.localeCompare(a.updateAt);
+      } else if (this.sortValue === "CreateAt") {
+        comparator = (a, b) => b.createAt.localeCompare(a.createAt);
+      } else {
+        comparator = (a, b) => a.name.localeCompare(b.name); // Name
+      }
+
+      return this.projects.filter(searcher).filter(filter).sort(comparator);
     },
     dialogWidth() {
       if (this.windowWidth > 800) {
@@ -273,10 +253,10 @@ export default {
   display: flex;
   align-content: center;
   flex-wrap: wrap;
+  row-gap: 5px;
 }
 
 .input-item-base {
-  margin-top: 5px;
   height: 36px;
 }
 

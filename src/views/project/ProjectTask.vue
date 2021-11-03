@@ -1,14 +1,50 @@
 <!-- 项目任务列表页 -->
 <template>
   <div class="main-page">
-    <div v-if="isAdmin" class="input-area">
-      <div style="flex-grow: 1" />
-      <router-link to="create" append>
+    <!-- search, filter and sort -->
+    <div class="input-container">
+      <!-- 搜索框 -->
+      <input
+        v-model="searchWord"
+        placeholder="搜索任务"
+        class="search-input input-item-base"
+      />
+      <!-- 按项目类型筛选 -->
+      <el-select
+        v-model="filterValue"
+        size="medium"
+        class="input-select input-item-base"
+        style="width: 120px"
+      >
+        <el-option
+          v-for="option in filterOptions"
+          :key="option.value"
+          :label="option.label"
+          :value="option.value"
+        />
+      </el-select>
+      <!-- 排序选项 -->
+      <el-select
+        v-model="sortValue"
+        size="medium"
+        class="input-select input-item-base"
+        style="width: 120px"
+      >
+        <el-option
+          v-for="option in sortOptions"
+          :key="option.value"
+          :label="option.label"
+          :value="option.value"
+        />
+      </el-select>
+      <router-link v-if="isAdmin" to="create" append>
         <el-button type="primary" size="medium">创建任务</el-button>
       </router-link>
     </div>
+
+    <!-- task list -->
     <task-item
-      v-for="task in tasks"
+      v-for="task in showedTasks"
       :key="task.id"
       :task="task"
       :projectId="projectId"
@@ -20,6 +56,7 @@
 <script>
 import * as api from "../../utils/ApiUtils";
 import { MemberJson } from "../../utils/JsonModel";
+import * as StrUtils from "../../utils/StringUtils";
 import TaskItem from "../../components/project/TaskItem.vue";
 /** @typedef {import("../../utils/JsonModel").TaskJson} TaskJson */
 
@@ -30,6 +67,22 @@ export default {
       currentRole: MemberJson.ROLE_MEMBER,
       /** @type {TaskJson[]} */
       tasks: [],
+      searchWord: "",
+      filterOptions: [
+        { value: "All", label: "所有" },
+        { value: "NotComplete", label: "未完成" },
+        { value: "Completed", label: "已完成" },
+        { value: "NotAssign", label: "未分配" },
+        { value: "Assigned", label: "已分配" },
+      ],
+      /** @type {'All' | 'NotComplete' | 'Completed' | 'NotAssign' | 'Assigned'} */
+      filterValue: "All",
+      sortOptions: [
+        { value: "CreateAt", label: "创建时间" },
+        { value: "Name", label: "任务名称" },
+      ],
+      /** @type {'CreateAt' | 'Name'} */
+      sortValue: "CreateAt",
     };
   },
   computed: {
@@ -42,6 +95,41 @@ export default {
         this.currentRole === MemberJson.ROLE_ADMIN ||
         this.currentRole === MemberJson.ROLE_SUPER_ADMIN
       );
+    },
+    /** @returns {TaskJson[]} */
+    showedTasks() {
+      /** @type {(task: TaskJson) => boolean} */
+      let searcher; //过滤搜索词
+      if (StrUtils.notEmpty(this.searchWord)) {
+        searcher = (task) =>
+          StrUtils.includeIgnoreCase(task.title, this.searchWord);
+      } else {
+        searcher = () => true;
+      }
+
+      /** @type {(task: TaskJson) => boolean} */
+      let filter; //过滤任务类型
+      if (this.filterValue === "NotComplete") {
+        filter = (task) => !task.complete;
+      } else if (this.filterValue === "Completed") {
+        filter = (task) => task.complete;
+      } else if (this.filterValue === "NotAssign") {
+        filter = (task) => task.executors.length === 0;
+      } else if (this.filterValue === "Assigned") {
+        filter = (task) => task.executors.length > 0;
+      } else {
+        filter = () => true; // All
+      }
+
+      /** @type {(a: TaskJson, b: TaskJson) => number} */
+      let comparator; //排序
+      if (this.sortValue === "CreateAt") {
+        comparator = (a, b) => b.createAt.localeCompare(a.createAt);
+      } else {
+        comparator = (a, b) => a.title.localeCompare(b.title); // Name
+      }
+
+      return this.tasks.filter(searcher).filter(filter).sort(comparator);
     },
   },
   watch: {
@@ -70,7 +158,6 @@ export default {
     async setTasksAsync() {
       try {
         this.tasks = await api.getTasksAsync(this.projectId);
-        this.tasks.sort((a, b) => b.createAt.localeCompare(a.createAt));
       } catch (error) {
         this.$message({ message: "任务获取失败", type: "error" });
         console.log("Get tasks failed: " + error);
@@ -93,9 +180,7 @@ export default {
       }
     },
   },
-  components: {
-    TaskItem,
-  },
+  components: { TaskItem },
 };
 </script>
 
@@ -104,9 +189,46 @@ export default {
   padding: 20px;
 }
 
-.input-area {
+.search-input {
+  width: 400px;
+  margin-right: 10px;
+  background: #fafbfc;
+  border-color: #dcdfe6;
+  border-radius: 6px;
+  border-style: solid;
+  border-width: 1px;
+  padding: 8px 12px;
+  font-size: 16px;
+  transition: 0.3s;
+}
+
+.search-input::placeholder {
+  color: #909399;
+}
+
+.search-input:hover {
+  border-color: #409eff;
+}
+
+.search-input:focus {
+  outline: none;
+  border-color: #409eff;
+  box-shadow: 0 0 5px #409eff;
+}
+
+.input-container {
   display: flex;
-  margin-bottom: 15px;
+  align-content: center;
+  flex-wrap: wrap;
+  row-gap: 5px;
+}
+
+.input-item-base {
+  height: 36px;
+}
+
+.input-select {
+  margin-right: 10px;
 }
 
 @media screen and (max-width: 600px) {

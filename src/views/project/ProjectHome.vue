@@ -63,9 +63,9 @@ export default {
     };
   },
   computed: {
-    /** @returns {string} */
+    /** @returns {number} */
     projectId() {
-      return this.$route.params.projectId;
+      return parseInt(this.$route.params.projectId);
     },
     isMember() {
       return this.isAdmin || this.currentRole === MemberJson.ROLE_MEMBER;
