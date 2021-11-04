@@ -33,16 +33,18 @@ html {
   height: 100%;
 }
 
-::-webkit-scrollbar {
-  width: 12px;
-}
+@media screen and (min-width: 600px) {
+  ::-webkit-scrollbar {
+    width: 10px;
+  }
 
-::-webkit-scrollbar-thumb {
-  border-radius: 4px;
-  background-color: #97979fa1;
-}
+  ::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background-color: #97979fa1;
+  }
 
-::-webkit-scrollbar-thumb:hover {
-  background-color: grey;
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: grey;
+  }
 }
 </style>

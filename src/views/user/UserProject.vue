@@ -14,7 +14,6 @@
         v-model="filterValue"
         size="medium"
         class="input-select input-item-base"
-        style="width: 120px"
       >
         <el-option
           v-for="option in filterOptions"
@@ -28,7 +27,6 @@
         v-model="sortValue"
         size="medium"
         class="input-select input-item-base"
-        style="width: 120px"
       >
         <el-option
           v-for="option in sortOptions"
@@ -224,7 +222,6 @@ export default {
 
 .search-input {
   width: 400px;
-  margin-right: 10px;
   background: #fafbfc;
   border-color: #dcdfe6;
   border-radius: 6px;
@@ -247,13 +244,15 @@ export default {
   outline: none;
   border-color: #409eff;
   box-shadow: 0 0 5px #409eff;
+  background: white;
 }
 
 .input-container {
   display: flex;
   align-content: center;
   flex-wrap: wrap;
-  row-gap: 5px;
+  row-gap: 10px;
+  column-gap: 10px;
 }
 
 .input-item-base {
@@ -261,8 +260,7 @@ export default {
 }
 
 .input-select {
-  margin-right: 10px;
-  width: 150px;
+  width: 120px;
 }
 
 .attr-name {
@@ -293,6 +291,7 @@ export default {
   outline: none;
   border-color: #409eff;
   box-shadow: 0 0 5px #409eff;
+  background: white;
 }
 
 .create-btn-area {

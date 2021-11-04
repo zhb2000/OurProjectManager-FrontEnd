@@ -154,20 +154,20 @@ export default {
 }
 
 .input-area {
-  margin: 0 10px 10px 10px;
+  margin: 10px;
   display: flex;
   align-content: center;
   flex-wrap: wrap;
+  row-gap: 10px;
+  column-gap: 10px;
 }
 
 .input-item-base {
-  margin-top: 5px;
   height: 36px;
 }
 
 .user-input {
   width: 400px;
-  margin-right: 10px;
   background: #fafbfc;
   border-color: #dcdfe6;
   border-radius: 6px;
@@ -186,6 +186,7 @@ export default {
   outline: none;
   border-color: #409eff;
   box-shadow: 0 0 5px #409eff;
+  background: white;
 }
 
 @media screen and (max-width: 700px) {

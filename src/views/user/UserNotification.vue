@@ -203,6 +203,7 @@ export default {
   outline: none;
   border-color: #409eff;
   box-shadow: 0 0 5px #409eff;
+  background: white;
 }
 
 .receiver-input {

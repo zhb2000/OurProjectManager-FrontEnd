@@ -202,7 +202,6 @@ export default {
 
 .search-input {
   width: 400px;
-  margin-right: 10px;
   background: #fafbfc;
   border-color: #dcdfe6;
   border-radius: 6px;
@@ -225,13 +224,15 @@ export default {
   outline: none;
   border-color: #409eff;
   box-shadow: 0 0 5px #409eff;
+  background: white;
 }
 
 .input-container {
   display: flex;
   align-content: center;
   flex-wrap: wrap;
-  row-gap: 5px;
+  row-gap: 10px;
+  column-gap: 10px;
   margin-bottom: 15px;
 }
 

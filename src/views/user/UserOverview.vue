@@ -102,7 +102,7 @@ export default {
 
 <style scoped>
 .main-page {
-  padding: 20px;
+  padding: 20px 10px 20px 10px;
 }
 
 .username-left {
@@ -151,11 +151,7 @@ export default {
   line-height: 40px;
 }
 
-@media screen and (max-width: 400px) {
-  .main-page {
-    padding: 20px 10px 20px 10px;
-  }
-
+@media screen and (max-width: 350px) {
   .detail-card {
     padding: 10px 20px;
   }
