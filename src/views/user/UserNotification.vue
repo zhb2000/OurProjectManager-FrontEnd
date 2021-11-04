@@ -7,7 +7,12 @@
         编写新消息
       </el-button>
     </div>
-    <el-dialog title="编写新消息" :visible.sync="dialogVisible">
+
+    <el-dialog
+      title="编写新消息"
+      :width="dialogWidth"
+      :visible.sync="dialogVisible"
+    >
       <div>
         <input
           class="send-input receiver-input"
@@ -25,6 +30,7 @@
         </div>
       </div>
     </el-dialog>
+    
     <el-tabs v-model="activeTabName">
       <el-tab-pane label="收件箱" name="recv" :lazy="true">
         <recv-item
@@ -68,12 +74,22 @@ export default {
       body: "",
       dialogVisible: false,
       activeTabName: "recv",
+      windowWidth: window.innerWidth,
     };
   },
   computed: {
     /** @returns {string} */
     username() {
       return this.$route.params.username;
+    },
+    dialogWidth() {
+      if (this.windowWidth > 800) {
+        return "50%";
+      } else if (this.windowWidth > 400) {
+        return "80%";
+      } else {
+        return "90%";
+      }
     },
   },
   watch: {
@@ -82,7 +98,11 @@ export default {
     },
   },
   async mounted() {
+    this.$nextTick(() => window.addEventListener("resize", this.onResize));
     await this.pageChangedAsync();
+  },
+  beforeDestroy() {
+    window.removeEventListener("resize", this.onResize);
   },
   methods: {
     /** fetch user's recv and send notifications */
@@ -169,11 +189,11 @@ export default {
       }
       this.recvNotifications[index].read = read;
     },
+    onResize() {
+      this.windowWidth = window.innerWidth;
+    },
   },
-  components: {
-    RecvItem,
-    SendItem,
-  },
+  components: { RecvItem, SendItem },
 };
 </script>
 
