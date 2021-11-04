@@ -33,6 +33,7 @@ html {
   height: 100%;
 }
 
+/* 桌面端使用自定义滚动条 */
 @media screen and (min-width: 600px) {
   ::-webkit-scrollbar {
     width: 10px;
@@ -45,6 +46,17 @@ html {
 
   ::-webkit-scrollbar-thumb:hover {
     background-color: grey;
+  }
+}
+
+/* 小屏幕上收窄 Element UI 的弹框组件 */
+@media screen and (max-width: 500px) {
+  .el-message {
+    min-width: 300px !important;
+  }
+
+  .el-message-box {
+    width: 300px !important;
   }
 }
 </style>

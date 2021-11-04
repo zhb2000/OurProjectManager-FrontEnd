@@ -152,7 +152,6 @@ export default {
       }
       try {
         member.role = newRole;
-        console.log("new role: " + member.role);
         await api.updateMemberAsync(this.projectId, member);
       } catch (error) {
         this.$message({ message: "成员角色更新失败", type: "error" });
